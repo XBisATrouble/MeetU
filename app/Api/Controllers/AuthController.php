@@ -53,20 +53,25 @@ class AuthController extends BaseController
     {
         $token = JWTAuth::refresh();
 
-        return $this->response->array(compact('token'));
+        return $this->response->array([
+            'success'=>'true',
+            'status_code'=>'200',
+            'token'=>$token,
+        ]);
     }
 
     public function register()
     {
         //验证规则
         $rules = [
-            'name' => ['required','unique:users'],
             'phone' => ['required', 'min:11', 'max:11', 'unique:users'],
             'password' => ['required', 'min:6'],
-            'school_id'=>['required'],
-            'gender'=>['required','min:0','max:1','integer'],
+            'nickname' => ['required','unique:users'],
+            'gender'=>['required','boolean'],
+            'name' => ['unique:users'],
+            'idcard'=>['unique:users','min:18','max:18'],
         ];
-        $payload = app('request')->only('name', 'phone', 'password','school_id','gender');
+        $payload = app('request')->only('phone','password','nickname','gender','description','name','idcard','school_id','student_id','QQ','WeChat','WeiBo','BaiduPostBar','FaceBook','Instagram','Twitter');
         // 验证格式
         $validator = app('validator')->make($payload, $rules);
         if ($validator->fails()) {
@@ -78,11 +83,22 @@ class AuthController extends BaseController
         }
 
         $newUser=[
-            'name' => $payload['name'],
             'phone' => $payload['phone'],
             'password' => bcrypt($payload['password']),
-            'school_id'=>$payload['school_id'],
+            'nickname'=>$payload['nickname'],
             'gender'=>$payload['gender'],
+            'description'=>$payload['description'],
+            'name' => $payload['name'],
+            'idcard'=>$payload['idcard'],
+            'school_id'=>$payload['school_id'],
+            'student_id'=>$payload['student_id'],
+            'QQ'=>$payload['QQ'],
+            'WeChat'=>$payload['WeChat'],
+            'WeiBo'=>$payload['WeiBo'],
+            'BaiduPostBar'=>$payload['BaiduPostBar'],
+            'FaceBook'=>$payload['FaceBook'],
+            'Instagram'=>$payload['Instagram'],
+            'Twitter'=>$payload['Twitter'],
         ];
 
 

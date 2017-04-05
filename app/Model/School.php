@@ -19,4 +19,11 @@ class School extends Model
     {
         return $this->belongsTo('App\Model\Province');
     }
+
+    public function getName($array,$school_id)
+    {
+        $school_name=$this->find($school_id)->school_name;
+        $array['school_name']=$school_name;
+        return $array;
+    }
 }

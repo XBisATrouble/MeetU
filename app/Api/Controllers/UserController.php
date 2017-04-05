@@ -7,6 +7,7 @@
  */
 
 namespace App\Api\Controllers;
+use App\Model\School;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
@@ -16,22 +17,17 @@ class UserController extends BaseController
 {
     public function info()
     {
-        try {
-            if (! $user = JWTAuth::parseToken()->authenticate()) {
-                return response()->json(['user_not_found'], 404);
-            }
-        } catch (TokenExpiredException $e) {
-            return response()->json(['token_expired'], $e->getStatusCode());
-        } catch (TokenInvalidException $e) {
-            return response()->json(['token_invalid'], $e->getStatusCode());
-        } catch (JWTException $e) {
-            return response()->json(['token_absent'], $e->getStatusCode());
+        if (! $user = JWTAuth::parseToken()->authenticate()) {
+            return response()->json(['user_not_found'], 404);
         }
 
+        $user_array=$user->toArray(); //将结果集转化为数组
+        $school=new School();
+        $user_array=$school->getName($user_array,$user['school_id']);
         return $this->response->array([
             'success'=>'true',
             'status_code'=>'200',
-            'data'=>$user->toArray()
+            'data'=>$user_array
         ]);
     }
 }

@@ -10,6 +10,7 @@ namespace App\Api\Controllers;
 
 
 use App\Model\Province;
+use App\Model\School;
 
 class SchoolController extends BaseController
 {
@@ -30,7 +31,7 @@ class SchoolController extends BaseController
         }
     }
 
-    public function getSchool($province_id)
+    public function getSchools($province_id)
     {
         $province = Province::find($province_id);
 

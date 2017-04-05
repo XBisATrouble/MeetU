@@ -14,7 +14,7 @@ class User extends Authenticatable
     protected $table="users";
 
     protected $fillable = [
-        'name', 'email', 'password','phone','school_id',
+        'phone','password','nickname','gender','description','name','idcard','school_id','student_id','QQ','WeChat','WeiBo','BaiduPostBar','FaceBook','Instagram','Twitter'
     ];
 
     /**
@@ -23,11 +23,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token','updated_at','created_at',
+        'password', 'remember_token','updated_at','created_at','school_id','idcard'
     ];
     public function getGenderAttribute($value)
     {
-        $gender = ['1'=>'男','0'=>'女'];
+        $gender = ['1'=>'男','0'=>'女',''=>null];
         return $gender[$value];
     }
 }
