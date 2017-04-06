@@ -26,18 +26,18 @@
 | password |   varchar,**不可为空且大于6位**| 用户密码 |
 |nickname|varchar,**不可为空且不与数据库内账号重复**|昵称|
 |gender|int，**不可为空，0为女 1为男** |性别
-|description| varchar,选填|个人描述|
-|name|varchar,选填，用于实名验证|真实姓名|
-|idcard|varchar,选填，用于实名验证|身份证号|
-|school_id|varchar,选填|学校id|
-|student_id|varchar,选填|学号|
-|QQ|varchar,选填|QQ|
-|WeChat|varchar,选填|微信|
-|WeiBo|varchar,选填|微博|
-|BaiduPostBar|varchar,选填|百度贴吧|
-|Facebook|varcahr,选填|Facebook|
-|Instagram|varchar,选填|Instagram|
-|Twitter|varchar,选填|Twitter|
+|description| varchar，选填|个人描述|
+|name|varchar，选填，用于实名验证|真实姓名|
+|idcard|varchar，选填，用于实名验证|身份证号|
+|school_id|varchar，选填|学校id|
+|student_id|varchar，选填|学号|
+|QQ|varchar，选填|QQ|
+|WeChat|varchar，选填|微信|
+|WeiBo|varchar，选填|微博|
+|BaiduPostBar|varchar，选填|百度贴吧|
+|Facebook|varcahr，选填|Facebook|
+|Instagram|varchar，选填|Instagram|
+|Twitter|varchar，选填|Twitter|
 
 
 - **返回参数**
@@ -237,7 +237,7 @@
 #### 接口说明 **6、**刷新TOKEN
 
 - **请求URL**
-> [/api/user/register ](#)
+> [/api/user/upToken](#)
 
 - **请求方式** 
 >**POST**
@@ -261,5 +261,36 @@
   "success": "true",
   "status_code": "200",
   "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6XC9cL2xvY2FsaG9zdFwvbWVldHVcL3B1YmxpY1wvYXBpXC91c2VyXC9sb2dpbiIsImlhdCI6MTQ5MTE4NjY0OCwiZXhwIjoxNDkxMTkwMjQ4LCJuYmYiOjE0OTExODY2NDgsImp0aSI6IjY3Mjg4M2E5NTY2NzhlYzA0OTg1ZWYzYTk5MTBmYjdkIn0.gfQvOUtV0wtlwbCoLKtm-fPv7HaU-LcZPQfC8E7oP90"
+}
+```
+
+#### 接口说明 **7、**修改密码
+
+- **请求URL**
+> [/api/user/changePwd?token=](#)
+
+- **请求方式** 
+>**POST**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+| :-------- | :--------| :------ |
+| token|varchar|token|
+|newPassword|varchar,不可为空，大于6位|新密码|
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+| :-------- | :--------| :------ |
+| success|   boolean|  请求成功与否|
+| status_code|   Integer|  执行结果code|
+|msg|varchar|返回信息|
+
+- **返回示例**
+>    
+```php
+{
+  "success": "true",
+  "status_code": "200",
+  "msg": "修改成功"
 }
 ```
