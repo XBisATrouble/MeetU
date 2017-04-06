@@ -32,7 +32,10 @@ $api->version('v1', function ($api) {
         $api->group(['middleware'=>'jwt.api.auth'],function ($api){
             //获取用户信息
             $api->post('user/info','UserController@info');
-            $api->post('user/upToken','AuthController@upToken');
+            //修改密码
+            $api->post('user/changePwd','UserController@changePwd');
         });
+        //刷新token
+        $api->post('user/upToken','AuthController@upToken');
     });
 });

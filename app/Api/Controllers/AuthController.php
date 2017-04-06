@@ -51,12 +51,13 @@ class AuthController extends BaseController
      */
     public function upToken()
     {
-        $token = JWTAuth::refresh();
+        $token = JWTAuth::getToken();
+        $newToken = JWTAuth::refresh($token);
 
         return $this->response->array([
             'success'=>'true',
             'status_code'=>'200',
-            'token'=>$token,
+            'token'=>$newToken,
         ]);
     }
 
