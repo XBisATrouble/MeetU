@@ -22,8 +22,12 @@ class School extends Model
 
     public function getName($array,$school_id)
     {
-        $school_name=$this->find($school_id)->school_name;
-        $array['school_name']=$school_name;
+        if ($school_id!=""){
+            $school_name=$this->find($school_id)->school_name;
+            $array['school_name']=$school_name;
+        }else{
+            $array['school_name']=null;
+        }
         return $array;
     }
 }

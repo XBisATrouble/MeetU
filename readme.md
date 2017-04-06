@@ -14,7 +14,7 @@
 #### 接口说明 **1、**注册
 
 - **请求URL**
-> [/api/user/register ](#)
+> [http://xbbbbbb.cn/MeetU/api/user/register ](#)
 
 - **请求方式** 
 >**POST**
@@ -24,7 +24,7 @@
 | :-------- | :--------| :------ |
 | phone|  <mark>varchar,**不可为空且不与数据库内账号重复**</mark>|  手机号码,**作为登陆标识**|
 | password |   varchar,**不可为空且大于6位**| 用户密码 |
-|nickname|varchar,**不可为空且不与数据库内账号重复**|昵称|
+|nickname|varchar,**不可为空**|昵称|
 |gender|int，**不可为空，0为女 1为男** |性别
 |description| varchar，选填|个人描述|
 |name|varchar，选填，用于实名验证|真实姓名|
@@ -46,6 +46,7 @@
 | success|   boolean|  请求成功与否|
 | status_code|   Integer|  执行结果code|
 | msg|   String|  执行结果消息|
+|token|varchar|注册成功即保持登录状态|
 
 - **返回示例**
 >    
@@ -54,13 +55,14 @@
   "success": "true",
   "status_code": "200",
   "msg": "创建用户成功"
+  "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI2LCJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3RcL21lZXR1XC9hcGlcL3VzZXJcL3JlZ2lzdGVyIiwiaWF0IjoxNDkxNDcyOTc0LCJleHAiOjE0OTE0NzY1NzQsIm5iZiI6MTQ5MTQ3Mjk3NCwianRpIjoiNTNhYTg0ZDYzNWJhM2ZmNzcwZjBhOGM2MjI1YThiMDQifQ.158udEsT4sAlx1vg3-Y25nkHOkS2bV5fMXyRTIvn3I0"
 }
 ```
 
 #### 接口说明 **2、**登陆
 
 - **请求URL**
-> [/api/user/login](#)
+> [http://xbbbbbb.cn/MeetU/api/user/login](#)
 
 
 - **请求方式** 
@@ -92,7 +94,7 @@
 #### 接口说明 **3、**获取省份列表
 
 - **请求URL**
-> [/api/getProvinces ](#)
+> [http://xbbbbbb.cn/MeetU/api/getProvinces ](#)
 
 
 - **请求方式** 
@@ -129,7 +131,7 @@
 #### 接口说明 **4、**获取某省份学校列表
 
 - **请求URL**
-> [/api/getSchool/{province_id} ](#)
+> [http://xbbbbbb.cn/MeetU/api/getSchools/{province_id} ](#)
 
 
 - **请求方式** 
@@ -167,7 +169,7 @@
 #### 接口说明 **5、**获取用户信息
 
 - **请求URL**
-> [/api/user/info?token=](#)
+> [http://xbbbbbb.cn/MeetU/api/user/info?token=](#)
 
 
 - **请求方式** 
@@ -237,7 +239,7 @@
 #### 接口说明 **6、**刷新TOKEN
 
 - **请求URL**
-> [/api/user/upToken](#)
+> [http://xbbbbbb.cn/MeetU/api/user/upToken](#)
 
 - **请求方式** 
 >**POST**
@@ -267,7 +269,7 @@
 #### 接口说明 **7、**修改密码
 
 - **请求URL**
-> [/api/user/changePwd?token=](#)
+> [http://xbbbbbb.cn/MeetU/api/user/changePwd?token=](#)
 
 - **请求方式** 
 >**POST**
@@ -294,3 +296,57 @@
   "msg": "修改成功"
 }
 ```
+
+
+#### 接口说明 **8、**模糊查询学校
+
+- **请求URL**
+> [http://xbbbbbb.cn/MeetU/api/findSchool/{keywords}](#)
+
+- **请求方式** 
+>**GET**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+| :-------- | :--------| :------ |
+|keywords|varchar|搜索的关键词，开头结尾和中间皆可|
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+| :-------- | :--------| :------ |
+| success|   boolean|  请求成功与否|
+| status_code|   Integer|  执行结果code|
+|data|array|返回信息|
+- **返回示例**
+>    
+```php
+{
+  "success": "true",
+  "status_code": "200",
+  "data": [
+    {
+      "school_id": 8,
+      "school_name": "北京邮电大学"
+    },
+    {
+      "school_id": 91,
+      "school_name": "北京邮电大学世纪学院"
+    },...
+    }
+  ]
+}
+```
+
+## 错误码排查
+> | 错误信息|  错误原因 | 
+| :-------- | :--------|
+|The phone field is required|手机是必须的|
+|The phone has already been taken|手机号码已被使用|
+|The phone must be at least 11 characters|手机号码必须为11位|
+|The password field is required|密码是必须的|
+|The password must be at least 6 characters|密码必须大于6位|
+|The gender field is required|性别是必须的|
+|The gender field must be true or false|性别必须是1或0|
+|The name has already been taken|姓名已经被使用|
+|The idcard must be at least 18 characters|身份证必须为18位|
+|The idcard has already been taken|身份证已经被使用|

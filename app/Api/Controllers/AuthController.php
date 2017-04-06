@@ -37,7 +37,6 @@ class AuthController extends BaseController
                     'msg' => '创建token失败']
             );
         }
-
         // all good so return the token
         return response()->json([
             'success'=>'true',
@@ -67,7 +66,7 @@ class AuthController extends BaseController
         $rules = [
             'phone' => ['required', 'min:11', 'max:11', 'unique:users'],
             'password' => ['required', 'min:6'],
-            'nickname' => ['required','unique:users'],
+            'nickname' => ['required'],
             'gender'=>['required','boolean'],
             'name' => ['unique:users'],
             'idcard'=>['unique:users','min:18','max:18'],
@@ -104,13 +103,33 @@ class AuthController extends BaseController
 
 
         $res = User::create($newUser);
-
         // 创建用户成功
         if ($res) {
+            $credentials = ['phone'=>$payload['phone'],'password'=>$payload['password']];
+
+            try {
+                // attempt to verify the credentials and create a token for the user
+                if (! $token = JWTAuth::attempt($credentials)) {
+                    return response()->json([
+                            'success'=>'false',
+                            'status_code'=>'400',
+                            'msg' => '用户名或密码错误']
+                    );
+                }
+            } catch (JWTException $e) {
+                // something went wrong whilst attempting to encode the token
+                return response()->json([
+                        'success'=>'false',
+                        'status_code'=>'500',
+                        'msg' => '创建token失败']
+                );
+            }
+
             return $this->response->array([
                 'success'=>'true',
                 'status_code'=>'200',
                 'msg' => '创建用户成功',
+                'token'=>$token,
             ]);
         } else {
             return $this->response->array([

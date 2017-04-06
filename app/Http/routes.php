@@ -27,6 +27,7 @@ $api->version('v1', function ($api) {
         //注册时获取地区学校
         $api->get('getProvinces','SchoolController@getProvinces');
         $api->get('getSchools/{province_id}','SchoolController@getSchools');
+        $api->get('findSchool/{keywords}', 'SchoolController@findSchool');
 
         //需要token的私有接口
         $api->group(['middleware'=>'jwt.api.auth'],function ($api){
