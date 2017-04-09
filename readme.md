@@ -60,8 +60,8 @@
 ```php
 {
   "status_code": "2000",
-  "info":"success"
-  "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI2LCJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3RcL21lZXR1XC9hcGlcL3VzZXJcL3JlZ2lzdGVyIiwiaWF0IjoxNDkxNDcyOTc0LCJleHAiOjE0OTE0NzY1NzQsIm5iZiI6MTQ5MTQ3Mjk3NCwianRpIjoiNTNhYTg0ZDYzNWJhM2ZmNzcwZjBhOGM2MjI1YThiMDQifQ.158udEsT4sAlx1vg3-Y25nkHOkS2bV5fMXyRTIvn3I0"
+  "info": "success",
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6XC9cL2xvY2FsaG9zdFwvbWVldHVcL2FwaVwvdXNlclwvbG9naW4iLCJpYXQiOjE0OTE3NDA4OTcsImV4cCI6MTQ5MTc0NDQ5NywibmJmIjoxNDkxNzQwODk3LCJqdGkiOiI2MDliYWVkZWJhODIzOWI2ZDFlMmU4NDgwYjY5YzZiYiJ9.VPqPOr4FkmWTMgSzRXedhLdCjZpcbAJHtOHBa2E_r-8"
 }
 ```
 
@@ -111,7 +111,7 @@
 ```php
 {
   "status_code": "2000",
-  "info": "登陆成功",
+  "info": "success",
   "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6XC9cL2xvY2FsaG9zdFwvbWVldHVcL2FwaVwvdXNlclwvbG9naW4iLCJpYXQiOjE0OTE3Mzc2NzAsImV4cCI6MTQ5MTc0MTI3MCwibmJmIjoxNDkxNzM3NjcwLCJqdGkiOiJjNzE0MWI1NTJkMGU0MzAzZWQyNjE1MjZlY2NhMGNhNiJ9.zlt190JTj0M8hMYiGyNYnmXayQgIn0LWF1UND56NVsE"
 }
 ```

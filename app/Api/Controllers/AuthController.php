@@ -43,7 +43,7 @@ class AuthController extends BaseController
         // all good so return the token
         return response()->json([
             'status_code'=>'2000',
-            'info'=>'登陆成功',
+            'info'=>'success',
             'token'=>$token,
         ]);
     }
