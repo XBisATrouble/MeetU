@@ -88,6 +88,8 @@ class AuthController extends BaseController
             'gender'=>['required','boolean'],
             'name' => ['unique:users'],
             'idcard'=>['unique:users','between:18,18'],
+            'photo'=>['mimes:jpeg,bmp,png,jpg'],
+            'photo2'=>['mimes:jpeg,bmp,png,jpg'],
         ];
 
         $error_message=[
@@ -101,17 +103,32 @@ class AuthController extends BaseController
             'name.unique'=>'该姓名已被注册!',
             'idcard.unique'=>'该身份证已被注册!',
             'idcard.between'=>'身份证必须为18位',
+            'photo.mimes'=>'必须上传图片',
+            'photo2.mimes'=>'必须上传图片',
         ];
 
-        $payload = app('request')->only('phone','password','nickname','gender','description','name','idcard','school_id','student_id','QQ','WeChat','WeiBo','FaceBook','Instagram','Twitter');
+        $payload = app('request')->only('phone','password','nickname','gender','description','name','idcard','school_id','student_id','QQ','WeChat','WeiBo','FaceBook','Instagram','Twitter','photo','photo2');
+
         // 验证格式
         $validator = app('validator')->make($payload, $rules,$error_message);
+
         if ($validator->fails()) {
             return $this->response->array([
                 'status_code'=>'4002',
                 'info' => $validator->errors(),
                 'token'=>'',
             ]);
+        }
+
+        if ($payload['photo']!=null){
+            $photo=$this->upLoadPhoto($payload['photo'],$payload['idcard']);
+        }else{
+            $photo=null;
+        }
+        if ($payload['photo2']!=null){
+            $photo2=$this->upLoadPhoto($payload['photo2'],$payload['idcard'],'_2');
+        }else{
+            $photo2=null;
         }
 
         $newUser=[
@@ -130,8 +147,9 @@ class AuthController extends BaseController
             'FaceBook'=>$payload['FaceBook'],
             'Instagram'=>$payload['Instagram'],
             'Twitter'=>$payload['Twitter'],
+            'verify_photo'=>$photo,
+            'verify_photo_2'=>$photo2,
         ];
-
 
         $res = User::create($newUser);
         // 创建用户成功

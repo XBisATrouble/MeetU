@@ -23,7 +23,6 @@ $api->version('v1', function ($api) {
         $api->post('user/login','AuthController@authenticate');
         $api->post('user/register','AuthController@register');
 
-
         //注册时获取地区学校
         $api->get('getProvinces','SchoolController@getProvinces');
         $api->get('getSchools/{province_id}','SchoolController@getSchools');

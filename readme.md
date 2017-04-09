@@ -46,7 +46,8 @@
 |Facebook|varcahr，选填|Facebook|
 |Instagram|varchar，选填|Instagram|
 |Twitter|varchar，选填|Twitter|
-
+|photo|file，选填|验证图片1|
+|photo2|file，选填|验证图片2|
 
 - **返回参数**
 > | 返回参数      |     参数类型 |   参数说明   |
@@ -186,15 +187,6 @@
       "school_id": 2031,
       "school_name": "重庆大学"
     },
-}
-```
-- **错误返回示例**
->    
-```php
-{
-  "success": "false",
-  "status_code": "404",
-  "data": "未找到相关信息"
 }
 ```
 

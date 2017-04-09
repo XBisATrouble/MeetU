@@ -14,7 +14,7 @@ class User extends Authenticatable
     protected $table="users";
 
     protected $fillable = [
-        'phone','password','nickname','gender','description','name','idcard','school_id','student_id','QQ','WeChat','WeiBo','BaiduPostBar','FaceBook','Instagram','Twitter'
+        'phone','password','nickname','gender','description','name','idcard','school_id','student_id','QQ','WeChat','WeiBo','BaiduPostBar','FaceBook','Instagram','Twitter','verify_photo','verify_photo_2'
     ];
 
     /**
