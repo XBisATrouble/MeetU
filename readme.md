@@ -2,19 +2,28 @@
 
 [TOC]
 
-## 状态码说明(status_code)
+## 说明(status_code)
 > | 状态编码      |     参数类型 |  
 | :-------- | :--------|
-| 200|   处理成功| 
-| 400|   客户端请求错误| 
-| 500|   服务器错误| 
+|2000|   处理成功| 
+|2001|创建用户成功|
+|2002|修改用户信息成功|
+|4000|客户端请求错误|
+|4001|用户名或密码错误|
+|4002|账号已被注册|
+|4003|请求参数出错|
+|4004|未找到相关信息|
+|4011|token过期|
+|4012|token无效|
+|4013|缺少token|
+| 5000|  服务器发生错误| 
 
 ## 登录注册模块
 
 #### 接口说明 **1、**注册
 
 - **请求URL**
-> [http://xbbbbbb.cn/MeetU/api/user/register ](#)
+> [https://xbbbbbb.cn/MeetU/api/user/register ](#)
 
 - **请求方式** 
 >**POST**
@@ -34,7 +43,6 @@
 |QQ|varchar，选填|QQ|
 |WeChat|varchar，选填|微信|
 |WeiBo|varchar，选填|微博|
-|BaiduPostBar|varchar，选填|百度贴吧|
 |Facebook|varcahr，选填|Facebook|
 |Instagram|varchar，选填|Instagram|
 |Twitter|varchar，选填|Twitter|
@@ -43,26 +51,43 @@
 - **返回参数**
 > | 返回参数      |     参数类型 |   参数说明   |
 | :-------- | :--------| :------ |
-| success|   boolean|  请求成功与否|
 | status_code|   Integer|  执行结果code|
-| msg|   String|  执行结果消息|
+|info|varchar|返回信息|
 |token|varchar|注册成功即保持登录状态|
 
 - **返回示例**
 >    
 ```php
 {
-  "success": "true",
-  "status_code": "200",
-  "msg": "创建用户成功"
+  "status_code": "2000",
+  "info":"success"
   "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI2LCJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3RcL21lZXR1XC9hcGlcL3VzZXJcL3JlZ2lzdGVyIiwiaWF0IjoxNDkxNDcyOTc0LCJleHAiOjE0OTE0NzY1NzQsIm5iZiI6MTQ5MTQ3Mjk3NCwianRpIjoiNTNhYTg0ZDYzNWJhM2ZmNzcwZjBhOGM2MjI1YThiMDQifQ.158udEsT4sAlx1vg3-Y25nkHOkS2bV5fMXyRTIvn3I0"
 }
 ```
 
+- **错误返回示例**
+>    
+```php
+{
+  "status_code": "403",
+  "info": {
+    "phone": [
+      "该手机已被注册!"
+    ],
+    "nickname": [
+      "昵称不能为空!"
+    ],
+    "gender": [
+      "性别不能为空!"
+    ]
+  },
+  "token": ""
+}
+```
 #### 接口说明 **2、**登陆
 
 - **请求URL**
-> [http://xbbbbbb.cn/MeetU/api/user/login](#)
+> [https://xbbbbbb.cn/MeetU/api/user/login](#)
 
 
 - **请求方式** 
@@ -77,24 +102,24 @@
 - **返回**
 > | 返回参数      |     参数类型 |   参数说明   |
 | :-------- | :--------| :------ |
-| success|   boolean|  请求成功与否|
 | status_code|   Integer|  执行结果code|
+|info|varchar|登录信息|
 |token|varchar|唯一标识token|
 
 - **返回示例**
 >    
 ```php
 {
-  "success": "true",
-  "status_code": "200",
-  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6XC9cL2xvY2FsaG9zdFwvbWVldHVcL3B1YmxpY1wvYXBpXC91c2VyXC9sb2dpbiIsImlhdCI6MTQ5MTE4NjY0OCwiZXhwIjoxNDkxMTkwMjQ4LCJuYmYiOjE0OTExODY2NDgsImp0aSI6IjY3Mjg4M2E5NTY2NzhlYzA0OTg1ZWYzYTk5MTBmYjdkIn0.gfQvOUtV0wtlwbCoLKtm-fPv7HaU-LcZPQfC8E7oP90"
+  "status_code": "2000",
+  "info": "登陆成功",
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6XC9cL2xvY2FsaG9zdFwvbWVldHVcL2FwaVwvdXNlclwvbG9naW4iLCJpYXQiOjE0OTE3Mzc2NzAsImV4cCI6MTQ5MTc0MTI3MCwibmJmIjoxNDkxNzM3NjcwLCJqdGkiOiJjNzE0MWI1NTJkMGU0MzAzZWQyNjE1MjZlY2NhMGNhNiJ9.zlt190JTj0M8hMYiGyNYnmXayQgIn0LWF1UND56NVsE"
 }
 ```
 
 #### 接口说明 **3、**获取省份列表
 
 - **请求URL**
-> [http://xbbbbbb.cn/MeetU/api/getProvinces ](#)
+> [https://xbbbbbb.cn/MeetU/api/getProvinces ](#)
 
 
 - **请求方式** 
@@ -107,8 +132,8 @@
 - **返回**
 > | 返回参数      |     参数类型 |   参数说明   |
 | :-------- | :--------| :------ |
-| success|   boolean|  请求成功与否|
 | status_code|   Integer|  执行结果code|
+|info|varchar|返回信息|
 | data|   array|  省份列表|
 |province_id|int|省份id|
 |province_name|varchar|省份名称|
@@ -117,21 +142,20 @@
 >    
 ```php
 {
-  "success": "true",
-  "status_code": "200",
+  "status_code": "2000",
+  "info": "success",
   "data": [
     {
       "province_id": 1,
       "province_name": "北京"
-    },...
-   ],
+    },
 }
 ```
 
 #### 接口说明 **4、**获取某省份学校列表
 
 - **请求URL**
-> [http://xbbbbbb.cn/MeetU/api/getSchools/{province_id} ](#)
+> [https://xbbbbbb.cn/MeetU/api/getSchools ](#)
 
 
 - **请求方式** 
@@ -145,31 +169,39 @@
 - **返回**
 > | 返回参数      |     参数类型 |   参数说明   |
 | :-------- | :--------| :------ |
-| success|   boolean|  请求成功与否|
 | status_code|   Integer|  执行结果code|
+|info|varchar|返回信息|
 | data|   array|  学校列表|
-|school_id|int|学校id|
-|school_name|varchar|学校名称
+|data:school_id|int|学校id|
+|data:school_name|varchar|学校名称
 
 - **返回示例**
 >    
 ```php
 {
-  "success": "true",
-  "status_code": "200",
+  "status_code": "2000",
+  "info": "success",
   "data": [
     {
-      "school_id": 111,
-      "school_name": "南开大学"
-    },...
-  ]
+      "school_id": 2031,
+      "school_name": "重庆大学"
+    },
+}
+```
+- **错误返回示例**
+>    
+```php
+{
+  "success": "false",
+  "status_code": "404",
+  "data": "未找到相关信息"
 }
 ```
 
 #### 接口说明 **5、**获取用户信息
 
 - **请求URL**
-> [http://xbbbbbb.cn/MeetU/api/user/info?token=](#)
+> [https://xbbbbbb.cn/MeetU/api/user/info?token=TOKEN](#)
 
 
 - **请求方式** 
@@ -178,7 +210,7 @@
 - **请求参数**
 > | 请求参数      |     参数类型 |   参数说明   |
 | :-------- | :--------| :------ |
-| token | varchar|登陆后返回的token|
+|token|varchar|调用接口凭证|
 - **成功返回**
 > | 返回参数      |     参数类型 |   参数说明   |
 | :-------- | :--------| :------ |
@@ -188,13 +220,14 @@
 |character_value|int|人品值|
 |marital_status|varchar|情感状态|
 |verify|bool|是否通过实名验证，0为否，1为是|
+|contact|array|联系方式|
 
 - **返回示例**
 >    
 ```php
 {
   "success": "true",
-  "status_code": "200",
+  "status_code": "2000",
   "data": {
     "id": 1,
     "name": "陈旭斌",
@@ -206,15 +239,15 @@
     "gender": "男",
     "grade": "大二",
     "marital_status": "单身",
-    "QQ": null,
-    "WChat": null,
-    "WeiBo": null,
-    "BaiduPostBar": null,
-    "FaceBook": null,
-    "Instagram": null,
-    "Twitter": null,
     "verify": 0,
-    "school_name": "重庆邮电大学"
+    "school_name": "重庆邮电大学",
+  "QQ": null,
+  "WeChat": null,
+  "WeiBo": null,
+  "FaceBook": null,
+  "Instagram": null,
+  "Twitter": null,
+    }
   }
 }
 ```
@@ -223,23 +256,23 @@
 > | 返回参数      |     参数类型 |   参数说明   |
 | :-------- | :--------| :------ |
 | success|   boolean|  请求成功与否|
-| status_code|   Integer|  状态码 **404:未找到相关用户，401:token已过期，402:缺少token，403:token无效**|
+| status_code|   Integer|  状态码 |
 |msg|array|错误信息|
 
 - **返回示例**
 >    
 ```php
 {
-  "success": "false",
-  "status_code": "403",
-  "msg": "token无效"
+  "status_code": "402",
+  "info": "缺少token",
+  "data": ""
 }
 ```
 
 #### 接口说明 **6、**刷新TOKEN
 
 - **请求URL**
-> [http://xbbbbbb.cn/MeetU/api/user/upToken](#)
+> [https://xbbbbbb.cn/MeetU/api/user/upToken?token=TOKEN](#)
 
 - **请求方式** 
 >**POST**
@@ -247,13 +280,13 @@
 - **请求参数**
 > | 请求参数      |     参数类型 |   参数说明   |
 | :-------- | :--------| :------ |
-| token|varchar|旧token|
+|token|varchar|调用接口凭证|
 
 - **返回**
 > | 返回参数      |     参数类型 |   参数说明   |
 | :-------- | :--------| :------ |
-| success|   boolean|  请求成功与否|
 | status_code|   Integer|  执行结果code|
+|info|varchar|返回信息|
 |token|varchar|新生成的token，原token失效|
 
 - **返回示例**
@@ -269,7 +302,7 @@
 #### 接口说明 **7、**修改密码
 
 - **请求URL**
-> [http://xbbbbbb.cn/MeetU/api/user/changePwd?token=](#)
+> [https://xbbbbbb.cn/MeetU/api/user/changePwd?token=](#)
 
 - **请求方式** 
 >**POST**
@@ -277,23 +310,22 @@
 - **请求参数**
 > | 请求参数      |     参数类型 |   参数说明   |
 | :-------- | :--------| :------ |
-| token|varchar|token|
+|token|varchar|调用接口凭证|
 |newPassword|varchar,不可为空，大于6位|新密码|
 
 - **返回**
 > | 返回参数      |     参数类型 |   参数说明   |
 | :-------- | :--------| :------ |
-| success|   boolean|  请求成功与否|
 | status_code|   Integer|  执行结果code|
+|info|varcahr|返回信息|
 |msg|varchar|返回信息|
 
 - **返回示例**
 >    
 ```php
 {
-  "success": "true",
-  "status_code": "200",
-  "msg": "修改成功"
+  "status_code": "2002",
+  "info": "修改成功"
 }
 ```
 
@@ -301,7 +333,7 @@
 #### 接口说明 **8、**模糊查询学校
 
 - **请求URL**
-> [http://xbbbbbb.cn/MeetU/api/findSchool/{keywords}](#)
+> [https://xbbbbbb.cn/MeetU/api/findSchool/](#)
 
 - **请求方式** 
 >**GET**
@@ -314,39 +346,25 @@
 - **返回**
 > | 返回参数      |     参数类型 |   参数说明   |
 | :-------- | :--------| :------ |
-| success|   boolean|  请求成功与否|
 | status_code|   Integer|  执行结果code|
+|info|varchar|返回信息|
 |data|array|返回信息|
+|data:school_id|int|学校id|
+|data:school_name|varchar|学校名称|
 - **返回示例**
 >    
 ```php
 {
-  "success": "true",
-  "status_code": "200",
+  "status_code": "2000",
+  "info": "success",
   "data": [
     {
-      "school_id": 8,
-      "school_name": "北京邮电大学"
+      "school_id": 3,
+      "school_name": "北京交通大学"
     },
     {
-      "school_id": 91,
-      "school_name": "北京邮电大学世纪学院"
-    },...
-    }
-  ]
+      "school_id": 4,
+      "school_name": "北京航空航天大学"
+    },
 }
 ```
-
-## 错误码排查
-> | 错误信息|  错误原因 | 
-| :-------- | :--------|
-|The phone field is required|手机是必须的|
-|The phone has already been taken|手机号码已被使用|
-|The phone must be at least 11 characters|手机号码必须为11位|
-|The password field is required|密码是必须的|
-|The password must be at least 6 characters|密码必须大于6位|
-|The gender field is required|性别是必须的|
-|The gender field must be true or false|性别必须是1或0|
-|The name has already been taken|姓名已经被使用|
-|The idcard must be at least 18 characters|身份证必须为18位|
-|The idcard has already been taken|身份证已经被使用|

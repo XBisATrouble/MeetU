@@ -20,14 +20,14 @@ class SchoolController extends BaseController
         if (!empty($provinces))
         {
             return $this->response->array([
-                'success'=>'true',
-                'status_code'=>'200',
-                'data'=>$provinces->toArray()
+                'status_code'=>'2000',
+                'info'=>'success',
+                'data'=>$provinces->toArray(),
             ]);
         }
         else
         {
-            return $this->response->errorNotFound_Me('操作失败');
+            return $this->errorNotFound_Me('操作失败');
         }
     }
 
@@ -39,14 +39,14 @@ class SchoolController extends BaseController
         {
             $schools=$province->schools;
             return $this->response->array([
-                'success'=>'true',
-                'status_code'=>'200',
-                'data'=>$schools
+                'status_code'=>'2000',
+                'info'=>'success',
+                'data'=>$schools,
             ]);
         }
         else
         {
-            return $this->response->errorNotFound_Me('未找到相关信息');
+            return $this->errorNotFound_Me('未找到相关信息');
         }
     }
 
@@ -56,15 +56,14 @@ class SchoolController extends BaseController
 
         if (!empty($school)){
             return $this->response->array([
-                'success'=>'true',
-                'status_code'=>'200',
+                'status_code'=>'2000',
+                'info'=>'success',
                 'data'=>$school
             ]);
         }else{
             return $this->response->array([
-                'success'=>'false',
                 'status_code'=>'404',
-                'msg'=>'未搜到相关信息',
+                'info'=>'未搜到相关信息',
             ]);
         }
     }

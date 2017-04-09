@@ -11,6 +11,7 @@ use App\Model\User;
 use Illuminate\Http\Request;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 
 
 class AuthController extends BaseController
@@ -24,23 +25,25 @@ class AuthController extends BaseController
             // attempt to verify the credentials and create a token for the user
             if (! $token = JWTAuth::attempt($credentials)) {
                 return response()->json([
-                        'success'=>'false',
-                        'status_code'=>'400',
-                        'msg' => '用户名或密码错误']
+                        'status_code'=>'4001',
+                        'info'=>'账号或者密码错误!',
+                        'token'=>'',
+                        ]
                 );
             }
         } catch (JWTException $e) {
             // something went wrong whilst attempting to encode the token
             return response()->json([
-                    'success'=>'false',
-                    'status_code'=>'500',
-                    'msg' => '创建token失败']
+                    'status_code'=>'5000',
+                    'info'=>'服务器出错!',
+                    'token'=>'',
+                    ]
             );
         }
         // all good so return the token
         return response()->json([
-            'success'=>'true',
-            'status_code'=>'200',
+            'status_code'=>'2000',
+            'info'=>'登陆成功',
             'token'=>$token,
         ]);
     }
@@ -50,12 +53,27 @@ class AuthController extends BaseController
      */
     public function upToken()
     {
-        $token = JWTAuth::getToken();
-        $newToken = JWTAuth::refresh($token);
+        try {
+            $token = JWTAuth::getToken();
+            $newToken = JWTAuth::refresh($token);
+            JWTAuth::invalidate($token);
+        } catch (TokenExpiredException $e) {
+            return $this->response->array([
+                'status_code'=>'40011',
+                'info'=>'token已过期',
+                'token'=>'',
+            ]);
+        } catch (JWTException $e) {
+            return $this->response->array([
+                'status_code'=>'4012',
+                'info'=>'token无效',
+                'token'=>'',
+            ]);
+        }
 
         return $this->response->array([
-            'success'=>'true',
-            'status_code'=>'200',
+            'status_code'=>'2000',
+            'info'=>'success',
             'token'=>$newToken,
         ]);
     }
@@ -64,21 +82,35 @@ class AuthController extends BaseController
     {
         //验证规则
         $rules = [
-            'phone' => ['required', 'min:11', 'max:11', 'unique:users'],
+            'phone' => ['required', 'between:11,11', 'unique:users'],
             'password' => ['required', 'min:6'],
             'nickname' => ['required'],
             'gender'=>['required','boolean'],
             'name' => ['unique:users'],
-            'idcard'=>['unique:users','min:18','max:18'],
+            'idcard'=>['unique:users','between:18,18'],
         ];
-        $payload = app('request')->only('phone','password','nickname','gender','description','name','idcard','school_id','student_id','QQ','WeChat','WeiBo','BaiduPostBar','FaceBook','Instagram','Twitter');
+
+        $error_message=[
+            'phone.required'=>'手机号不能为空!',
+            'phone.between'=>'手机号必须为11位',
+            'phone.unique'=>'该手机已被注册!',
+            'password.required'=>'密码不能为空!',
+            'password.min'=>'密码必须大于6位!',
+            'nickname.required'=>'昵称不能为空!',
+            'gender.required'=>'性别不能为空!',
+            'name.unique'=>'该姓名已被注册!',
+            'idcard.unique'=>'该身份证已被注册!',
+            'idcard.between'=>'身份证必须为18位',
+        ];
+
+        $payload = app('request')->only('phone','password','nickname','gender','description','name','idcard','school_id','student_id','QQ','WeChat','WeiBo','FaceBook','Instagram','Twitter');
         // 验证格式
-        $validator = app('validator')->make($payload, $rules);
+        $validator = app('validator')->make($payload, $rules,$error_message);
         if ($validator->fails()) {
             return $this->response->array([
-                'success'=>'false',
-                'status_code'=>'400',
-                'msg' => $validator->errors()
+                'status_code'=>'4002',
+                'info' => $validator->errors(),
+                'token'=>'',
             ]);
         }
 
@@ -95,7 +127,6 @@ class AuthController extends BaseController
             'QQ'=>$payload['QQ'],
             'WeChat'=>$payload['WeChat'],
             'WeiBo'=>$payload['WeiBo'],
-            'BaiduPostBar'=>$payload['BaiduPostBar'],
             'FaceBook'=>$payload['FaceBook'],
             'Instagram'=>$payload['Instagram'],
             'Twitter'=>$payload['Twitter'],
@@ -107,35 +138,18 @@ class AuthController extends BaseController
         if ($res) {
             $credentials = ['phone'=>$payload['phone'],'password'=>$payload['password']];
 
-            try {
-                // attempt to verify the credentials and create a token for the user
-                if (! $token = JWTAuth::attempt($credentials)) {
-                    return response()->json([
-                            'success'=>'false',
-                            'status_code'=>'400',
-                            'msg' => '用户名或密码错误']
-                    );
-                }
-            } catch (JWTException $e) {
-                // something went wrong whilst attempting to encode the token
-                return response()->json([
-                        'success'=>'false',
-                        'status_code'=>'500',
-                        'msg' => '创建token失败']
-                );
-            }
+            $token = JWTAuth::attempt($credentials);
 
             return $this->response->array([
-                'success'=>'true',
-                'status_code'=>'200',
-                'msg' => '创建用户成功',
+                'info'=>'success',
+                'status_code'=>'2001',
                 'token'=>$token,
             ]);
         } else {
             return $this->response->array([
-                'success'=>'false',
-                'status_code'=>'500',
-                'msg' => '创建用户失败',
+                'info'=>'服务器出错!',
+                'status_code'=>'5000',
+                'token'=>'',
             ]);
         }
     }

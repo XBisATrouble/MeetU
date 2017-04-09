@@ -15,4 +15,12 @@ use Dingo\Api\Routing\Helpers;
 class BaseController extends Controller
 {
     use Helpers;
+
+    public function errorNotFound_Me($data)
+    {
+        return response()->json([
+            'status_code'=>'4004',
+            'info'=>$data,
+        ]);
+    }
 }

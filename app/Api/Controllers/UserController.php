@@ -20,16 +20,20 @@ class UserController extends BaseController
     public function info()
     {
         if (! $user = JWTAuth::parseToken()->authenticate()) {
-            return response()->json(['user_not_found'], 404);
+            return $this->response->array([
+                'status_code'=>'4004',
+                'info'=>'未找到相关信息',
+                'data'=>'',
+            ]);
         }
 
         $user_array=$user->toArray(); //将结果集转化为数组
         $school=new School();
         $user_array=$school->getName($user_array,$user['school_id']);
         return $this->response->array([
-            'success'=>'true',
-            'status_code'=>'200',
-            'data'=>$user_array
+            'status_code'=>'2000',
+            'info'=>'success',
+            'data'=>$user_array,
         ]);
     }
 
@@ -44,9 +48,8 @@ class UserController extends BaseController
         $validator = app('validator')->make($payload, $rules);
         if ($validator->fails()) {
             return $this->response->array([
-                'success'=>'false',
-                'status_code'=>'400',
-                'msg' => $validator->errors()
+                'status_code'=>'4003',
+                'info' => $validator->errors()
             ]);
         }
 
@@ -56,15 +59,13 @@ class UserController extends BaseController
         $User->password=bcrypt($newPwd);
         if($User->save())
             return $this->response->array([
-                'success'=>'true',
-                'status_code'=>'200',
-                'msg'=>'修改成功',
+                'status_code'=>'2002',
+                'info'=>'修改成功',
             ]);
         else{
             return $this->response->array([
-                'success'=>'false',
-                'status_code'=>'400',
-                'msg' => '修改失败',
+                'status_code'=>'5000',
+                'info' => '服务器出错',
             ]);
         }
     }

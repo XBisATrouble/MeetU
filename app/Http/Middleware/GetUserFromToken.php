@@ -24,34 +24,34 @@ class GetUserFromToken
 
             if (! $user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json([
-                    'success' => 'false',
-                    'status_code'=>'404',
-                    'msg' => '未找到相关用户'
+                    'status_code'=>'4004',
+                    'info' => '未找到相关用户',
+                    'data'=>'',
                 ], 404);
             }
 
         } catch (TokenExpiredException $e) {
 
             return response()->json([
-                'success' => 'false',
-                'status_code'=>'401',
-                'msg' => 'token已过期'
+                'status_code'=>'4011',
+                'info' => 'token已过期',
+                'data'=>'',
             ], $e->getStatusCode());
 
         } catch (TokenInvalidException $e) {
 
             return response()->json([
-                'success' => 'false',
-                'status_code'=>'403',
-                'msg' => 'token无效'
+                'status_code'=>'4012',
+                'info' => 'token无效',
+                'data'=>'',
             ], $e->getStatusCode());
 
         } catch (JWTException $e) {
 
             return response()->json([
-                'success' => 'false',
-                'status_code'=>'402',
-                'msg' => '缺少token'
+                'status_code'=>'4013',
+                'info' => '缺少token',
+                'data'=>'',
             ], $e->getStatusCode());
 
         }
