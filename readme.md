@@ -128,11 +128,6 @@
 - **请求方式** 
 >**GET**
 
-- **请求参数**
-> | 请求参数      |     参数类型 |   参数说明   |
->| :-------- | :--------| :------ |
-
-
 - **返回**
 > | 返回参数      |     参数类型 |   参数说明   |
 >| :-------- | :--------| :------ |
@@ -242,12 +237,12 @@
     "marital_status": "单身",
     "verify": 0,
     "school_name": "重庆邮电大学",
-  "QQ": null,
-  "WeChat": null,
-  "WeiBo": null,
-  "FaceBook": null,
-  "Instagram": null,
-  "Twitter": null,
+	"QQ": null,
+	"WeChat": null,
+	"WeiBo": null,
+	"FaceBook": null,
+	"Instagram": null,
+	"Twitter": null,
     }
   }
 }
@@ -337,14 +332,10 @@
 > [https://xbbbbbb.cn/MeetU/api/findSchool/{keywords}](#)
 
 - **请求示例**
-> [https://xbbbbbb.cn/MeetU/api/findSchool/重庆](#)
+> [https://xbbbbbb.cn/MeetU/api/findSchool/北京](#)
 
 - **请求方式** 
 >**GET**
-
-- **请求参数**
-> | 请求参数      |     参数类型 |   参数说明   |
->| :-------- | :--------| :------ |
 
 - **返回**
 > | 返回参数      |     参数类型 |   参数说明   |
@@ -354,6 +345,7 @@
 >|data|array|返回信息|
 >|data:school_id|int|学校id|
 >|data:school_name|varchar|学校名称|
+
 - **返回示例**
 >    
 ```php
