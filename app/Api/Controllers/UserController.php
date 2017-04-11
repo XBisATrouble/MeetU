@@ -27,6 +27,13 @@ class UserController extends BaseController
             ]);
         }
 
+        $user = collect($user)->map(function ($item) {
+            if ($item==null) {
+                $item = "";
+            }
+            return $item;
+        });
+
         $user_array=$user->toArray(); //将结果集转化为数组
         $school=new School();
         $user_array=$school->getName($user_array,$user['school_id']);

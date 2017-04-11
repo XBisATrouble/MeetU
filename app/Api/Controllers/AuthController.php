@@ -24,28 +24,14 @@ class AuthController extends BaseController
         try {
             // attempt to verify the credentials and create a token for the user
             if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json([
-                        'status_code'=>'4001',
-                        'info'=>'账号或者密码错误!',
-                        'token'=>'',
-                        ]
-                );
+                return $this->return_response('4001','账号或者密码错误!');
             }
         } catch (JWTException $e) {
             // something went wrong whilst attempting to encode the token
-            return response()->json([
-                    'status_code'=>'5000',
-                    'info'=>'服务器出错!',
-                    'token'=>'',
-                    ]
-            );
+            return $this->return_response('5000','服务器出错!');
         }
         // all good so return the token
-        return response()->json([
-            'status_code'=>'2000',
-            'info'=>'success',
-            'token'=>$token,
-        ]);
+        return $this->return_response('2000','success',$token);
     }
 
     /*
@@ -54,12 +40,12 @@ class AuthController extends BaseController
     public function upToken()
     {
         try {
-            $token = JWTAuth::getToken();
-            $newToken = JWTAuth::refresh($token);
-            JWTAuth::invalidate($token);
+            $old_token = JWTAuth::getToken();
+            $token = JWTAuth::refresh($old_token);
+            //JWTAuth::invalidate($old_token);
         } catch (TokenExpiredException $e) {
             return $this->response->array([
-                'status_code'=>'40011',
+                'status_code'=>'4011',
                 'info'=>'token已过期',
                 'token'=>'',
             ]);
@@ -74,7 +60,7 @@ class AuthController extends BaseController
         return $this->response->array([
             'status_code'=>'2000',
             'info'=>'success',
-            'token'=>$newToken,
+            'token'=>$token,
         ]);
     }
 
@@ -85,51 +71,66 @@ class AuthController extends BaseController
             'phone' => ['required', 'between:11,11', 'unique:users'],
             'password' => ['required', 'min:6'],
             'nickname' => ['required'],
-            'gender'=>['required','boolean'],
+            'gender'=>['boolean'],
             'name' => ['unique:users'],
             'idcard'=>['unique:users','between:18,18'],
-            'photo'=>['mimes:jpeg,bmp,png,jpg'],
-            'photo2'=>['mimes:jpeg,bmp,png,jpg'],
+//            'photo'=>['mimes:jpeg,bmp,png,jpg'],
+//            'photo2'=>['mimes:jpeg,bmp,png,jpg'],
         ];
 
         $error_message=[
             'phone.required'=>'手机号不能为空!',
-            'phone.between'=>'手机号必须为11位',
+            'phone.between'=>'手机号必须为11位!',
             'phone.unique'=>'该手机已被注册!',
             'password.required'=>'密码不能为空!',
             'password.min'=>'密码必须大于6位!',
             'nickname.required'=>'昵称不能为空!',
-            'gender.required'=>'性别不能为空!',
             'name.unique'=>'该姓名已被注册!',
             'idcard.unique'=>'该身份证已被注册!',
             'idcard.between'=>'身份证必须为18位',
-            'photo.mimes'=>'必须上传图片',
-            'photo2.mimes'=>'必须上传图片',
+//            'photo.mimes'=>'必须上传图片',
+//            'photo2.mimes'=>'必须上传图片',
         ];
 
         $payload = app('request')->only('phone','password','nickname','gender','description','name','idcard','school_id','student_id','QQ','WeChat','WeiBo','FaceBook','Instagram','Twitter','photo','photo2');
 
         // 验证格式
         $validator = app('validator')->make($payload, $rules,$error_message);
+        $validator_array=$validator->errors()->toArray();
 
         if ($validator->fails()) {
-            return $this->response->array([
-                'status_code'=>'4002',
-                'info' => $validator->errors(),
-                'token'=>'',
-            ]);
+            if(!empty($validator_array['phone'][0]))
+            {
+                return $this->return_response('4022',$validator_array['phone'][0]);
+            }
+            if(!empty($validator_array['idcard'][0]))
+            {
+                return $this->return_response('4023',$validator_array['idcard'][0]);
+            }
+            if(!empty($validator_array['password'][0]))
+            {
+                return $this->return_response('4024',$validator_array['password'][0]);
+            }
+//            if(!empty($validator_array['photo'][0]))
+//            {
+//                return $this->return_response('4025',$validator_array['photo'][0]);
+//            }
+//            if(!empty($validator_array['photo2'][0]))
+//            {
+//                return $this->return_response('4025',$validator_array['photo2'][0]);
+//            }
         }
 
-        if ($payload['photo']!=null){
-            $photo=$this->upLoadPhoto($payload['photo'],$payload['idcard']);
-        }else{
-            $photo=null;
-        }
-        if ($payload['photo2']!=null){
-            $photo2=$this->upLoadPhoto($payload['photo2'],$payload['idcard'],'_2');
-        }else{
-            $photo2=null;
-        }
+//        if ($payload['photo']!=null){
+//            $photo=$this->upLoadPhoto($payload['photo'],$payload['idcard']);
+//        }else{
+//            $photo=null;
+//        }
+//        if ($payload['photo2']!=null){
+//            $photo2=$this->upLoadPhoto($payload['photo2'],$payload['idcard'],'_2');
+//        }else{
+//            $photo2=null;
+//        }
 
         $newUser=[
             'phone' => $payload['phone'],
@@ -147,8 +148,8 @@ class AuthController extends BaseController
             'FaceBook'=>$payload['FaceBook'],
             'Instagram'=>$payload['Instagram'],
             'Twitter'=>$payload['Twitter'],
-            'verify_photo'=>$photo,
-            'verify_photo_2'=>$photo2,
+            'verify_photo'=>$payload['photo'],
+            'verify_photo_2'=>$payload['photo2'],
         ];
 
         $res = User::create($newUser);
@@ -158,17 +159,9 @@ class AuthController extends BaseController
 
             $token = JWTAuth::attempt($credentials);
 
-            return $this->response->array([
-                'info'=>'success',
-                'status_code'=>'2001',
-                'token'=>$token,
-            ]);
+            return $this->return_response('2001','success',$token);
         } else {
-            return $this->response->array([
-                'info'=>'服务器出错!',
-                'status_code'=>'5000',
-                'token'=>'',
-            ]);
+            return $this->return_response('5000','服务器出错!');
         }
     }
 }

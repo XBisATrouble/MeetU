@@ -27,6 +27,7 @@ $api->version('v1', function ($api) {
         $api->get('getProvinces','SchoolController@getProvinces');
         $api->get('getSchools/{province_id}','SchoolController@getSchools');
         $api->get('findSchool/{keywords}', 'SchoolController@findSchool');
+        $api->get('upload','ApplyController@upload');
 
         //需要token的私有接口
         $api->group(['middleware'=>'jwt.api.auth'],function ($api){

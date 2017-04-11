@@ -11,11 +11,27 @@ namespace App\Api\Controllers;
 
 use App\Http\Controllers\Controller;
 use Dingo\Api\Routing\Helpers;
-use phpDocumentor\Reflection\Types\Null_;
 
 class BaseController extends Controller
 {
     use Helpers;
+
+    public function upLoadPhoto($photo,$path,$name,$prefix=null)
+    {
+        $photoPath='./public/upload/'.$path;
+        $extension = $photo->getClientOriginalExtension();
+        $photo->move($photoPath,$name.$prefix.'.'.$extension);
+        return $photoPath.'/'.$name.'.'.$extension;
+    }
+
+    public function return_response($status_code, $info, $token='')
+    {
+        return $this->response->array([
+            'status_code'=>$status_code,
+            'info'=> $info,
+            'token'=>$token,
+        ]);
+    }
 
     public function errorNotFound_Me($data)
     {
@@ -23,13 +39,5 @@ class BaseController extends Controller
             'status_code'=>'4004',
             'info'=>$data,
         ]);
-    }
-
-    public function upLoadPhoto($photo,$name,$prefix=null)
-    {
-        $photoPath='./public/upload/verify';
-        $extension = $photo->getClientOriginalExtension();
-        $photo->move($photoPath,$name.$prefix.'.'.$extension);
-        return $photoPath.'/'.$name.'.'.$extension;
     }
 }

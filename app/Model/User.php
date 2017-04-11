@@ -23,7 +23,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token','updated_at','created_at','school_id','idcard'
+        'password', 'remember_token','updated_at','created_at','idcard'
     ];
     public function getGenderAttribute($value)
     {

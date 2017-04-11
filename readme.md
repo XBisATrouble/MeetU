@@ -11,12 +11,15 @@
 >|2002|修改用户信息成功|
 >|4000|客户端请求错误|
 >|4001|用户名或密码错误|
->|4002|账号已被注册|
 >|4003|请求参数出错|
 >|4004|未找到相关信息|
 >|4011|token过期|
 >|4012|token无效|
 >|4013|缺少token|
+>|4022|手机号码出错|
+>|4023|身份证号码出错|
+>|4024|密码出错|
+>|4025|必须上传图片|
 >|5000|服务器发生错误| 
 
 ## 登录注册模块
@@ -71,18 +74,8 @@
 >    
 ```php
 {
-  "status_code": "403",
-  "info": {
-    "phone": [
-      "该手机已被注册!"
-    ],
-    "nickname": [
-      "昵称不能为空!"
-    ],
-    "gender": [
-      "性别不能为空!"
-    ]
-  },
+  "status_code": "4022",
+  "info": "该手机已被注册!",
   "token": ""
 }
 ```
@@ -237,12 +230,12 @@
     "marital_status": "单身",
     "verify": 0,
     "school_name": "重庆邮电大学",
-	"QQ": null,
-	"WeChat": null,
-	"WeiBo": null,
-	"FaceBook": null,
-	"Instagram": null,
-	"Twitter": null,
+  "QQ": null,
+  "WeChat": null,
+  "WeiBo": null,
+  "FaceBook": null,
+  "Instagram": null,
+  "Twitter": null,
     }
   }
 }
@@ -332,7 +325,7 @@
 > [https://xbbbbbb.cn/MeetU/api/findSchool/{keywords}](#)
 
 - **请求示例**
-> [https://xbbbbbb.cn/MeetU/api/findSchool/北京](#)
+> [https://xbbbbbb.cn/MeetU/api/findSchool/重庆](#)
 
 - **请求方式** 
 >**GET**
