@@ -11,6 +11,7 @@ namespace App\Api\Controllers;
 
 use App\Http\Controllers\Controller;
 use Dingo\Api\Routing\Helpers;
+use JWTAuth;
 
 class BaseController extends Controller
 {
@@ -39,5 +40,10 @@ class BaseController extends Controller
             'status_code'=>'4004',
             'info'=>$data,
         ]);
+    }
+
+    public function getUser()
+    {
+        return $user = JWTAuth::parseToken()->authenticate();
     }
 }

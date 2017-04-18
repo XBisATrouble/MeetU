@@ -23,11 +23,23 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token','updated_at','created_at','idcard'
+        'password', 'remember_token','updated_at','created_at','idcard','pivot',
     ];
+
+    protected $casts = [
+        'age' => 'integer',
+        'character_value'=>'integer',
+    ];
+
     public function getGenderAttribute($value)
     {
         $gender = ['1'=>'男','0'=>'女',''=>null];
         return $gender[$value];
+    }
+
+    public function belongsToSchool()
+
+    {
+        return $this->belongsTo('School', 'school_id');
     }
 }

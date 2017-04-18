@@ -13,6 +13,6 @@ class ApplyController extends BaseController
 {
     public function upload()
     {
-        return 1;
+
     }
 }

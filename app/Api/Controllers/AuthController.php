@@ -44,24 +44,11 @@ class AuthController extends BaseController
             $token = JWTAuth::refresh($old_token);
             //JWTAuth::invalidate($old_token);
         } catch (TokenExpiredException $e) {
-            return $this->response->array([
-                'status_code'=>'4011',
-                'info'=>'token已过期',
-                'token'=>'',
-            ]);
+            return $this->return_response('4011','token已过期');
         } catch (JWTException $e) {
-            return $this->response->array([
-                'status_code'=>'4012',
-                'info'=>'token无效',
-                'token'=>'',
-            ]);
+            return $this->return_response('4012','token无效');
         }
-
-        return $this->response->array([
-            'status_code'=>'2000',
-            'info'=>'success',
-            'token'=>$token,
-        ]);
+        return $this->return_response('2000','success',$token);
     }
 
     public function register()

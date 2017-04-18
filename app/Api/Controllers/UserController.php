@@ -11,9 +11,6 @@ use App\Model\School;
 use App\Model\User;
 use Illuminate\Http\Request;
 use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Tymon\JWTAuth\Exceptions\TokenExpiredException;
-use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 
 class UserController extends BaseController
 {
@@ -26,14 +23,12 @@ class UserController extends BaseController
                 'data'=>'',
             ]);
         }
-
         $user = collect($user)->map(function ($item) {
             if ($item==null) {
                 $item = "";
             }
             return $item;
         });
-
         $user_array=$user->toArray(); //将结果集转化为数组
         $school=new School();
         $user_array=$school->getName($user_array,$user['school_id']);
