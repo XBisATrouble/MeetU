@@ -9,7 +9,6 @@
 namespace App\Api\Controllers;
 use App\Model\School;
 use App\Model\User;
-use Illuminate\Http\Request;
 use JWTAuth;
 
 class UserController extends BaseController

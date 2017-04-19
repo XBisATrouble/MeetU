@@ -34,6 +34,15 @@ class BaseController extends Controller
         ]);
     }
 
+    public function return_response_activity($status_code, $info, $activity='')
+    {
+        return $this->response->array([
+            'status_code'=>$status_code,
+            'info'=> $info,
+            'activity'=>$activity,
+        ]);
+    }
+
     public function errorNotFound_Me($data)
     {
         return response()->json([
@@ -45,5 +54,17 @@ class BaseController extends Controller
     public function getUser()
     {
         return $user = JWTAuth::parseToken()->authenticate();
+    }
+
+    public function insert_tags($activity)
+    {
+        $tags_array=array();
+        $tags=$activity->tags;
+        foreach ($tags as $tag) {
+            $tags_array[]=$tag->name;
+        }
+        $activity=$activity->toArray();
+        $activity['tags']=$tags_array;
+        return $activity;
     }
 }

@@ -9,6 +9,7 @@
 >|2000|   处理成功| 
 >|2001|创建用户成功|
 >|2002|修改用户信息成功|
+>|2003|修改活动信息成功|
 >|4000|客户端请求错误|
 >|4001|用户名或密码错误|
 >|4003|请求参数出错|
@@ -20,6 +21,7 @@
 >|4023|身份证号码出错|
 >|4024|密码出错|
 >|4025|必须上传图片|
+>|4030|无权操作|
 >|5000|服务器发生错误| 
 
 ## 登录注册模块
@@ -62,7 +64,7 @@
 
 - **返回示例**
 >    
-```php
+```json
 {
   "status_code": "2000",
   "info": "success",
@@ -72,7 +74,7 @@
 
 - **错误返回示例**
 >    
-```php
+```json
 {
   "status_code": "4022",
   "info": "该手机已被注册!",
@@ -104,7 +106,7 @@
 
 - **返回示例**
 >    
-```php
+```json
 {
   "status_code": "2000",
   "info": "success",
@@ -132,7 +134,7 @@
 
 - **返回示例**
 >    
-```php
+```json
 {
   "status_code": "2000",
   "info": "success",
@@ -169,7 +171,7 @@
 
 - **返回示例**
 >    
-```php
+```json
 {
   "status_code": "2000",
   "info": "success",
@@ -213,10 +215,10 @@
 
 - **返回示例**
 >    
-```php
+```json
 {
-  "success": "true",
   "status_code": "2000",
+  "info": "success",
   "data": {
     "id": 1,
     "name": "陈旭斌",
@@ -224,19 +226,22 @@
     "phone": "15340521856",
     "age": 19,
     "character_value": 50,
-    "student_id": null,
+    "school_id": 2034,
+    "student_id": "",
     "gender": "男",
     "grade": "大二",
     "marital_status": "单身",
-    "verify": 0,
-    "school_name": "重庆邮电大学",
-  "QQ": null,
-  "WeChat": null,
-  "WeiBo": null,
-  "FaceBook": null,
-  "Instagram": null,
-  "Twitter": null,
-    }
+    "QQ": "",
+    "WeChat": "",
+    "WeiBo": "",
+    "FaceBook": "",
+    "Instagram": "",
+    "Twitter": "",
+    "verify": "0",
+    "description": "",
+    "verify_photo": "",
+    "verify_photo_2": "",
+    "school_name": "重庆邮电大学"
   }
 }
 ```
@@ -250,7 +255,7 @@
 
 - **返回示例**
 >    
-```php
+```json
 {
   "status_code": "402",
   "info": "缺少token",
@@ -280,11 +285,11 @@
 
 - **返回示例**
 >    
-```php
+```json
 {
-  "success": "true",
-  "status_code": "200",
-  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6XC9cL2xvY2FsaG9zdFwvbWVldHVcL3B1YmxpY1wvYXBpXC91c2VyXC9sb2dpbiIsImlhdCI6MTQ5MTE4NjY0OCwiZXhwIjoxNDkxMTkwMjQ4LCJuYmYiOjE0OTExODY2NDgsImp0aSI6IjY3Mjg4M2E5NTY2NzhlYzA0OTg1ZWYzYTk5MTBmYjdkIn0.gfQvOUtV0wtlwbCoLKtm-fPv7HaU-LcZPQfC8E7oP90"
+  "status_code": "2000",
+  "info": "success",
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6XC9cL2xvY2FsaG9zdFwvTWVldFVcL2FwaVwvdXNlclwvdXBUb2tlbiIsImlhdCI6MTQ5MjU5MDU3NSwiZXhwIjoxNDkyNTk0MTgyLCJuYmYiOjE0OTI1OTA1ODIsImp0aSI6ImNmNjQwMWUxODIyOTFhMjE2YjA1NzgxMTZjYmY3N2RjIn0.bIrCLiAbgHB7Y8vehkmlT7Aqk2646hkfMYVP6_FsmfQ"
 }
 ```
 
@@ -311,7 +316,7 @@
 
 - **返回示例**
 >    
-```php
+```json
 {
   "status_code": "2002",
   "info": "修改成功"
@@ -341,7 +346,7 @@
 
 - **返回示例**
 >    
-```php
+```json
 {
   "status_code": "2000",
   "info": "success",
@@ -354,5 +359,163 @@
       "school_id": 4,
       "school_name": "北京航空航天大学"
     },
+}
+```
+
+## 活动模块
+
+#### 接口说明 1、获取活动列表
+
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/activity/](#)
+
+
+- **请求方式** 
+>**GET**
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|Varchar|信息|
+>|total|Integer|返回活动总数|
+>| activities|   Array|  活动列表|
+>|activities.people_number|Integer|参与上限人数|
+>|activities.people_number_join|Integer|已参与人数|
+
+- **返回示例**
+>    
+```json
+{
+    "status_code": "2000",
+    "info": "success",
+    "total": 2,
+    "activities": [
+        {
+            "id": 1,
+            "title": "狼人杀",
+            "content": "晚上七点半千喜鹤开狼",
+            "creator": "陈旭斌",
+            "people_number_limit": 8,
+            "people_number_up": 12,
+            "people_number_join": 3,
+            "type": "说走就走",
+            "entrie_time_start": null,
+            "entrie_time_end": null,
+            "date_time_start": "2017-04-12 08:00:00",
+            "date_time_end": "2017-04-12 22:30:00",
+            "theme": "1",
+            "location": "重庆邮电大学千喜鹤",
+            "created_at": "2017-04-12 22:32:48",
+            "updated_at": "2017-04-12 22:32:51",
+            "tags": [
+                "说走就走",
+                "桌游"
+            ]
+        },
+        {
+            "id": 2,
+            "title": "火锅",
+            "content": "活动介绍",
+            "creator": "张三",
+            "people_number_limit": 2,
+            "people_number_up": 4,
+            "people_number_join": 1,
+            "type": "说走就走",
+            "entrie_time_start": null,
+            "entrie_time_end": null,
+            "date_time_start": "2017-04-18 18:10:51",
+            "date_time_end": "2017-04-18 19:30:56",
+            "theme": "1",
+            "location": "城门老火锅",
+            "created_at": "2017-04-18 09:11:36",
+            "updated_at": "2017-04-18 09:11:38",
+            "tags": []
+        }
+    ]
+}
+```
+
+#### 接口说明 2、获取参与活动的成员列表
+
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/activity/{activity_id}/user/](#)
+
+
+- **请求方式** 
+>**GET**
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|Varchar|信息|
+>|total|Integer|返回活动总数|
+>| user|   array|  用户列表|
+
+- **返回示例**
+>    
+```json
+{
+    "status_code": "2000",
+    "info": "success",
+    "total": 2,
+    "users": [
+        {
+            "user_id": 1,
+            "name": "陈旭斌"
+        },
+        {
+            "user_id": 18,
+            "name": "张三"
+        }
+    ]
+}
+```
+
+#### 接口说明 2、获取活动
+
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/activity/{activity_id}/](#)
+
+
+- **请求方式** 
+>**GET**
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|total|Integer|返回活动总数|
+>| user|   array|  用户列表|
+
+- **返回示例**
+>    
+```json
+{
+    "status_code": "2000",
+    "info": "success",
+    "activities": {
+        "id": 1,
+        "title": "狼人杀",
+        "content": "晚上七点半千喜鹤开狼",
+        "creator": "陈旭斌",
+        "people_number_limit": 8,
+        "people_number_up": 12,
+        "people_number_join": 3,
+        "type": "说走就走",
+        "entrie_time_start": null,
+        "entrie_time_end": null,
+        "date_time_start": "2017-04-12 08:00:00",
+        "date_time_end": "2017-04-12 22:30:00",
+        "theme": "1",
+        "location": "重庆邮电大学千喜鹤",
+        "created_at": "2017-04-12 22:32:48",
+        "updated_at": "2017-04-12 22:32:51",
+        "tags": [
+            "说走就走",
+            "桌游"
+        ]
+    }
 }
 ```

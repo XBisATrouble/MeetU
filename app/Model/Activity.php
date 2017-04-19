@@ -7,23 +7,25 @@ use Illuminate\Database\Eloquent\Model;
 class Activity extends Model
 {
     //
+    protected $fillable = [
+        'title','content','type','creator','people_number_limit','people_number_up','theme','date_time_start','date_time_end','entrie_time_end','entrie_time_start','location'
+    ];
 
     public function tags()
     {
-        $tags=$this->belongsToMany('App\Model\Tag')->select('name');
-        return $tags;
+        return $this->belongsToMany('App\Model\Tag');
     }
 
-    public function getThemeAttribute($theme)
+    public function getTypeAttribute($type)
     {
-        return $this->attributes['theme']=Theme::find($theme)->theme;
+        return $this->attributes['type']=Type::find($type)->type;
     }
 
     public function getCreatorAttribute($user_id)
     {
         return $this->attributes['creator']=User::find($user_id)->name;
     }
-
+    
     public function users()
     {
         return $this->belongsToMany('App\Model\User')->select('user_id','name');

@@ -18,6 +18,7 @@ class ActivityUserController extends BaseController
         $total=$users->count();
         return $this->response->array([
             'status_code'=>'2000',
+            'info'=>'success',
             'total'=>$total,
             'users'=>$users,
         ]);
