@@ -24,7 +24,7 @@
 >|4030|无权操作|
 >|5000|服务器发生错误| 
 
-## 登录注册模块
+## 用户模块
 
 #### 接口说明 1、注册
 
@@ -186,7 +186,7 @@
 #### 接口说明 5、获取用户信息
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/user/info?token=TOKEN](#)
+> [https://xbbbbbb.cn/MeetU/api/user/info](#)
 
 
 - **请求方式** 
@@ -266,7 +266,7 @@
 #### 接口说明 6、刷新TOKEN
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/user/upToken?token=TOKEN](#)
+> [https://xbbbbbb.cn/MeetU/api/user/upToken](#)
 
 - **请求方式** 
 >**POST**
@@ -296,7 +296,7 @@
 #### 接口说明 7、修改密码
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/user/changePwd?token=](#)
+> [https://xbbbbbb.cn/MeetU/api/user/changePwd](#)
 
 - **请求方式** 
 >**POST**
@@ -327,7 +327,7 @@
 #### 接口说明 8、模糊查询学校
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/findSchool/{keywords}](#)
+> [https://xbbbbbb.cn/MeetU/api/findSchool/{keywords}/](#)
 
 - **请求示例**
 > [https://xbbbbbb.cn/MeetU/api/findSchool/重庆](#)
@@ -367,11 +367,16 @@
 #### 接口说明 1、获取活动列表
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/activity/](#)
+> [https://xbbbbbb.cn/MeetU/api/activity](#)
 
 
 - **请求方式** 
 >**GET**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>|token|varchar|调用接口凭证|
 
 - **返回**
 > | 返回参数      |     参数类型 |   参数说明   |
@@ -395,7 +400,10 @@
             "id": 1,
             "title": "狼人杀",
             "content": "晚上七点半千喜鹤开狼",
-            "creator": "陈旭斌",
+            "creator": {
+                "id": 1,
+                "name": "陈旭斌"
+            },
             "people_number_limit": 8,
             "people_number_up": 12,
             "people_number_join": 3,
@@ -404,7 +412,6 @@
             "entrie_time_end": null,
             "date_time_start": "2017-04-12 08:00:00",
             "date_time_end": "2017-04-12 22:30:00",
-            "theme": "1",
             "location": "重庆邮电大学千喜鹤",
             "created_at": "2017-04-12 22:32:48",
             "updated_at": "2017-04-12 22:32:51",
@@ -417,7 +424,10 @@
             "id": 2,
             "title": "火锅",
             "content": "活动介绍",
-            "creator": "张三",
+            "creator": {
+                "id": 18,
+                "name": "张三"
+            },
             "people_number_limit": 2,
             "people_number_up": 4,
             "people_number_join": 1,
@@ -426,7 +436,6 @@
             "entrie_time_end": null,
             "date_time_start": "2017-04-18 18:10:51",
             "date_time_end": "2017-04-18 19:30:56",
-            "theme": "1",
             "location": "城门老火锅",
             "created_at": "2017-04-18 09:11:36",
             "updated_at": "2017-04-18 09:11:38",
@@ -436,14 +445,73 @@
 }
 ```
 
-#### 接口说明 2、获取参与活动的成员列表
+#### 接口说明 2、获取活动
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/activity/{activity_id}/user/](#)
+> [https://xbbbbbb.cn/MeetU/api/activity/{activity_id}](#)
 
 
 - **请求方式** 
 >**GET**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>|token|varchar|调用接口凭证|
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|Integer|信息|
+>|activity|array|活动信息数组|
+
+- **返回示例**
+>    
+```json
+{
+    "status_code": "2000",
+    "info": "success",
+    "activity": {
+        "id": 1,
+        "title": "狼人杀",
+        "content": "晚上七点半千喜鹤开狼",
+        "creator": {
+            "id": 1,
+            "name": "陈旭斌"
+        },
+        "people_number_limit": 8,
+        "people_number_up": 12,
+        "people_number_join": 3,
+        "type": "说走就走",
+        "entrie_time_start": null,
+        "entrie_time_end": null,
+        "date_time_start": "2017-04-12 08:00:00",
+        "date_time_end": "2017-04-12 22:30:00",
+        "location": "重庆邮电大学千喜鹤",
+        "created_at": "2017-04-12 22:32:48",
+        "updated_at": "2017-04-12 22:32:51",
+        "tags": [
+            "说走就走",
+            "桌游"
+        ]
+    }
+}
+```
+
+#### 接口说明 3、获取活动参与成员列表
+
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/activity/{activity_id}/user](#)
+
+
+- **请求方式** 
+>**GET**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>|token|varchar|调用接口凭证|
 
 - **返回**
 > | 返回参数      |     参数类型 |   参数说明   |
@@ -473,49 +541,155 @@
 }
 ```
 
-#### 接口说明 2、获取活动
+#### 接口说明 4、创建活动
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/activity/{activity_id}/](#)
+> [https://xbbbbbb.cn/MeetU/api/activity/](#)
 
 
 - **请求方式** 
->**GET**
+>**POST**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>|**token**|varchar|调用接口凭证|
+>|title|varchar|标题
+>|content|varchar|内容|
+>|type|int|活动类型|
+>|people_number_limit|int|人数下限|
+>|people_number_up|int|人数上限|
+>|location|varchar|地点|
+>|entrie_time_start|datetime|报名起始时间|
+>|entrie_time_end|datetime|报名截止时间|
+>|date_time_start|datetime|活动开始时间|
+>|date_time_end|datetime|活动结束时间|
 
 - **返回**
 > | 返回参数      |     参数类型 |   参数说明   |
 >| :-------- | :--------| :------ |
 >| status_code|   Integer|  执行结果code|
->|total|Integer|返回活动总数|
->| user|   array|  用户列表|
+>|info|Varchar|信息|
+>|activity|array|所创建的活动|
 
 - **返回示例**
 >    
 ```json
 {
-    "status_code": "2000",
-    "info": "success",
-    "activities": {
-        "id": 1,
-        "title": "狼人杀",
-        "content": "晚上七点半千喜鹤开狼",
-        "creator": "陈旭斌",
-        "people_number_limit": 8,
-        "people_number_up": 12,
-        "people_number_join": 3,
-        "type": "说走就走",
-        "entrie_time_start": null,
-        "entrie_time_end": null,
-        "date_time_start": "2017-04-12 08:00:00",
-        "date_time_end": "2017-04-12 22:30:00",
-        "theme": "1",
-        "location": "重庆邮电大学千喜鹤",
-        "created_at": "2017-04-12 22:32:48",
-        "updated_at": "2017-04-12 22:32:51",
-        "tags": [
-            "说走就走",
-            "桌游"
-        ]
-    }
+  "status_code": "2000",
+  "info": "success",
+  "activity": {
+    "id": 11,
+    "title": "五一厦门三日游",
+    "content": "活动介绍活动介绍活动介绍",
+    "creator": {
+      "id": 1,
+      "name": "陈旭斌"
+    },
+    "people_number_limit": 20,
+    "people_number_up": 35,
+    "people_number_join": 0,
+    "type": "说走就走",
+    "entrie_time_start": null,
+    "entrie_time_end": null,
+    "date_time_start": null,
+    "date_time_end": null,
+    "location": "厦门鼓浪屿",
+    "created_at": "2017-04-20 18:26:00",
+    "updated_at": "2017-04-20 18:26:00",
+    "tags": []
+  }
+}
+```
+
+#### 接口说明 5、更新活动
+
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/activity/{activity_id}](#)
+
+
+- **请求方式** 
+>**PUT**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>|**token**|varchar|调用接口凭证|
+>|title|varchar|标题
+>|content|varchar|内容|
+>|type|int|活动类型|
+>|people_number_limit|int|人数下限|
+>|people_number_up|int|人数上限|
+>|location|varchar|地点|
+>|entrie_time_start|datetime|报名起始时间|
+>|entrie_time_end|datetime|报名截止时间|
+>|date_time_start|datetime|活动开始时间|
+>|date_time_end|datetime|活动结束时间|
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|Varchar|信息|
+>|activity|array|所创建的活动|
+
+- **返回示例**
+>    
+```json
+{
+  "status_code": "2000",
+  "info": "success",
+  "activity": {
+    "id": 11,
+    "title": "五一厦门三日游",
+    "content": "活动介绍活动介绍活动介绍",
+    "creator": {
+      "id": 1,
+      "name": "陈旭斌"
+    },
+    "people_number_limit": "25",
+    "people_number_up": "35",
+    "people_number_join": 0,
+    "type": "说走就走",
+    "entrie_time_start": null,
+    "entrie_time_end": null,
+    "date_time_start": null,
+    "date_time_end": null,
+    "location": "厦门鼓浪屿",
+    "created_at": "2017-04-20 18:26:00",
+    "updated_at": "2017-04-20 18:26:30",
+    "tags": []
+  }
+}
+```
+
+#### 接口说明 6、删除活动
+
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/activity/{activity_id}](#)
+
+
+- **请求方式** 
+>**DELETE**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>|**token**|varchar|调用接口凭证|
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|Varchar|信息|
+>|activity|array|所创建的活动|
+
+- **返回示例**
+>    
+```json
+{
+  "status_code": "2000",
+  "info": "删除成功",
+  "activity": 10
 }
 ```

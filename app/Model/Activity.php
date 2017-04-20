@@ -21,11 +21,16 @@ class Activity extends Model
         return $this->attributes['type']=Type::find($type)->type;
     }
 
-    public function getCreatorAttribute($user_id)
+//    public function getCreatorAttribute($user_id)
+//    {
+//        return $this->attributes['creator']=User::find($user_id)->name;
+//    }
+
+    public function creator()
     {
-        return $this->attributes['creator']=User::find($user_id)->name;
+        return $this->belongsTo('App\Model\User','creator')->select('id','name');
     }
-    
+
     public function users()
     {
         return $this->belongsToMany('App\Model\User')->select('user_id','name');

@@ -11,11 +11,11 @@
 |
 */
 
+
 Route::get('/', function () {
     return 'Welcome to my api';
     //return view('welcome');
 });
-
 
 $api = app('Dingo\Api\Routing\Router');
 $api->version('v1', function ($api) {
@@ -23,15 +23,12 @@ $api->version('v1', function ($api) {
         //注册登陆模块
         $api->post('user/login','AuthController@authenticate');
         $api->post('user/register','AuthController@register');
-
-        $api->resource('activity','ActivityController');
-        $api->resource('activity.user','ActivityUserController');
         //注册时获取地区学校
         $api->get('getProvinces','SchoolController@getProvinces');
         $api->get('getSchools/{province_id}','SchoolController@getSchools');
         $api->get('findSchool/{keywords}', 'SchoolController@findSchool');
-
-        $api->get('/Tag/{id}','ActivityController@showTagByActivity');
+        //刷新token
+        $api->post('user/upToken','AuthController@upToken');
 
         //需要token的私有接口
         $api->group(['middleware'=>'jwt.api.auth'],function ($api){
@@ -39,8 +36,9 @@ $api->version('v1', function ($api) {
             $api->post('user/info','UserController@info');
             //修改密码
             $api->post('user/changePwd','UserController@changePwd');
+            //文章操作
+            $api->resource('activity','ActivityController');
+            $api->resource('activity.user','ActivityUserController');
         });
-        //刷新token
-        $api->post('user/upToken','AuthController@upToken');
     });
 });
