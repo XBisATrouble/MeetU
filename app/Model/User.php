@@ -38,8 +38,17 @@ class User extends Authenticatable
     }
 
     public function belongsToSchool()
-
     {
         return $this->belongsTo('School', 'school_id');
+    }
+
+    public function activity()
+    {
+        return $this->belongsToMany('App\Model\Activity');
+    }
+
+    public function create_activity()
+    {
+        return $this->hasMany('App\Model\Activity','creator');
     }
 }

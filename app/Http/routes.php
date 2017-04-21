@@ -29,16 +29,19 @@ $api->version('v1', function ($api) {
         $api->get('findSchool/{keywords}', 'SchoolController@findSchool');
         //刷新token
         $api->post('user/upToken','AuthController@upToken');
-
         //需要token的私有接口
         $api->group(['middleware'=>'jwt.api.auth'],function ($api){
             //获取用户信息
             $api->post('user/info','UserController@info');
             //修改密码
             $api->post('user/changePwd','UserController@changePwd');
-            //文章操作
+            //参与活动操作
+            $api->get('activity/user_participated/{id}','ActivityParticipantsController@participated');
+            $api->get('activity/user_created/{id}','ActivityParticipantsController@created');
+            $api->delete('activity/{id}/participants','ActivityParticipantsController@destroy');
+            $api->resource('activity.participants','ActivityParticipantsController',array('only' => array('index','store')));
+            //活动操作
             $api->resource('activity','ActivityController');
-            $api->resource('activity.user','ActivityUserController');
         });
     });
 });

@@ -36,11 +36,21 @@ class BaseController extends Controller
 
     public function return_response_activity($status_code, $info, $activity='')
     {
-        return $this->response->array([
-            'status_code'=>$status_code,
-            'info'=> $info,
-            'activity'=>$activity,
-        ]);
+        if($activity=='')
+        {
+            return $this->response->array([
+                'status_code'=>$status_code,
+                'info'=> $info,
+            ]);
+        }
+        else
+        {
+            return $this->response->array([
+                'status_code'=>$status_code,
+                'info'=> $info,
+                'activity'=>$activity,
+            ]);
+        }
     }
 
     public function errorNotFound_Me($data)

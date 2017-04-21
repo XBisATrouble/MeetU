@@ -128,7 +128,7 @@
 >| :-------- | :--------| :------ |
 >| status_code|   Integer|  执行结果code|
 >|info|varchar|返回信息|
->| data|   array|  省份列表|
+>| data|object|  省份列表|
 >|province_id|int|省份id|
 >|province_name|varchar|省份名称|
 
@@ -165,7 +165,7 @@
 >| :-------- | :--------| :------ |
 >| status_code|   Integer|  执行结果code|
 >|info|varchar|返回信息|
->| data|   array|  学校列表|
+>| data|object|  学校列表|
 >|data:school_id|int|学校id|
 >|data:school_name|varchar|学校名称
 
@@ -202,7 +202,7 @@
 >| :-------- | :--------| :------ |
 >| success|   boolean|  请求成功与否|
 >| status_code|   Integer|  执行结果code|
->|data|array|返回信息|
+>|data|object|返回信息|
 >|character_value|int|人品值|
 >|marital_status|varchar|情感状态|
 >|verify|bool|是否通过实名验证，0为否，1为是|
@@ -249,9 +249,8 @@
 - **错误返回**
 > | 返回参数      |     参数类型 |   参数说明   |
 >| :-------- | :--------| :------ |
->| success|   boolean|  请求成功与否|
 >| status_code|   Integer|  状态码 |
->|msg|array|错误信息|
+>|info|varchar|错误信息|
 
 - **返回示例**
 >    
@@ -340,7 +339,7 @@
 >| :-------- | :--------| :------ |
 >| status_code|   Integer|  执行结果code|
 >|info|varchar|返回信息|
->|data|array|返回信息|
+>|data|object|返回信息|
 >|data:school_id|int|学校id|
 >|data:school_name|varchar|学校名称|
 
@@ -384,7 +383,7 @@
 >| status_code|   Integer|  执行结果code|
 >|info|Varchar|信息|
 >|total|Integer|返回活动总数|
->| activities|   Array|  活动列表|
+>| activities|   object|  活动列表|
 >|activities.people_number|Integer|参与上限人数|
 >|activities.people_number_join|Integer|已参与人数|
 
@@ -464,7 +463,7 @@
 >| :-------- | :--------| :------ |
 >| status_code|   Integer|  执行结果code|
 >|info|Integer|信息|
->|activity|array|活动信息数组|
+>|activity|object|活动信息数组|
 
 - **返回示例**
 >    
@@ -519,7 +518,7 @@
 >| status_code|   Integer|  执行结果code|
 >|info|Varchar|信息|
 >|total|Integer|返回活动总数|
->| user|   array|  用户列表|
+>| user|   object|  用户列表|
 
 - **返回示例**
 >    
@@ -570,7 +569,7 @@
 >| :-------- | :--------| :------ |
 >| status_code|   Integer|  执行结果code|
 >|info|Varchar|信息|
->|activity|array|所创建的活动|
+>|activity|object|所创建的活动|
 
 - **返回示例**
 >    
@@ -631,7 +630,7 @@
 >| :-------- | :--------| :------ |
 >| status_code|   Integer|  执行结果code|
 >|info|Varchar|信息|
->|activity|array|所创建的活动|
+>|activity|object|所创建的活动|
 
 - **返回示例**
 >    
@@ -682,7 +681,7 @@
 >| :-------- | :--------| :------ |
 >| status_code|   Integer|  执行结果code|
 >|info|Varchar|信息|
->|activity|array|所创建的活动|
+>|activity|object|所创建的活动|
 
 - **返回示例**
 >    
@@ -690,6 +689,170 @@
 {
   "status_code": "2000",
   "info": "删除成功",
-  "activity": 10
+}
+```
+
+#### 接口说明 7、参加活动
+
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/activity/{activity}/participants ](#)
+
+
+- **请求方式** 
+>**POST**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>|**token**|varchar|调用接口凭证|
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|Varchar|信息|
+
+- **返回示例**
+>    
+```json
+{
+  "status_code": "2000",
+  "info": "参加成功"
+}
+```
+
+#### 接口说明 8、退出活动
+
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/activity/{activity}/participants ](#)
+
+
+- **请求方式** 
+>**DELETE**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>|**token**|varchar|调用接口凭证|
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|Varchar|信息|
+
+- **返回示例**
+>    
+```json
+{
+  "status_code": "2000",
+  "info": "退出成功"
+}
+```
+
+#### 接口说明 9、获取用户参加的活动列表
+
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/activity/user_participated/{id}](#)
+
+
+- **请求方式** 
+>**GET**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>|**token**|varchar|调用接口凭证|
+>|id|int|用户id|
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|Varchar|信息|
+>|activity|object|活动|
+
+- **返回示例**
+>    
+```json
+{
+    "status_code": "2000",
+    "info": "success",
+    "total": 1,
+    "activity": [
+        {
+            "id": 1,
+            "title": "五一厦门三日游",
+            "content": "活动介绍活动介绍活动介绍",
+            "creator": 1,
+            "people_number_limit": 25,
+            "people_number_up": 35,
+            "people_number_join": 0,
+            "type": "说走就走",
+            "entrie_time_start": null,
+            "entrie_time_end": null,
+            "date_time_start": null,
+            "date_time_end": null,
+            "location": "厦门鼓浪屿",
+            "created_at": "2017-04-20 21:28:11",
+            "updated_at": "2017-04-21 00:00:51",
+            "tags": [
+                "说走就走",
+                "桌游"
+            ]
+        }
+    ]
+}
+```
+
+#### 接口说明 10、获取用户创建的活动列表
+
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/activity/user_created/{id}](#)
+
+
+- **请求方式** 
+>**GET**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>|**token**|varchar|调用接口凭证|
+>|id|int|用户id|
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|Varchar|信息|
+>|activity|object|活动|
+
+- **返回示例**
+>    
+```json
+{
+    "status_code": "2000",
+    "info": "success",
+    "total": 1,
+    "activity": [
+        {
+            "id": 2,
+            "title": "火锅",
+            "content": "活动介绍",
+            "creator": 20,
+            "people_number_limit": 2,
+            "people_number_up": 4,
+            "people_number_join": 1,
+            "type": "说走就走",
+            "entrie_time_start": null,
+            "entrie_time_end": null,
+            "date_time_start": "2017-04-18 18:10:51",
+            "date_time_end": "2017-04-18 19:30:56",
+            "location": "城门老火锅",
+            "created_at": "2017-04-18 09:11:36",
+            "updated_at": "2017-04-18 09:11:38",
+            "tags": []
+        }
+    ]
 }
 ```
