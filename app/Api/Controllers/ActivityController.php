@@ -28,7 +28,9 @@ class ActivityController extends BaseController
         $activities=Activity::with('creator')->get();
         $total=$activities->count();
         $activities_info=array();
+        $user_id=$this->getUser()->id;
         foreach ($activities as $activity) {
+            $activity['is_participated']=$this->is_participated($user_id,$activity->id);
             $activity=$this->insert_tags($activity);
             $activities_info[]=$activity;
         }
@@ -47,6 +49,7 @@ class ActivityController extends BaseController
         {
             return $this->return_response_activity('4004','未找到相关信息');
         }
+        $activity['is_participated']=$this->is_participated($this->getUser()->id,$id);
         $activity=$this->insert_tags($activity);
         return $this->return_response_activity('2000','success',$activity);
     }
@@ -70,7 +73,10 @@ class ActivityController extends BaseController
         {
             return $this->return_response_activity('5000','服务器出错');
         }
+        $user_id=$this->getUser()->id;
+        $activity->users()->attach($user_id);
         $activity=Activity::with('creator')->find($activity->id);
+        $activity['is_participated']=$this->is_participated($user_id,$activity->id);
         $activity=$this->insert_tags($activity);
         return $this->return_response_activity('2000','发布成功',$activity);
     }
@@ -102,6 +108,7 @@ class ActivityController extends BaseController
         {
             return $this->return_response_activity('5000','服务器出错');
         }
+        $activity['is_participated']=$this->is_participated($this->getUser()->id,$activity->id);
         $activity=$this->insert_tags($activity);
         return $this->return_response_activity('2000','更新成功',$activity);
     }

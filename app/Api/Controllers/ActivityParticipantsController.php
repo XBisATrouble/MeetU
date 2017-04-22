@@ -35,9 +35,9 @@ class ActivityParticipantsController extends BaseController
         {
             return $this->return_response_activity('4004','未找到相关信息');
         }
-        if(DB::table('activity_user')->where(['activity_id'=>$id,'user_id'=>$user_id])->get()!=null)
+        if($this->is_participated($user_id,$id))
         {
-            return $this->return_response_activity('4004','您已参加该活动');
+            return $this->return_response_activity('4040','您已参加该活动');
         }
 
         $activity->users()->attach($user_id);
@@ -52,16 +52,16 @@ class ActivityParticipantsController extends BaseController
         {
             return $this->return_response_activity('4004','未找到相关信息');
         }
-        if(DB::table('activity_user')->where(['activity_id'=>$id,'user_id'=>$user_id])->get()==null)
+        if($this->is_participated($user_id,$id))
         {
-            return $this->return_response_activity('4004','未找到相关信息');
+            return $this->return_response_activity('4040','您已参加该活动');
         }
 
         $activity->users()->detach($user_id);
         return $this->return_response_activity('2000','退出成功');
     }
 
-    public function participated($id)
+    public function participated($id)  //查询某用户参与了那些活动
     {
         $user=User::find($id);
         if($user==null)
@@ -71,6 +71,7 @@ class ActivityParticipantsController extends BaseController
         $activities=$user->activity;
         $activities_array=array();
         foreach ($activities as $activity) {
+            $activity['is_participated']=true;
             $activities_array[]=$this->insert_tags($activity);
         }
         $total=$user->activity->count();
@@ -78,11 +79,11 @@ class ActivityParticipantsController extends BaseController
             'status_code'=>'2000',
             'info'=>'success',
             'total'=>$total,
-            'activity'=>$activities_array,
+            'activities'=>$activities_array,
         ]);
     }
 
-    public function created($id)
+    public function created($id)   //查询某用户创建了那些活动
     {
         $user=User::find($id);
         if($user==null)
@@ -92,6 +93,7 @@ class ActivityParticipantsController extends BaseController
         $activities=$user->create_activity;
         $activities_array=array();
         foreach ($activities as $activity) {
+            $activity['is_participated']=true;
             $activities_array[]=$this->insert_tags($activity);
         }
         $total=$user->create_activity->count();

@@ -11,6 +11,7 @@ namespace App\Api\Controllers;
 
 use App\Http\Controllers\Controller;
 use Dingo\Api\Routing\Helpers;
+use Illuminate\Support\Facades\DB;
 use JWTAuth;
 
 class BaseController extends Controller
@@ -76,5 +77,13 @@ class BaseController extends Controller
         $activity=$activity->toArray();
         $activity['tags']=$tags_array;
         return $activity;
+    }
+
+    public function is_participated($user_id,$activity_id)
+    {
+        if(DB::table('activity_user')->where(['activity_id'=>$activity_id,'user_id'=>$user_id])->get()!=null)
+            return true;
+        else
+            return false;
     }
 }

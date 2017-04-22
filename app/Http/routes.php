@@ -21,6 +21,9 @@ $api = app('Dingo\Api\Routing\Router');
 $api->version('v1', function ($api) {
     $api->group(['namespace'=>'App\Api\Controllers'], function ($api) {
         //注册登陆模块
+        $api->get('/',function(){
+            return 'Welcome to my api';
+        });
         $api->post('user/login','AuthController@authenticate');
         $api->post('user/register','AuthController@register');
         //注册时获取地区学校
