@@ -2,7 +2,9 @@
 
 [TOC]
 
-## 说明(status_code)
+## 说明
+
+#### 1、状态码
 
 >| 状态编码      |     参数类型 |  
 >| :-------- | :--------|
@@ -20,9 +22,12 @@
 >|4022|手机号码出错|
 >|4023|身份证号码出错|
 >|4024|密码出错|
->|4025|必须上传图片|
 >|4030|无权操作|
+>|4040|您已参加该活动|
 >|5000|服务器发生错误| 
+
+#### 2、时间格式
+>yyyy-MM-dd HH:mm:ss, 如"2017-4-22 11:02:43"
 
 ## 用户模块
 
@@ -391,55 +396,57 @@
 >    
 ```json
 {
-    "status_code": "2000",
-    "info": "success",
-    "total": 2,
-    "activities": [
-        {
-            "id": 1,
-            "title": "狼人杀",
-            "content": "晚上七点半千喜鹤开狼",
-            "creator": {
-                "id": 1,
-                "name": "陈旭斌"
-            },
-            "people_number_limit": 8,
-            "people_number_up": 12,
-            "people_number_join": 3,
-            "type": "说走就走",
-            "entrie_time_start": null,
-            "entrie_time_end": null,
-            "date_time_start": "2017-04-12 08:00:00",
-            "date_time_end": "2017-04-12 22:30:00",
-            "location": "重庆邮电大学千喜鹤",
-            "created_at": "2017-04-12 22:32:48",
-            "updated_at": "2017-04-12 22:32:51",
-            "tags": [
-                "说走就走",
-                "桌游"
-            ]
-        },
-        {
-            "id": 2,
-            "title": "火锅",
-            "content": "活动介绍",
-            "creator": {
-                "id": 18,
-                "name": "张三"
-            },
-            "people_number_limit": 2,
-            "people_number_up": 4,
-            "people_number_join": 1,
-            "type": "说走就走",
-            "entrie_time_start": null,
-            "entrie_time_end": null,
-            "date_time_start": "2017-04-18 18:10:51",
-            "date_time_end": "2017-04-18 19:30:56",
-            "location": "城门老火锅",
-            "created_at": "2017-04-18 09:11:36",
-            "updated_at": "2017-04-18 09:11:38",
-            "tags": []
-        }
+  "status_code": "2000",
+  "info": "success",
+  "total": 4,
+  "activities": [
+    {
+      "id": 1,
+      "title": "五一厦门三日游",
+      "content": "活动介绍活动介绍活动介绍",
+      "creator": {
+        "id": 1,
+        "name": "陈旭斌"
+      },
+      "people_number_limit": 25,
+      "people_number_up": 35,
+      "people_number_join": 0,
+      "type": "说走就走",
+      "entrie_time_start": null,
+      "entrie_time_end": null,
+      "date_time_start": null,
+      "date_time_end": null,
+      "location": "厦门鼓浪屿",
+      "created_at": "2017-04-20 21:28:11",
+      "updated_at": "2017-04-21 00:00:51",
+      "tags": [
+        "电影",
+        "桌游"
+      ],
+      "is_participated": true
+    },
+    {
+      "id": 2,
+      "title": "火锅",
+      "content": "活动介绍",
+      "creator": {
+        "id": 20,
+        "name": "李四"
+      },
+      "people_number_limit": 2,
+      "people_number_up": 4,
+      "people_number_join": 1,
+      "type": "说走就走",
+      "entrie_time_start": null,
+      "entrie_time_end": null,
+      "date_time_start": "2017-04-18 18:10:51",
+      "date_time_end": "2017-04-18 19:30:56",
+      "location": "城门老火锅",
+      "created_at": "2017-04-18 09:11:36",
+      "updated_at": "2017-04-18 09:11:38",
+      "tags": [],
+      "is_participated": true
+    },
     ]
 }
 ```
@@ -464,37 +471,39 @@
 >| status_code|   Integer|  执行结果code|
 >|info|Integer|信息|
 >|activity|object|活动信息数组|
+>|is_participated|bool|该授权用户是否参与该活动|
 
 - **返回示例**
 >    
 ```json
 {
-    "status_code": "2000",
-    "info": "success",
-    "activity": {
-        "id": 1,
-        "title": "狼人杀",
-        "content": "晚上七点半千喜鹤开狼",
-        "creator": {
-            "id": 1,
-            "name": "陈旭斌"
-        },
-        "people_number_limit": 8,
-        "people_number_up": 12,
-        "people_number_join": 3,
-        "type": "说走就走",
-        "entrie_time_start": null,
-        "entrie_time_end": null,
-        "date_time_start": "2017-04-12 08:00:00",
-        "date_time_end": "2017-04-12 22:30:00",
-        "location": "重庆邮电大学千喜鹤",
-        "created_at": "2017-04-12 22:32:48",
-        "updated_at": "2017-04-12 22:32:51",
-        "tags": [
-            "说走就走",
-            "桌游"
-        ]
-    }
+  "status_code": "2000",
+  "info": "success",
+  "activity": {
+    "id": 1,
+    "title": "五一厦门三日游",
+    "content": "活动介绍活动介绍活动介绍",
+    "creator": {
+      "id": 1,
+      "name": "陈旭斌"
+    },
+    "people_number_limit": 25,
+    "people_number_up": 35,
+    "people_number_join": 0,
+    "type": "说走就走",
+    "entrie_time_start": null,
+    "entrie_time_end": null,
+    "date_time_start": null,
+    "date_time_end": null,
+    "location": "厦门鼓浪屿",
+    "created_at": "2017-04-20 21:28:11",
+    "updated_at": "2017-04-21 00:00:51",
+    "tags": [
+      "电影",
+      "桌游"
+    ],
+    "is_participated": true
+  }
 }
 ```
 
@@ -606,6 +615,7 @@
 - **请求URL**
 > [https://xbbbbbb.cn/MeetU/api/activity/{activity_id}](#)
 
+>- **注意：只能更新自己创建的活动**
 
 - **请求方式** 
 >**PUT**
@@ -667,6 +677,7 @@
 - **请求URL**
 > [https://xbbbbbb.cn/MeetU/api/activity/{activity_id}](#)
 
+>- **注意：只能删除自己创建的活动**
 
 - **请求方式** 
 >**DELETE**
