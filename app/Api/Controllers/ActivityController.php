@@ -11,18 +11,13 @@ namespace App\Api\Controllers;
 
 use App\Model\Activity;
 use App\Model\Tag;
+use App\Model\Type;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use JWTAuth;
 
 class ActivityController extends BaseController
 {
-    public function create()
-    {
-        $tags=Tag::lists('name','id');
-        return compact('tags');
-    }
-
     public function index()
     {
         $activities=Activity::with('creator')->get();
@@ -38,13 +33,13 @@ class ActivityController extends BaseController
             'status_code'=>'2000',
             'info'=>'success',
             'total'=>$total,
-            'activities'=>$activities_info,
+            'data'=>$activities_info,
         ]);
     }
 
     public function show($id)
     {
-        $activity=Activity::with('creator')->find($id);
+        $activity=Activity::with('creator','tags')->find($id);
         if($activity==null)
         {
             return $this->return_response_activity('4004','未找到相关信息');
@@ -132,5 +127,34 @@ class ActivityController extends BaseController
         {
             return $this->return_response_activity('2000','删除成功');
         }
+    }
+
+    public function edit($id)
+    {
+        $activity=Activity::with('creator')->find($id);
+        if($activity==null)
+        {
+            return $this->return_response_activity('4004','未找到相关信息');
+        }
+        $activity['is_participated']=$this->is_participated($this->getUser()->id,$id);
+        $activity=$this->insert_tags($activity);
+        return $this->return_response_activity('2000','success',$activity);
+    }
+
+    public function create()
+    {
+//        $tags=Tag::lists('name','id');
+//        $type=Type::lists('type','id');
+//        $result[]=compact('tags');
+//        $result[]=compact('type');
+//        return $result;
+        $total=Tag::count();
+        $tags=Tag::all();
+        return response()->json([
+            'status_code'=>'2000',
+            'info'=>'success',
+            'total'=>$total,
+            'data'=>$tags,
+        ]);
     }
 }

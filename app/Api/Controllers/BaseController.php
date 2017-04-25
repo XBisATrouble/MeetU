@@ -49,7 +49,26 @@ class BaseController extends Controller
             return $this->response->array([
                 'status_code'=>$status_code,
                 'info'=> $info,
-                'activity'=>$activity,
+                'data'=>$activity,
+            ]);
+        }
+    }
+
+    public function return_response_user($status_code, $info, $users='')
+    {
+        if($users=='')
+        {
+            return $this->response->array([
+                'status_code'=>$status_code,
+                'info'=> $info,
+            ]);
+        }
+        else
+        {
+            return $this->response->array([
+                'status_code'=>$status_code,
+                'info'=> $info,
+                'data'=>$users,
             ]);
         }
     }
@@ -72,7 +91,7 @@ class BaseController extends Controller
         $tags_array=array();
         $tags=$activity->tags;
         foreach ($tags as $tag) {
-            $tags_array[]=$tag->name;
+            $tags_array[$tag->id]=$tag->name;
         }
         $activity=$activity->toArray();
         $activity['tags']=$tags_array;

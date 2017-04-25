@@ -4,7 +4,7 @@ namespace App\Model;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class UserMin extends Authenticatable
 {
     /**
      * The attributes that are mass assignable.
@@ -12,20 +12,15 @@ class User extends Authenticatable
      * @var array
      */
     protected $table="users";
-
-    protected $appends = ['school'];
-
-    protected $fillable = [
-        'phone','password','nickname','gender','description','name','idcard','school_id','student_id','QQ','WeChat','WeiBo','BaiduPostBar','FaceBook','Instagram','Twitter','verify_photo','verify_photo_2'
-    ];
-
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
+    protected $appends = ['school'];
+
     protected $hidden = [
-        'password', 'remember_token','updated_at','created_at','idcard','pivot','school_id','student_id'
+        'password', 'remember_token','updated_at','created_at','idcard','pivot','QQ','WeChat','phone','WeiBo','FaceBook','marital_status','verify_photo_2','verify_photo','name','verify','Twitter','Instagram','student_id','school_id'
     ];
 
     protected $casts = [
@@ -39,7 +34,7 @@ class User extends Authenticatable
         return $gender[$value];
     }
 
-    public function belongsToSchool()
+    public function school()
     {
         return $this->belongsTo('App\Model\School', 'school_id');
     }
@@ -58,5 +53,15 @@ class User extends Authenticatable
     {
         $school=School::find($this->school_id);
         return $school['school_name'];
+    }
+
+    public function scopeSince($query,$since)
+    {
+        return $query->where('id','>=',$since);
+    }
+
+    public function scopeNickname($query,$nickname,$start,$count)
+    {
+        return $query->where('nickname','like', '%'.$nickname.'%')->offset($start)->limit($count)->get();
     }
 }

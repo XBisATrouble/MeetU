@@ -10,7 +10,6 @@ namespace App\Api\Controllers;
 
 use App\Model\Activity;
 use App\Model\User;
-use Illuminate\Support\Facades\DB;
 
 class ActivityParticipantsController extends BaseController
 {
@@ -40,6 +39,8 @@ class ActivityParticipantsController extends BaseController
             return $this->return_response_activity('4040','您已参加该活动');
         }
 
+        $activity->people_number_join+=1;
+        $activity->save();
         $activity->users()->attach($user_id);
         return $this->return_response_activity('2000','参加成功');
     }
