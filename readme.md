@@ -24,6 +24,7 @@
 >|4024|密码出错|
 >|4030|无权操作|
 >|4040|您已参加该活动|
+>|4041|用户关注出错|
 >|5000|服务器发生错误| 
 
 #### 2、时间格式
@@ -31,7 +32,7 @@
 
 ## 用户模块
 
-### auth模块 
+### 用户授权模块 
 * **对token的一些授权操作**
 
 #### 接口说明 1、登陆
@@ -455,7 +456,7 @@
 #### 接口说明 7、获取省份列表
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/getProvinces](#)
+> [https://xbbbbbb.cn/MeetU/api/provinces](#)
 
 
 - **请求方式** 
@@ -487,7 +488,7 @@
 #### 接口说明 8、获取某省份学校列表
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/getSchools ](#)
+> [https://xbbbbbb.cn/MeetU/api/schools ](#)
 
 
 - **请求方式** 
@@ -520,111 +521,6 @@
     },
 }
 ```
-#！！！！！search模块
-
-#### 接口说明 9、模糊查询学校
-
-- **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/findSchool/{keywords}/](#)
-
-- **请求示例**
-> [https://xbbbbbb.cn/MeetU/api/findSchool/重庆](#)
-
-- **请求方式** 
->**GET**
-
-- **返回**
-> | 返回参数      |     参数类型 |   参数说明   |
->| :-------- | :--------| :------ |
->| status_code|   Integer|  执行结果code|
->|info|varchar|返回信息|
->|data|object|返回信息|
->|data:school_id|int|学校id|
->|data:school_name|varchar|学校名称|
-
-- **返回示例**
->    
-```json
-{
-  "status_code": "2000",
-  "info": "success",
-  "data": [
-    {
-      "school_id": 3,
-      "school_name": "北京交通大学"
-    },
-    {
-      "school_id": 4,
-      "school_name": "北京航空航天大学"
-    },
-}
-```
-
-#### 接口说明 10、用户信息查询
-
-- **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/search/user](#)
-
-- **请求方式** 
->**GET**
-
-- **请求参数**
-> | 请求参数      |     参数类型 |   参数说明   |
->| :-------- | :--------| :------ |
->|q|varchar|全文检索的关键词|
->|start|int|起始元素|
->|count|int|返回结果的数量，默认为20|
-
-- **返回**
-> | 返回参数      |     参数类型 |   参数说明   |
->| :-------- | :--------| :------ |
->| status_code|   Integer|  执行结果code|
->|info|varchar|返回信息|
->|data|object|用户迷你信息|
-
-- **返回示例**
->    
-```json
-{
-    "status_code": "2000",
-    "info": "success",
-    "data": [
-        {
-            "id": 4,
-            "nickname": "xbb",
-            "age": null,
-            "character_value": 50,
-            "gender": "女",
-            "grade": null,
-            "description": null,
-            "school": "中国矿业大学(北京)"
-        },
-        {
-            "id": 6,
-            "nickname": "xbb",
-            "age": null,
-            "character_value": 50,
-            "gender": "女",
-            "grade": null,
-            "description": null,
-            "school": null
-        },
-        {
-            "id": 7,
-            "nickname": "xbb",
-            "age": null,
-            "character_value": 50,
-            "gender": "女",
-            "grade": null,
-            "description": null,
-            "school": "中国人民大学"
-        }
-    ]
-}
-```
-
-# ！！！！！
-
 
 ## 活动模块
 
@@ -1128,6 +1024,119 @@
 }
 ```
 
+## 搜索模块
+
+#### 接口说明 1、模糊查询学校
+
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/search/schools](#)
+
+- **请求方式** 
+>**GET**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>|q|varchar|全文检索的关键词|
+>|start|int|起始元素|
+>|count|int|返回结果的数量，默认为20|
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|varchar|返回信息|
+>|total|int|查询结果个数|
+>|data|object|返回信息|
+>|data:school_id|int|学校id|
+>|data:school_name|varchar|学校名称|
+
+- **返回示例**
+>    
+```json
+{
+    "status_code": "2000",
+    "info": "success",
+    "total": 3,
+    "data": [
+        {
+            "school_id": 1,
+            "school_name": "中国人民大学"
+        },
+        {
+            "school_id": 22,
+            "school_name": "中国人民公安大学"
+        },
+        {
+            "school_id": 167,
+            "school_name": "中国人民武装警察部队学院"
+        }
+    ]
+}
+```
+
+#### 接口说明 2、用户信息查询
+
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/search/users](#)
+
+- **请求方式** 
+>**GET**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>|q|varchar|全文检索的关键词|
+>|start|int|起始元素|
+>|count|int|返回结果的数量，默认为20|
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|varchar|返回信息|
+>|data|object|用户迷你信息|
+
+- **返回示例**
+>    
+```json
+{
+    "status_code": "2000",
+    "info": "success",
+    "data": [
+        {
+            "id": 4,
+            "nickname": "xbb",
+            "age": null,
+            "character_value": 50,
+            "gender": "女",
+            "grade": null,
+            "description": null,
+            "school": "中国矿业大学(北京)"
+        },
+        {
+            "id": 6,
+            "nickname": "xbb",
+            "age": null,
+            "character_value": 50,
+            "gender": "女",
+            "grade": null,
+            "description": null,
+            "school": null
+        },
+        {
+            "id": 7,
+            "nickname": "xbb",
+            "age": null,
+            "character_value": 50,
+            "gender": "女",
+            "grade": null,
+            "description": null,
+            "school": "中国人民大学"
+        }
+    ]
+}
+```
 
 ## TODO AND ISSUE
 #### 1. 创建活动时标签的格式

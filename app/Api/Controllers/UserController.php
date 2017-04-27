@@ -13,19 +13,6 @@ use JWTAuth;
 
 class UserController extends BaseController
 {
-    public function serach()
-    {
-        $q= isset($_GET['q'])?trim($_GET['q']):null;
-        $start= isset($_GET['start'])?trim($_GET['start']):0;
-        $count= isset($_GET['count'])?trim($_GET['count']):20;
-        if($q==null)
-        {
-            return $this->return_response_user('4003','请求参数出错');
-        }
-        $users=UserMin::nickname($q,$start,$count);
-        return $this->return_response_user('2000','success',$users);
-    }
-
     public function index()
     {
         if (! $user = JWTAuth::parseToken()->authenticate()) {
@@ -39,6 +26,29 @@ class UserController extends BaseController
         });
         $user_array=$user->toArray(); //将结果集转化为数组
         return $this->return_response_user('2000','success',$user_array);
+    }
+
+    public function show($id)
+    {
+        $user_me=UserMin::find($this->getUser()->id);
+        if ($user_me->isFollowEachOther($id))
+            $user=UserMin::find($id);
+        else
+        {
+            $user=UserMin::select('id','nickname','age','character_value','gender','description','school_id')->find($id);
+        }
+        $user = collect($user)->map(function ($item) {
+            if ($item==null) {
+                $item = "";
+            }
+            return $item;
+        });
+        if ($user->isEmpty())
+        {
+            return $this->return_response_user('4004','未找到相关信息');
+        }
+
+        return $this->return_response_user('2000','success',$user);
     }
 
     public function update()
@@ -120,5 +130,41 @@ class UserController extends BaseController
                 'info' => '服务器出错',
             ]);
         }
+    }
+
+    public function followers()
+    {
+        $user=UserMin::find($this->getUser()->id);
+        return $user->followers;
+    }
+
+    public function following()
+    {
+        $user=UserMin::find($this->getUser()->id);
+        return $user->followings;
+    }
+
+    public function follow($user_id)
+    {
+        if($this->isFollow($this->getUser()->id,$user_id))
+        {
+            return $this->return_response_activity('4041','您已经关注他');
+        }
+        $user=UserMin::find($this->getUser()->id);
+        $user->follow($user_id);
+
+        return $this->return_response_activity('2000','关注成功');
+    }
+
+    public function unfollow($user_id)
+    {
+        if(!$this->isFollow($this->getUser()->id,$user_id))
+        {
+            return $this->return_response_activity('4041','您还未关注他');
+        }
+        $user=UserMin::find($this->getUser()->id);
+        $user->unfollow($user_id);
+
+        return $this->return_response_activity('2000','取关成功');
     }
 }

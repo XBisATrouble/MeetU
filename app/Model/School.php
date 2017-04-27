@@ -30,4 +30,9 @@ class School extends Model
         }
         return $array;
     }
+
+    public function scopeName($query,$keywords,$start,$count)
+    {
+        return $query->where('school_name','like', '%'.$keywords.'%')->offset($start)->limit($count)->get();
+    }
 }

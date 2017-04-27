@@ -17,18 +17,35 @@ class UsersController extends BaseController
     public function index()
     {
         $since= isset($_GET['since'])?$_GET['since']:0;
-        $users=UserMin::since($since)->take('50')->get();
-        if ($users->isEmpty())
+        $users=UserMin::since($since)->select('id','nickname','age','character_value','gender','grade','description','school_id')->take('50')->get();
+
+        $user_array=array();
+        foreach ($users as $user) {
+            $user_array[] = collect($user)->map(function ($item) {
+                if ($item==null) {
+                    $item = "";
+                }
+                return $item;
+            });
+        }
+
+        if ($user_array==null)
         {
             return $this->return_response_user('4004','未找到相关信息');
         }
-        return $this->return_response_user('2000','success',$users);
+        return $this->return_response_user('2000','success',$user_array);
     }
 
     public function show($id)
     {
-        $user=UserMin::find($id);
-        if ($user==null)
+        $user=UserMin::select('id','nickname','age','character_value','gender','grade','description','school_id')->find($id);
+        $user = collect($user)->map(function ($item) {
+            if ($item==null) {
+                $item = "";
+            }
+            return $item;
+        });
+        if ($user->isEmpty())
         {
             return $this->return_response_user('4004','未找到相关信息');
         }
@@ -139,5 +156,17 @@ class UsersController extends BaseController
         } else {
             return $this->return_response('5000','服务器出错!');
         }
+    }
+
+    public function followers($user_id)
+    {
+        $user=UserMin::find($user_id);
+        return $user->followers;
+    }
+
+    public function following($user_id)
+    {
+        $user=UserMin::find($user_id);
+        return $user->followings;
     }
 }

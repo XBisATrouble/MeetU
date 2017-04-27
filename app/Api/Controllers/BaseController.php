@@ -10,6 +10,7 @@ namespace App\Api\Controllers;
 
 
 use App\Http\Controllers\Controller;
+use App\Model\UserMin;
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Support\Facades\DB;
 use JWTAuth;
@@ -35,7 +36,7 @@ class BaseController extends Controller
         ]);
     }
 
-    public function return_response_activity($status_code, $info, $activity='')
+    public function return_response_activity($status_code, $info, $activity='',$total='')
     {
         if($activity=='')
         {
@@ -46,15 +47,27 @@ class BaseController extends Controller
         }
         else
         {
-            return $this->response->array([
-                'status_code'=>$status_code,
-                'info'=> $info,
-                'data'=>$activity,
-            ]);
+            if($total=='')
+            {
+                return $this->response->array([
+                    'status_code'=>$status_code,
+                    'info'=> $info,
+                    'data'=>$activity,
+                ]);
+            }
+            else
+            {
+                return $this->response->array([
+                    'status_code'=>$status_code,
+                    'info'=> $info,
+                    'total'=>$total,
+                    'data'=>$activity,
+                ]);
+            }
         }
     }
 
-    public function return_response_user($status_code, $info, $users='')
+    public function return_response_user($status_code, $info, $users='',$total='')
     {
         if($users=='')
         {
@@ -65,11 +78,23 @@ class BaseController extends Controller
         }
         else
         {
-            return $this->response->array([
-                'status_code'=>$status_code,
-                'info'=> $info,
-                'data'=>$users,
-            ]);
+            if($total=='')
+            {
+                return $this->response->array([
+                    'status_code'=>$status_code,
+                    'info'=> $info,
+                    'data'=>$users,
+                ]);
+            }
+            else
+            {
+                return $this->response->array([
+                    'status_code'=>$status_code,
+                    'info'=> $info,
+                    'total'=>$total,
+                    'data'=>$users,
+                ]);
+            }
         }
     }
 
@@ -98,11 +123,16 @@ class BaseController extends Controller
         return $activity;
     }
 
-    public function is_participated($user_id,$activity_id)
+    public function isParticipated($user_id,$activity_id)
     {
         if(DB::table('activity_user')->where(['activity_id'=>$activity_id,'user_id'=>$user_id])->get()!=null)
             return true;
         else
             return false;
+    }
+
+    public function isFollow($user_id,$follower_id)
+    {
+        return UserMin::find($user_id)->isFollowing($follower_id);
     }
 }

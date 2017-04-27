@@ -20,7 +20,7 @@ class UserMin extends Authenticatable
     protected $appends = ['school'];
 
     protected $hidden = [
-        'password', 'remember_token','updated_at','created_at','idcard','pivot','QQ','WeChat','phone','WeiBo','FaceBook','marital_status','verify_photo_2','verify_photo','name','verify','Twitter','Instagram','student_id','school_id'
+        'password', 'remember_token','updated_at','created_at','idcard','pivot','phone','marital_status','verify_photo_2','verify_photo','name','verify','student_id','school_id'
     ];
 
     protected $casts = [
@@ -63,5 +63,46 @@ class UserMin extends Authenticatable
     public function scopeNickname($query,$nickname,$start,$count)
     {
         return $query->where('nickname','like', '%'.$nickname.'%')->offset($start)->limit($count)->get();
+    }
+
+
+    //获取所有我关注的人
+    public function followings()
+    {
+        return $this->belongsToMany(self::Class, 'followers', 'user_id', 'follower_id');
+    }
+
+    //获取所有关注我的人
+    public function followers()
+    {
+        return $this->belongsToMany(self::Class, 'followers', 'follower_id', 'user_id');
+    }
+
+    //关注用户
+    public function follow($user_id)
+    {
+        $this->followings()->attach($user_id);
+    }
+
+    //取消关注
+    public function unfollow($user_id)
+    {
+        $this->followings()->detach($user_id);
+    }
+
+    //我是否关注了某个用户
+    public function isFollowing($user_id)
+    {
+        return $this->followings->contains($user_id);
+    }
+
+    public function isFollowed($user_id)
+    {
+        return $this->followers->contains($user_id);
+    }
+
+    public function isFollowEachOther($user_id)
+    {
+        return $this->isFollowing($user_id) && $this->isFollowed($user_id);
     }
 }
