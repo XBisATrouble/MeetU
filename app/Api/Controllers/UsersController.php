@@ -17,7 +17,7 @@ class UsersController extends BaseController
     public function index()
     {
         $since= isset($_GET['since'])?$_GET['since']:0;
-        $users=UserMin::since($since)->select('id','nickname','age','character_value','gender','grade','description','school_id')->take('50')->get();
+        $users=UserMin::since($since)->select('id','nickname','age','character_value','gender','grade','followers','description','school_id')->take('50')->get();
 
         $user_array=array();
         foreach ($users as $user) {
@@ -38,7 +38,7 @@ class UsersController extends BaseController
 
     public function show($id)
     {
-        $user=UserMin::select('id','nickname','age','character_value','gender','grade','description','school_id')->find($id);
+        $user=UserMin::select('id','nickname','age','character_value','gender','followers','grade','description','school_id')->find($id);
         $user = collect($user)->map(function ($item) {
             if ($item==null) {
                 $item = "";
@@ -142,7 +142,8 @@ class UsersController extends BaseController
 
         $res = User::create($newUser);
         // 创建用户成功
-        if ($res) {
+        if ($res)
+        {
             $credentials = ['phone'=>$payload['phone'],'password'=>$payload['password']];
 
             $token = JWTAuth::attempt($credentials);
@@ -153,20 +154,44 @@ class UsersController extends BaseController
                 'user'=>$res->toArray(),
             ]);
             //return $this->return_response('2001','注册成功',$token);
-        } else {
+        }
+        else
+        {
             return $this->return_response('5000','服务器出错!');
         }
     }
 
     public function followers($user_id)
     {
-        $user=UserMin::find($user_id);
-        return $user->followers;
+        if($user=UserMin::find($user_id)->followers)
+        {
+            $total=$user->count();
+            if ($total==0)
+            {
+                return $this->return_response_user('2004','未找到相关信息');
+            }
+            return $this->return_response_user('2000','success',$user,$total);
+        }
+        else
+        {
+            return $this->return_response('5000','服务器出错!');
+        }
     }
 
     public function following($user_id)
     {
-        $user=UserMin::find($user_id);
-        return $user->followings;
+        if($user=UserMin::find($user_id)->followings)
+        {
+            $total=$user->count();
+            if ($total==0)
+            {
+                return $this->return_response_user('2004','未找到相关信息');
+            }
+            return $this->return_response_user('2000','success',$user,$total);
+        }
+        else
+        {
+            return $this->return_response('5000','服务器出错!');
+        }
     }
 }

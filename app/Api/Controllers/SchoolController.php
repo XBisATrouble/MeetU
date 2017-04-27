@@ -49,21 +49,4 @@ class SchoolController extends BaseController
             return $this->errorNotFound_Me('未找到相关信息');
         }
     }
-//    public function findSchool($keywords)
-//    {
-//        $school=School::where('school_name','like', '%'.$keywords.'%')->get()->toArray();
-//
-//        if (!empty($school)){
-//            return $this->response->array([
-//                'status_code'=>'2000',
-//                'info'=>'success',
-//                'data'=>$school
-//            ]);
-//        }else{
-//            return $this->response->array([
-//                'status_code'=>'404',
-//                'info'=>'未搜到相关信息',
-//            ]);
-//        }
-//    }
 }

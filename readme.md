@@ -12,6 +12,7 @@
 >|2001|创建用户成功|
 >|2002|修改用户信息成功|
 >|2003|修改活动信息成功|
+>|2004|返回结果为空|
 >|4000|客户端请求错误|
 >|4001|用户名或密码错误|
 >|4003|请求参数出错|
@@ -130,7 +131,7 @@
 ### users模块
 * **非私有信息，均返回简化版用户信息，无需授权即可访问**
 
-#### 接口说明 4、获取所有用户列表
+#### 接口说明 1、获取所有用户列表
 
 - **请求URL**
 > [https://xbbbbbb.cn/MeetU/api/users](#)
@@ -171,7 +172,7 @@
 }
 ```
 
-#### 接口说明 5、获取单个用户
+#### 接口说明 2、获取单个用户
 - **请求URL**
 > [https://xbbbbbb.cn/MeetU/api/users/{user_id}](#)
 
@@ -204,7 +205,7 @@
 }
 ```
 
-#### 接口说明 6、注册
+#### 接口说明 3、注册
 
 - **请求URL**
 > [https://xbbbbbb.cn/MeetU/api/users ](#)
@@ -278,11 +279,102 @@
 }
 ```
 
+#### 接口说明 4、获取关注某个用户的人
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/users/{user_id}/followers](#)
+
+- **请求方式** 
+>**GET**
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|varchar|返回信息|
+>|total|int|返回结果数|
+>|data|object|结果用户对象|
+
+- **返回示例**
+>    
+```json
+{
+    "status_code": "2000",
+    "info": "success",
+    "total": 2,
+    "data": [
+        {
+            "id": 8,
+            "nickname": "Tom",
+            "age": null,
+            "character_value": 50,
+            "gender": "男",
+            "description": null,
+            "school": "首都经济贸易大学"
+        },
+        {
+            "id": 1,
+            "nickname": "XB",
+            "age": 19,
+            "character_value": 50,
+            "gender": "男",
+            "description": null,
+            "school": "重庆邮电大学"
+        }
+    ]
+}
+```
+
+#### 接口说明 5、获取某个用户关注的人
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/users/{user_id}/following](#)
+
+- **请求方式** 
+>**GET**
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|varchar|返回信息|
+>|total|int|返回结果数|
+>|data|object|结果用户对象|
+
+- **返回示例**
+>    
+```json
+{
+    "status_code": "2000",
+    "info": "success",
+    "total": 2,
+    "data": [
+        {
+            "id": 1,
+            "nickname": "XB",
+            "age": 19,
+            "character_value": 50,
+            "gender": "男",
+            "description": null,
+            "school": "重庆邮电大学"
+        },
+        {
+            "id": 3,
+            "nickname": "kubiXB",
+            "age": null,
+            "character_value": 50,
+            "gender": "男",
+            "description": null,
+            "school": "天津商业大学"
+        }
+    ]
+}
+```
+
+
 ### user模块
 * **授权后才能使用，和用户的个人私有操作有关**
 
 
-#### 接口说明 7、获取认证用户个人信息
+#### 接口说明 1、获取认证用户个人信息
 
 - **请求URL**
 > [https://xbbbbbb.cn/MeetU/api/user](#)
@@ -359,7 +451,7 @@
 }
 ```
 
-#### 接口说明 8、修改认证用户密码
+#### 接口说明 2、修改认证用户密码
 
 - **请求URL**
 > [https://xbbbbbb.cn/MeetU/api/user/changePwd](#)
@@ -389,7 +481,7 @@
 }
 ```
 
-#### 接口说明 6、更新用户信息
+#### 接口说明 3、更新用户信息
 
 - **请求URL**
 > [https://xbbbbbb.cn/MeetU/api/user ](#)
@@ -400,6 +492,7 @@
 - **请求参数**
 >| 请求参数      |     参数类型 |   参数说明   |
 >| :-------- | :--------| :------ |
+>|token|varchar|调用接口凭证|
 >|nickname|varchar,**不可为空**|昵称|
 >|gender|int，**不可为空，0为女 1为男** |性别|
 >|description| varchar，选填|个人描述|
@@ -453,43 +546,9 @@
 }
 ```
 
-#### 接口说明 7、获取省份列表
-
+#### 接口说明 4、授权用户获取单个用户
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/provinces](#)
-
-
-- **请求方式** 
->**GET**
-
-- **返回**
-> | 返回参数      |     参数类型 |   参数说明   |
->| :-------- | :--------| :------ |
->| status_code|   Integer|  执行结果code|
->|info|varchar|返回信息|
->| data|object|  省份列表|
->|province_id|int|省份id|
->|province_name|varchar|省份名称|
-
-- **返回示例**
->    
-```json
-{
-  "status_code": "2000",
-  "info": "success",
-  "data": [
-    {
-      "province_id": 1,
-      "province_name": "北京"
-    },
-}
-```
-
-#### 接口说明 8、获取某省份学校列表
-
-- **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/schools ](#)
-
+> [https://xbbbbbb.cn/MeetU/api/user/{user_id}](#)
 
 - **请求方式** 
 >**GET**
@@ -497,30 +556,186 @@
 - **请求参数**
 > | 请求参数      |     参数类型 |   参数说明   |
 >| :-------- | :--------| :------ |
->| province_id|   int| 省份id|
+>|token|varchar|调用接口凭证|
 
 - **返回**
 > | 返回参数      |     参数类型 |   参数说明   |
 >| :-------- | :--------| :------ |
 >| status_code|   Integer|  执行结果code|
 >|info|varchar|返回信息|
->| data|object|  学校列表|
->|data:school_id|int|学校id|
->|data:school_name|varchar|学校名称
+>|data|object|结果用户对象|
+>|data.QQ\WeiBo...|varchar|用户的联系方式，若该授权用户和此用户互相关注则显示|
 
 - **返回示例**
 >    
 ```json
 {
-  "status_code": "2000",
-  "info": "success",
-  "data": [
-    {
-      "school_id": 2031,
-      "school_name": "重庆大学"
-    },
+    "status_code": "2000",
+    "info": "success",
+    "data": {
+        "id": 1,
+        "nickname": "XB",
+        "age": 19,
+        "character_value": 50,
+        "gender": "男",
+        "description": "",
+        "school": "重庆邮电大学"
+    }
 }
 ```
+
+#### 接口说明 5、获取授权关注他人
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/user/following](#)
+
+- **请求方式** 
+>**POST**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>|token|varchar|调用接口凭证|
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|varchar|返回信息|
+
+- **返回示例**
+>    
+```json
+{
+  "status_code": "4041",
+  "info": "关注成功"
+}
+```
+
+#### 接口说明 6、获取授权取关他人
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/user/following](#)
+
+- **请求方式** 
+>**DELETE**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>|token|varchar|调用接口凭证|
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|varchar|返回信息|
+
+- **返回示例**
+>    
+```json
+{
+  "status_code": "4041",
+  "info": "取关成功"
+}
+```
+
+#### 接口说明 7、获取关注授权用户的人
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/user/followers](#)
+
+- **请求方式** 
+>**GET**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>|token|varchar|调用接口凭证|
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|varchar|返回信息|
+>|data|object|结果用户对象|
+
+- **返回示例**
+>    
+```json
+{
+    "status_code": "2000",
+    "info": "success",
+    "total": 2,
+    "data": [
+        {
+            "id": 9,
+            "nickname": "Andy",
+            "age": null,
+            "character_value": 50,
+            "gender": "男",
+            "description": null,
+            "school": null
+        },
+        {
+            "id": 8,
+            "nickname": "Tom",
+            "age": null,
+            "character_value": 50,
+            "gender": "男",
+            "description": null,
+            "school": "首都经济贸易大学"
+        }
+    ]
+}
+```
+
+#### 接口说明 8、获取授权用户关注的人
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/user/following](#)
+
+- **请求方式** 
+>**GET**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>|token|varchar|调用接口凭证|
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|varchar|返回信息|
+>|data|object|结果用户对象|
+
+- **返回示例**
+>    
+```json
+{
+    "status_code": "2000",
+    "info": "success",
+    "total": 2,
+    "data": [
+        {
+            "id": 8,
+            "nickname": "Tom",
+            "age": null,
+            "character_value": 50,
+            "gender": "男",
+            "description": null,
+            "school": "首都经济贸易大学"
+        },
+        {
+            "id": 2,
+            "nickname": "zs",
+            "age": null,
+            "character_value": 50,
+            "gender": null,
+            "description": null,
+            "school": "中国人民大学"
+        }
+    ]
+}
+```
+
 
 ## 活动模块
 
@@ -607,7 +822,7 @@
 }
 ```
 
-#### 接口说明 2、获取活动
+#### 接口说明 2、获取单个活动
 
 - **请求URL**
 > [https://xbbbbbb.cn/MeetU/api/activity/{activity_id}](#)
@@ -666,7 +881,7 @@
 #### 接口说明 3、获取活动参与成员列表
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/activity/{activity_id}/user](#)
+> [https://xbbbbbb.cn/MeetU/api/activity/{activity_id}/participants](#)
 
 
 - **请求方式** 
@@ -694,12 +909,26 @@
     "total": 2,
     "users": [
         {
-            "user_id": 1,
-            "name": "陈旭斌"
+            "id": 2,
+            "nickname": "zs",
+            "age": null,
+            "character_value": 50,
+            "gender": null,
+            "grade": null,
+            "followers": 0,
+            "description": null,
+            "school": "中国人民大学"
         },
         {
-            "user_id": 18,
-            "name": "张三"
+            "id": 4,
+            "nickname": "xbb",
+            "age": null,
+            "character_value": 50,
+            "gender": "女",
+            "grade": null,
+            "followers": 0,
+            "description": null,
+            "school": "中国矿业大学(北京)"
         }
     ]
 }
@@ -771,7 +1000,7 @@
 - **请求URL**
 > [https://xbbbbbb.cn/MeetU/api/activity/{activity_id}](#)
 
->- **注意：只能更新自己创建的活动**
+ **注意：只能更新自己创建的活动**
 
 - **请求方式** 
 >**PUT**
@@ -833,7 +1062,7 @@
 - **请求URL**
 > [https://xbbbbbb.cn/MeetU/api/activity/{activity_id}](#)
 
->- **注意：只能删除自己创建的活动**
+ **注意：只能删除自己创建的活动**
 
 - **请求方式** 
 >**DELETE**
@@ -1135,6 +1364,75 @@
             "school": "中国人民大学"
         }
     ]
+}
+```
+
+#### 接口说明 3、获取省份列表
+
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/provinces](#)
+
+
+- **请求方式** 
+>**GET**
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|varchar|返回信息|
+>| data|object|  省份列表|
+>|province_id|int|省份id|
+>|province_name|varchar|省份名称|
+
+- **返回示例**
+>    
+```json
+{
+  "status_code": "2000",
+  "info": "success",
+  "data": [
+    {
+      "province_id": 1,
+      "province_name": "北京"
+    },
+}
+```
+
+#### 接口说明 4、获取某省份学校列表
+
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/schools ](#)
+
+
+- **请求方式** 
+>**GET**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| province_id|   int| 省份id|
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|varchar|返回信息|
+>| data|object|  学校列表|
+>|data:school_id|int|学校id|
+>|data:school_name|varchar|学校名称
+
+- **返回示例**
+>    
+```json
+{
+  "status_code": "2000",
+  "info": "success",
+  "data": [
+    {
+      "school_id": 2031,
+      "school_name": "重庆大学"
+    },
 }
 ```
 

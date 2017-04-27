@@ -23,10 +23,9 @@ $api->version('v1', function ($api) {
         $api->post('auth','AuthController@store');                                              //注册登陆模块
         $api->put('auth','AuthController@update');                                              //更新token
         $api->resource('users','UsersController',array('only'=>array('index','show','store'))); //users相关操作
-                                                                                                //注册时获取地区学校
-        $api->get('provinces','SchoolController@getProvinces');
+
+        $api->get('provinces','SchoolController@getProvinces');                                 //注册时获取地区学校
         $api->get('schools/{province_id}','SchoolController@getSchools');
-        $api->get('findSchool/{keywords}', 'SchoolController@findSchool');
 
         $api->get('users/{user_id}/followers','UsersController@followers');                     //获取某个用户的粉丝
         $api->get('users/{user_id}/following','UsersController@following');                     //获取某个用户关注的人
@@ -39,7 +38,7 @@ $api->version('v1', function ($api) {
             $api->delete('auth','AuthController@destroy');                                      //退出操作
 
             $api->get('user','UserController@index');                                           //授权用户获取自己信息
-            $api->get('user/{id}','UserController@show')->where('id','[0-9]+');
+            $api->get('user/{id}','UserController@show')->where('id','[0-9]+');                 //授权用户查看别人信息
             $api->put('user','UserController@update');                                          //授权用户更新自己信息
             $api->post('user/changePwd','UserController@changePwd');                            //授权用户更新自己密码
 
@@ -47,14 +46,14 @@ $api->version('v1', function ($api) {
             $api->get('user/following','UserController@following');                             //获取授权用户关注的人
             $api->post('user/following/{user_id}','UserController@follow');                     //授权用户关注他人
             $api->delete('user/following/{user_id}','UserController@unfollow');                 //授权用户取关他人
-                                                                                                //参与活动操作
-            $api->get('activity/user_participated/{id}','ActivityParticipantsController@participated');
-            $api->get('activity/user_created/{id}','ActivityParticipantsController@created');
-            $api->delete('activity/{id}/participants','ActivityParticipantsController@destroy');
-            $api->resource('activity.participants','ActivityParticipantsController',array('only' => array('index','store')));
-                                                                                                //活动操作
-            $api->get('activity/create','ActivityController@create');
-            $api->get('activity/{activity}/edit','ActivityController@edit');
+
+            $api->get('activity/user_participated/{id}','ActivityParticipantsController@participated'); //查询某用户参与了那些活动
+            $api->get('activity/user_created/{id}','ActivityParticipantsController@created');           //查询某用户创建了那些活动
+            $api->delete('activity/{id}/participants','ActivityParticipantsController@destroy');        //退出某个活动
+            $api->resource('activity.participants','ActivityParticipantsController',array('only' => array('index','store'))); //
+
+            $api->get('activity/create','ActivityController@create');                                   //创建活动时需要的信息
+            $api->get('activity/{activity}/edit','ActivityController@edit');                            //编辑前获取所有的信息
             $api->resource('activity','ActivityController');
         });
     });

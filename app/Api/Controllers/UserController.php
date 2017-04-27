@@ -15,7 +15,8 @@ class UserController extends BaseController
 {
     public function index()
     {
-        if (! $user = JWTAuth::parseToken()->authenticate()) {
+        if (! $user = JWTAuth::parseToken()->authenticate())
+        {
             return $this->return_response_user('4004','未找到相关信息');
         }
         $user = collect($user)->map(function ($item) {
@@ -32,10 +33,12 @@ class UserController extends BaseController
     {
         $user_me=UserMin::find($this->getUser()->id);
         if ($user_me->isFollowEachOther($id))
+        {
             $user=UserMin::find($id);
+        }
         else
         {
-            $user=UserMin::select('id','nickname','age','character_value','gender','description','school_id')->find($id);
+            $user=UserMin::select('id','nickname','age','character_value','gender','followers','description','school_id')->find($id);
         }
         $user = collect($user)->map(function ($item) {
             if ($item==null) {
@@ -134,14 +137,36 @@ class UserController extends BaseController
 
     public function followers()
     {
-        $user=UserMin::find($this->getUser()->id);
-        return $user->followers;
+        if($user=UserMin::find($this->getUser()->id)->followers)
+        {
+            $total=$user->count();
+            if ($total==0)
+            {
+                return $this->return_response_user('2004','未找到相关信息');
+            }
+            return $this->return_response_user('2000','success',$user,$total);
+        }
+        else
+        {
+            return $this->return_response('5000','服务器出错!');
+        }
     }
 
     public function following()
     {
-        $user=UserMin::find($this->getUser()->id);
-        return $user->followings;
+        if($user=UserMin::find($this->getUser()->id)->followings)
+        {
+            $total=$user->count();
+            if ($total==0)
+            {
+                return $this->return_response_user('2004','未找到相关信息');
+            }
+            return $this->return_response_user('2000','success',$user,$total);
+        }
+        else
+        {
+            return $this->return_response('5000','服务器出错!');
+        }
     }
 
     public function follow($user_id)
@@ -152,6 +177,9 @@ class UserController extends BaseController
         }
         $user=UserMin::find($this->getUser()->id);
         $user->follow($user_id);
+        $follower=UserMin::find($user_id);
+        $follower->followers+=1;
+        $follower->save();
 
         return $this->return_response_activity('2000','关注成功');
     }
@@ -164,6 +192,9 @@ class UserController extends BaseController
         }
         $user=UserMin::find($this->getUser()->id);
         $user->unfollow($user_id);
+        $follower=UserMin::find($user_id);
+        $follower->followers-=1;
+        $follower->save();
 
         return $this->return_response_activity('2000','取关成功');
     }

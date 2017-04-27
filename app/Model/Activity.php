@@ -27,11 +27,11 @@ class Activity extends Model
 
     public function creator()
     {
-        return $this->belongsTo('App\Model\User','creator')->select('id','name');
+        return $this->belongsTo('App\Model\User','creator')->select('id','nickname','age','character_value','gender','followers','description','school_id');
     }
 
     public function users()
     {
-        return $this->belongsToMany('App\Model\User')->select('user_id','name');
+        return $this->belongsToMany('App\Model\User')->withTimestamps()->select('users.id','nickname','age','character_value','gender','grade','followers','description','school_id');
     }
 }
