@@ -12,6 +12,7 @@ namespace App\Api\Controllers;
 use App\Model\Activity;
 use App\Model\Tag;
 use App\Model\Type;
+use DateTime;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use JWTAuth;
@@ -23,9 +24,16 @@ class ActivityController extends BaseController
         $activities=Activity::with('creator')->get();
         $total=$activities->count();
         $activities_info=array();
-        $user_id=$this->getUser()->id;
+        if (isset($_GET['token']))
+        {
+            $user_id=$this->getUser()->id;
+        }
+        else
+        {
+            $user_id='';
+        }
         foreach ($activities as $activity) {
-            $activity['is_participated']=$this->is_participated($user_id,$activity->id);
+            $activity['is_participated']=$this->isParticipated($user_id,$activity->id);
             $activity=$this->insert_tags($activity);
             $activities_info[]=$activity;
         }
@@ -40,11 +48,19 @@ class ActivityController extends BaseController
     public function show($id)
     {
         $activity=Activity::with('creator','tags')->find($id);
+        if (isset($_GET['token']))
+        {
+            $user_id=$this->getUser()->id;
+        }
+        else
+        {
+            $user_id='';
+        }
         if($activity==null)
         {
             return $this->return_response_activity('4004','未找到相关信息');
         }
-        $activity['is_participated']=$this->is_participated($this->getUser()->id,$id);
+        $activity['is_participated']=$this->isParticipated($user_id,$id);
         $activity=$this->insert_tags($activity);
         return $this->return_response_activity('2000','success',$activity);
     }
@@ -71,7 +87,7 @@ class ActivityController extends BaseController
         $user_id=$this->getUser()->id;
         $activity->users()->attach($user_id);
         $activity=Activity::with('creator')->find($activity->id);
-        $activity['is_participated']=$this->is_participated($user_id,$activity->id);
+        $activity['is_participated']=$this->isParticipated($user_id,$activity->id);
         $activity=$this->insert_tags($activity);
         return $this->return_response_activity('2000','发布成功',$activity);
     }
@@ -103,7 +119,7 @@ class ActivityController extends BaseController
         {
             return $this->return_response_activity('5000','服务器出错');
         }
-        $activity['is_participated']=$this->is_participated($this->getUser()->id,$activity->id);
+        $activity['is_participated']=$this->isParticipated($this->getUser()->id,$activity->id);
         $activity=$this->insert_tags($activity);
         return $this->return_response_activity('2000','更新成功',$activity);
     }
@@ -136,7 +152,7 @@ class ActivityController extends BaseController
         {
             return $this->return_response_activity('4004','未找到相关信息');
         }
-        $activity['is_participated']=$this->is_participated($this->getUser()->id,$id);
+        $activity['is_participated']=$this->isParticipated($this->getUser()->id,$id);
         $activity=$this->insert_tags($activity);
         return $this->return_response_activity('2000','success',$activity);
     }

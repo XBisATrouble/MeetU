@@ -20,7 +20,7 @@ class UserMin extends Authenticatable
     protected $appends = ['school'];
 
     protected $hidden = [
-        'password', 'remember_token','updated_at','created_at','idcard','pivot','phone','marital_status','verify_photo_2','verify_photo','name','verify','student_id','school_id'
+        'password', 'remember_token','updated_at','created_at','idcard','pivot','phone','marital_status','verify_photo_2','verify_photo','name','verify','student_id','school_id','school_name',
     ];
 
     protected $casts = [
@@ -69,13 +69,13 @@ class UserMin extends Authenticatable
     //获取所有我关注的人
     public function followings()
     {
-        return $this->belongsToMany(self::Class, 'followers', 'user_id', 'follower_id')->withTimestamps()->select('users.id','nickname','age','character_value','gender','description','school_id');
+        return $this->belongsToMany(self::Class, 'followers', 'user_id', 'follower_id')->withTimestamps()->select('users.id','nickname','avatar','age','character_value','gender','description','school_id');
     }
 
     //获取所有关注我的人
     public function followers()
     {
-        return $this->belongsToMany(self::Class, 'followers', 'follower_id', 'user_id')->withTimestamps()->select('users.id','nickname','age','character_value','gender','description','school_id');
+        return $this->belongsToMany(self::Class, 'followers', 'follower_id', 'user_id')->withTimestamps()->select('users.id','nickname','avatar','age','character_value','gender','description','school_id');
     }
 
     //关注用户

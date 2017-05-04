@@ -8,6 +8,7 @@
 
 namespace App\Api\Controllers;
 
+use App\Model\School;
 use App\Model\UserMin;
 use App\Model\User;
 use JWTAuth;
@@ -17,7 +18,7 @@ class UsersController extends BaseController
     public function index()
     {
         $since= isset($_GET['since'])?$_GET['since']:0;
-        $users=UserMin::since($since)->select('id','nickname','age','character_value','gender','grade','followers','description','school_id')->take('50')->get();
+        $users=UserMin::since($since)->select('id','nickname','avatar','age','character_value','gender','grade','followers','description','school_id')->take('50')->get();
 
         $user_array=array();
         foreach ($users as $user) {
@@ -38,7 +39,7 @@ class UsersController extends BaseController
 
     public function show($id)
     {
-        $user=UserMin::select('id','nickname','age','character_value','gender','followers','grade','description','school_id')->find($id);
+        $user=UserMin::select('id','nickname','avatar','age','character_value','gender','followers','grade','description','school_id')->find($id);
         $user = collect($user)->map(function ($item) {
             if ($item==null) {
                 $item = "";
@@ -86,6 +87,7 @@ class UsersController extends BaseController
         $validator = app('validator')->make($payload, $rules,$error_message);
         $validator_array=$validator->errors()->toArray();
 
+
         if ($validator->fails()) {
             if(!empty($validator_array['phone'][0]))
             {
@@ -128,7 +130,9 @@ class UsersController extends BaseController
             'description'=>$payload['description'],
             'name' => $payload['name'],
             'idcard'=>$payload['idcard'],
+            'avatar' => '/images/avatars/default.png',
             'school_id'=>$payload['school_id'],
+            'school_name'=>School::find($payload['school_id'])->school_name,
             'student_id'=>$payload['student_id'],
             'QQ'=>$payload['QQ'],
             'WeChat'=>$payload['WeChat'],
@@ -163,7 +167,7 @@ class UsersController extends BaseController
 
     public function followers($user_id)
     {
-        if($user=UserMin::find($user_id)->followers)
+        if($user=UserMin::find($user_id)->followers()->get())
         {
             $total=$user->count();
             if ($total==0)
@@ -180,7 +184,7 @@ class UsersController extends BaseController
 
     public function following($user_id)
     {
-        if($user=UserMin::find($user_id)->followings)
+        if($user=UserMin::find($user_id)->followings()->get())
         {
             $total=$user->count();
             if ($total==0)

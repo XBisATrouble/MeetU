@@ -16,7 +16,7 @@ class User extends Authenticatable
     protected $appends = ['school'];
 
     protected $fillable = [
-        'phone','password','nickname','gender','description','name','idcard','school_id','student_id','QQ','WeChat','WeiBo','BaiduPostBar','FaceBook','Instagram','Twitter','verify_photo','verify_photo_2'
+        'phone','avatar','password','nickname','gender','description','name','idcard','school_id','school_name','student_id','QQ','WeChat','WeiBo','BaiduPostBar','FaceBook','Instagram','Twitter','verify_photo','verify_photo_2'
     ];
 
     /**
@@ -25,7 +25,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token','updated_at','created_at','idcard','pivot','school_id','student_id'
+        'password', 'remember_token','updated_at','created_at','idcard','pivot','school_id','student_id','school_name',
     ];
 
     protected $casts = [
