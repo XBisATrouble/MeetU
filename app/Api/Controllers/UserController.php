@@ -137,35 +137,29 @@ class UserController extends BaseController
 
     public function followers()
     {
-        if($user=UserMin::find($this->getUser()->id)->followers)
+        if($user=UserMin::find($this->getUser()->id))
         {
+            $user=$user->followings()->get();
             $total=$user->count();
-            if ($total==0)
-            {
-                return $this->return_response_user('2004','未找到相关信息');
-            }
             return $this->return_response_user('2000','success',$user,$total);
         }
         else
         {
-            return $this->return_response('5000','服务器出错!');
+            return $this->return_response_user('2004','未找到相关信息');
         }
     }
 
     public function following()
     {
-        if($user=UserMin::find($this->getUser()->id)->followings)
+        if($user=UserMin::find($this->getUser()->id))
         {
+            $user=$user->followings()->get();
             $total=$user->count();
-            if ($total==0)
-            {
-                return $this->return_response_user('2004','未找到相关信息');
-            }
             return $this->return_response_user('2000','success',$user,$total);
         }
         else
         {
-            return $this->return_response('5000','服务器出错!');
+            return $this->return_response_user('2004','未找到相关信息');
         }
     }
 

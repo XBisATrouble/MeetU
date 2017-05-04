@@ -39,7 +39,7 @@
 #### 接口说明 1、登陆
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/auth](#)
+> [https://xbbbbbb.cn/MeetU/api/auth](https://xbbbbbb.cn/MeetU/api/auth)
 
 
 - **请求方式** 
@@ -71,7 +71,7 @@
 #### 接口说明 2、更新TOKEN
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/auth](#)
+> [https://xbbbbbb.cn/MeetU/api/auth](https://xbbbbbb.cn/MeetU/api/auth)
 
 - **请求方式** 
 >**PUT**
@@ -101,7 +101,7 @@
 #### 接口说明 3、退出登录
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/auth](#)
+> [https://xbbbbbb.cn/MeetU/api/auth](https://xbbbbbb.cn/MeetU/api/auth)
 
 - **请求方式** 
 >**DELETE**
@@ -134,7 +134,7 @@
 #### 接口说明 1、获取所有用户列表
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/users](#)
+> [https://xbbbbbb.cn/MeetU/api/users](https://xbbbbbb.cn/MeetU/api/users)
 
 - **请求方式** 
 >**GET**
@@ -175,7 +175,7 @@
 
 #### 接口说明 2、获取单个用户
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/users/{user_id}](#)
+> [https://xbbbbbb.cn/MeetU/api/users/{user_id}](https://xbbbbbb.cn/MeetU/api/users/{user_id})
 
 - **请求方式** 
 >**GET**
@@ -211,7 +211,7 @@
 #### 接口说明 3、注册
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/users ](#)
+> [https://xbbbbbb.cn/MeetU/api/users ](https://xbbbbbb.cn/MeetU/api/users)
 
 - **请求方式** 
 >**POST**
@@ -284,7 +284,7 @@
 
 #### 接口说明 4、获取关注某个用户的人
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/users/{user_id}/followers](#)
+> [https://xbbbbbb.cn/MeetU/api/users/{user_id}/followers](https://xbbbbbb.cn/MeetU/api/users/{user_id}/followers)
 
 - **请求方式** 
 >**GET**
@@ -329,7 +329,7 @@
 
 #### 接口说明 5、获取某个用户关注的人
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/users/{user_id}/following](#)
+> [https://xbbbbbb.cn/MeetU/api/users/{user_id}/following](https://xbbbbbb.cn/MeetU/api/users/{user_id}/following)
 
 - **请求方式** 
 >**GET**
@@ -380,7 +380,7 @@
 #### 接口说明 1、获取认证用户个人信息
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/user](#)
+> [https://xbbbbbb.cn/MeetU/api/user](https://xbbbbbb.cn/MeetU/api/user)
 
 
 - **请求方式** 
@@ -457,7 +457,7 @@
 #### 接口说明 2、修改认证用户密码
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/user/changePwd](#)
+> [https://xbbbbbb.cn/MeetU/api/user/changePwd](https://xbbbbbb.cn/MeetU/api/user/changePwd)
 
 - **请求方式** 
 >**POST**
@@ -487,7 +487,7 @@
 #### 接口说明 3、更新用户信息
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/user ](#)
+> [https://xbbbbbb.cn/MeetU/api/user ](https://xbbbbbb.cn/MeetU/api/user)
 
 - **请求方式** 
 >**PUT**
@@ -551,7 +551,7 @@
 
 #### 接口说明 4、授权用户获取单个用户
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/user/{user_id}](#)
+> [https://xbbbbbb.cn/MeetU/api/user/{user_id}](https://xbbbbbb.cn/MeetU/api/user/{user_id})
 
 - **请求方式** 
 >**GET**
@@ -589,7 +589,7 @@
 
 #### 接口说明 5、授权用户关注他人
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/user/following/{user_id}](#)
+> [https://xbbbbbb.cn/MeetU/api/user/following/{user_id}](https://xbbbbbb.cn/MeetU/api/user/following/{user_id})
 
 - **请求方式** 
 >**POST**
@@ -616,7 +616,7 @@
 
 #### 接口说明 6、授权用户取关他人
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/user/following/{user_id}](#)
+> [https://xbbbbbb.cn/MeetU/api/user/following/{user_id}](https://xbbbbbb.cn/MeetU/api/user/following/{user_id})
 
 - **请求方式** 
 >**DELETE**
@@ -643,7 +643,7 @@
 
 #### 接口说明 7、获取关注授权用户的人
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/user/followers](#)
+> [https://xbbbbbb.cn/MeetU/api/user/followers](https://xbbbbbb.cn/MeetU/api/user/followers)
 
 - **请求方式** 
 >**GET**
@@ -694,7 +694,7 @@
 
 #### 接口说明 8、获取授权用户关注的人
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/user/following](#)
+> [https://xbbbbbb.cn/MeetU/api/user/following](https://xbbbbbb.cn/MeetU/api/user/following)
 
 - **请求方式** 
 >**GET**
@@ -749,7 +749,7 @@
 #### 接口说明 1、获取活动列表
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/activity](#)
+> [https://xbbbbbb.cn/MeetU/api/activity](https://xbbbbbb.cn/MeetU/api/activity)
 
 
 - **请求方式** 
@@ -905,7 +905,7 @@
 #### 接口说明 2、获取单个活动
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/activity/{activity_id}](#)
+> [https://xbbbbbb.cn/MeetU/api/activity/{activity_id}](https://xbbbbbb.cn/MeetU/api/activity/{activity_id})
 
 
 - **请求方式** 
@@ -967,7 +967,7 @@
 #### 接口说明 3、获取活动参与成员列表
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/activity/{activity_id}/participants](#)
+> [https://xbbbbbb.cn/MeetU/api/activity/{activity_id}/participants](https://xbbbbbb.cn/MeetU/api/activity/{activity_id}/participants)
 
 
 - **请求方式** 
@@ -1018,7 +1018,7 @@
 #### 接口说明 4、创建活动
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/activity/](#)
+> [https://xbbbbbb.cn/MeetU/api/activity](https://xbbbbbb.cn/MeetU/api/activity)
 
 
 - **请求方式** 
@@ -1079,7 +1079,7 @@
 #### 接口说明 5、更新活动
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/activity/{activity_id}](#)
+> [https://xbbbbbb.cn/MeetU/api/activity/{activity_id}](https://xbbbbbb.cn/MeetU/api/activity/)
 
  **注意：只能更新自己创建的活动**
 
@@ -1141,7 +1141,7 @@
 #### 接口说明 6、删除活动
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/activity/{activity_id}](#)
+> [https://xbbbbbb.cn/MeetU/api/activity/{activity_id}](https://xbbbbbb.cn/MeetU/api/activity/{activity_id})
 
  **注意：只能删除自己创建的活动**
 
@@ -1172,7 +1172,7 @@
 #### 接口说明 7、参加活动
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/activity/{activity}/participants ](#)
+> [https://xbbbbbb.cn/MeetU/api/activity/{activity}/participants ](https://xbbbbbb.cn/MeetU/api/activity/{activity}/participants)
 
 
 - **请求方式** 
@@ -1201,7 +1201,7 @@
 #### 接口说明 8、退出活动
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/activity/{activity}/participants ](#)
+> [https://xbbbbbb.cn/MeetU/api/activity/{activity}/participants ](https://xbbbbbb.cn/MeetU/api/activity/{activity}/participants)
 
 
 - **请求方式** 
@@ -1230,7 +1230,7 @@
 #### 接口说明 9、获取用户参加的活动列表
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/activity/user_participated/{id}](#)
+> [https://xbbbbbb.cn/MeetU/api/activity/user_participated/{id}](https://xbbbbbb.cn/MeetU/api/activity/user_participated/{id})
 
 
 - **请求方式** 
@@ -1284,7 +1284,7 @@
 #### 接口说明 10、获取用户创建的活动列表
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/activity/user_created/{id}](#)
+> [https://xbbbbbb.cn/MeetU/api/activity/user_created/{id}](https://xbbbbbb.cn/MeetU/api/activity/user_created/{id})
 
 
 - **请求方式** 
@@ -1337,7 +1337,7 @@
 #### 接口说明 1、模糊查询学校
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/search/schools](#)
+> [https://xbbbbbb.cn/MeetU/api/search/schools](https://xbbbbbb.cn/MeetU/api/search/schools)
 
 - **请求方式** 
 >**GET**
@@ -1386,7 +1386,7 @@
 #### 接口说明 2、用户信息查询
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/search/users](#)
+> [https://xbbbbbb.cn/MeetU/api/search/users](https://xbbbbbb.cn/MeetU/api/search/users)
 
 - **请求方式** 
 >**GET**
@@ -1449,7 +1449,7 @@
 #### 接口说明 3、获取省份列表
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/provinces](#)
+> [https://xbbbbbb.cn/MeetU/api/provinces](https://xbbbbbb.cn/MeetU/api/provinces)
 
 
 - **请求方式** 
@@ -1481,7 +1481,7 @@
 #### 接口说明 4、获取某省份学校列表
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/schools ](#)
+> [https://xbbbbbb.cn/MeetU/api/schools ](https://xbbbbbb.cn/MeetU/api/schools)
 
 
 - **请求方式** 
@@ -1518,7 +1518,7 @@
 #### 接口说明 5、活动信息查询
 
 - **请求URL**
-> [https://xbbbbbb.cn/MeetU/api/search/activities](#)
+> [https://xbbbbbb.cn/MeetU/api/search/activities](https://xbbbbbb.cn/MeetU/api/search/activities)
 
 - **请求方式** 
 >**GET**
