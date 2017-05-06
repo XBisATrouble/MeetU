@@ -8,20 +8,30 @@
 
 namespace App\Api\Controllers;
 
-
 use App\Model\Activity;
 use App\Model\Tag;
 use App\Model\Type;
 use DateTime;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use JWTAuth;
 
 class ActivityController extends BaseController
 {
-    public function index()
+    public function index(Request $request)
     {
-        $activities=Activity::with('creator')->get();
+        $attributes = array_filter(
+            $request->only('school_id', 'type'),
+            function($value) {
+                return ($value !== null && $value !== false && $value !== '');
+            }
+        );
+        $people_number_up=isset($_GET['numberOfPeople'])?$_GET['numberOfPeople']:10000;
+        $activities=Activity::with('creator')
+            ->where($attributes)
+            ->where('people_number_up','<',$people_number_up)
+            ->get(['id','title','content','creator','location','people_number_limit','people_number_up','people_number_join','date_time_start','date_time_end','type']);
         $total=$activities->count();
         $activities_info=array();
         if (isset($_GET['token']))
@@ -80,6 +90,7 @@ class ActivityController extends BaseController
         }
         $activity = Activity::create(Input::only('title', 'content','people_number_limit','people_number_up','type','entrie_time_start','entrie_time_end','date_time_start','date_time_end','location'));
         $activity->creator=$this->getUser()->id;
+        $activity->shool_id=$this->getUser()->school_id;
         if(!$activity->save())
         {
             return $this->return_response_activity('5000','服务器出错');

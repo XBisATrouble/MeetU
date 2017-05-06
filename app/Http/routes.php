@@ -20,7 +20,7 @@ Route::get('/', function () {
 $api = app('Dingo\Api\Routing\Router');
 $api->version('v1', function ($api) {
     $api->group(['namespace'=>'App\Api\Controllers','middleware'=>'throttle:120'], function ($api) {
-        $api->post('auth','AuthController@store');                                              //注册登陆模块
+        $api->post('auth','AuthController@store');                                              //登陆模块
         $api->put('auth','AuthController@update');                                              //更新token
         $api->resource('users','UsersController',array('only'=>array('index','show','store'))); //users相关操作
 

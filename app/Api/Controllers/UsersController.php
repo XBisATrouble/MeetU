@@ -130,7 +130,7 @@ class UsersController extends BaseController
             'description'=>$payload['description'],
             'name' => $payload['name'],
             'idcard'=>$payload['idcard'],
-            'avatar' => '/images/avatars/default.png',
+            'avatar' => 'public/images/avatars/default.png',
             'school_id'=>$payload['school_id'],
             'school_name'=>School::find($payload['school_id'])->school_name,
             'student_id'=>$payload['student_id'],

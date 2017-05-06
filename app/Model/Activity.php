@@ -13,7 +13,7 @@ class Activity extends Model
     ];
 
     protected $hidden = [
-        'pivot',
+        'pivot','school_id'
     ];
 
     protected $appends = [
