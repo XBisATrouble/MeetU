@@ -10,8 +10,6 @@ namespace App\Api\Controllers;
 
 use App\Model\Activity;
 use App\Model\Tag;
-use App\Model\Type;
-use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
@@ -33,15 +31,42 @@ class ActivityController extends BaseController
             ->where('people_number_up','<',$people_number_up)
             ->get(['id','title','content','creator','location','people_number_limit','people_number_up','people_number_join','date_time_start','date_time_end','type']);
         $total=$activities->count();
+        if ($total==0)
+        {
+            return $this->return_response_activity('4004','未找到相关信息');
+        }
         $activities_info=array();
+
+        $user_id='';
         if (isset($_GET['token']))
         {
-            $user_id=$this->getUser()->id;
+            if (is_object($this->getUser()))
+            {
+                $user_id=$this->getUser()->id;
+                goto a;       //跳出该if
+            }
+
+            if ($this->getUser()==4011)
+            {
+                return response()->json([
+                    'status_code'=>'4011',
+                    'info' => 'token已过期',
+                ]);
+            }
+            if ($this->getUser()==4012)
+            {
+                return response()->json([
+                    'status_code'=>'4012',
+                    'info' => 'token无效',
+                ]);
+            }
         }
         else
         {
             $user_id='';
         }
+
+a:
         foreach ($activities as $activity) {
             $activity['is_participated']=$this->isParticipated($user_id,$activity->id);
             $activity=$this->insert_tags($activity);
@@ -58,14 +83,36 @@ class ActivityController extends BaseController
     public function show($id)
     {
         $activity=Activity::with('creator','tags')->find($id);
+        $user_id='';
         if (isset($_GET['token']))
         {
-            $user_id=$this->getUser()->id;
+            if (is_object($this->getUser()))
+            {
+                $user_id=$this->getUser()->id;
+                goto a;       //跳出该if
+            }
+
+            if ($this->getUser()==4011)
+            {
+                return response()->json([
+                    'status_code'=>'4011',
+                    'info' => 'token已过期',
+                ]);
+            }
+            if ($this->getUser()==4012)
+            {
+                return response()->json([
+                    'status_code'=>'4012',
+                    'info' => 'token无效',
+                ]);
+            }
         }
         else
         {
             $user_id='';
         }
+
+a:
         if($activity==null)
         {
             return $this->return_response_activity('4004','未找到相关信息');

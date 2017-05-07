@@ -14,6 +14,9 @@ use App\Model\UserMin;
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Support\Facades\DB;
 use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 
 class BaseController extends Controller
 {
@@ -108,7 +111,24 @@ class BaseController extends Controller
 
     public function getUser()
     {
-        return $user = JWTAuth::parseToken()->authenticate();
+        //return $user = JWTAuth::parseToken()->authenticate();
+
+        try {
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                    $status_code='4004';
+                    return $status_code;
+            }
+        } catch (TokenExpiredException $e) {
+            $status_code='4011';
+            return $status_code;
+        } catch (TokenInvalidException $e) {
+            $status_code='4012';
+            return $status_code;
+        } catch (JWTException $e) {
+            $status_code='5000';
+            return $status_code;
+        }
+        return $user;
     }
 
     public function insert_tags($activity)
