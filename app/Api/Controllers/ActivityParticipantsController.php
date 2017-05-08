@@ -15,7 +15,11 @@ class ActivityParticipantsController extends BaseController
 {
     public function index($id)
     {
-        $users=Activity::find($id)->users()->get();
+        if (!$activity=Activity::find($id))
+        {
+            return $this->return_response_activity('4004','未找到相关信息');
+        }
+        $users=$activity->users()->get();
         $total=$users->count();
         return $this->response->array([
             'status_code'=>'2000',

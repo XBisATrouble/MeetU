@@ -29,7 +29,7 @@ class ActivityController extends BaseController
         $activities=Activity::with('creator')
             ->where($attributes)
             ->where('people_number_up','<',$people_number_up)
-            ->get(['id','title','content','creator','location','people_number_limit','people_number_up','people_number_join','date_time_start','date_time_end','type']);
+            ->get(['id','title','content','creator','location','people_number_up','people_number_join','date_time_start','date_time_end','type']);
         $total=$activities->count();
         if ($total==0)
         {
@@ -135,7 +135,7 @@ a:
         {
             return $this->return_response_activity('4003','请求参数出错');
         }
-        $activity = Activity::create(Input::only('title', 'content','people_number_limit','people_number_up','type','entrie_time_start','entrie_time_end','date_time_start','date_time_end','location'));
+        $activity = Activity::create(Input::only('title', 'content','people_number_up','type','entrie_time_start','entrie_time_end','date_time_start','date_time_end','location'));
         $activity->creator=$this->getUser()->id;
         $activity->shool_id=$this->getUser()->school_id;
         if(!$activity->save())
@@ -172,7 +172,7 @@ a:
         {
             return $this->return_response_activity('4003','请求参数出错');
         }
-        $activity->update(Input::only('title', 'content','people_number_limit','people_number_up','type','entrie_time_start','entrie_time_end','date_time_start','date_time_end','location'));
+        $activity->update(Input::only('title', 'content','people_number_up','type','entrie_time_start','entrie_time_end','date_time_start','date_time_end','location'));
         if(!$activity->save())
         {
             return $this->return_response_activity('5000','服务器出错');
@@ -230,5 +230,23 @@ a:
             'total'=>$total,
             'data'=>$tags,
         ]);
+    }
+
+    public function tags(Request $request)
+    {
+        $topics=Tag::select(['id','name'])->where('name','like','%'.$request->query('q').'%')->get();
+        return $topics;
+    }
+
+    public function normalizeTopic(array $topics)
+    {
+        return collect($topics)->map(function ($topic){
+            if(is_numeric($topic)){
+                Tag::find($topic)->increment('questions_count');
+                return (int)$topic;
+            }
+            $newTopic=Tag::create(['name'=>$topic,'questions_count'=>1]);
+            return $newTopic->id;
+        })->toArray();
     }
 }

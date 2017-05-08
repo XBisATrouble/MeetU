@@ -17,7 +17,7 @@ class Activity extends Model
     ];
 
     protected $appends = [
-        'status'
+        'status','PercentOfPeople'
     ];
 
     public function tags()
@@ -48,5 +48,10 @@ class Activity extends Model
             return "活动进行中";
         else
             return "活动已经结束";
+    }
+
+    public function getPercentOfPeopleAttribute()
+    {
+        return round($this->people_number_join/$this->people_number_up,2);
     }
 }

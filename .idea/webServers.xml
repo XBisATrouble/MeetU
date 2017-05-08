@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="491f240a-e642-4225-a6d1-b2221bc44b54" name="tencent" url="http://115.159.113.139">
-        <fileTransfer host="115.159.113.139" port="22" privateKey="D:\working\tools\putty\host" accessType="SFTP" keyPair="true">
+        <fileTransfer host="115.159.113.139" port="22" privateKey="C:\software\PuTTY\Tencent.ppk" accessType="SFTP" keyPair="true">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>

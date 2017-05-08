@@ -136,7 +136,7 @@ class BaseController extends Controller
         $tags_array=array();
         $tags=$activity->tags;
         foreach ($tags as $tag) {
-            $tags_array[$tag->id]=$tag->name;
+            $tags_array[]=$tag->name;            //$tags_array[$tag->id]=$tag->name;
         }
         $activity=$activity->toArray();
         $activity['tags']=$tags_array;

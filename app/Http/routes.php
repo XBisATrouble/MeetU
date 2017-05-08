@@ -41,6 +41,8 @@ $api->version('v1', function ($api) {
         $api->get('activity/user_participated/{id}','ActivityParticipantsController@participated')->where('id','[0-9]+'); //查询某用户参与了那些活动
         $api->get('activity/user_created/{id}','ActivityParticipantsController@created')->where('id','[0-9]+');           //查询某用户创建了那些活动
 
+        $api->get('search/tags','ActivityController@tags');
+
 
         //需要token的私有接口
         $api->group(['middleware'=>'jwt.api.auth'],function ($api){
