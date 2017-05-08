@@ -770,9 +770,11 @@
 >|info|Varchar|信息|
 >|total|Integer|返回活动总数|
 >|creator|object|创建者信息|
->| activities|   object|  活动列表|
->|activities.people_number|Integer|参与上限人数|
->|activities.people_number_join|Integer|已参与人数|
+>|data|object|活动列表|
+>|data.people_number_up|Integer|参与上限人数|
+>|data.people_number_join|Integer|已参与人数|
+>|data.PercentOfPeople|float|参与人数/人数上限，保留两位小数四舍五入|
+>|data.status|varchar|活动当前状态，根据当前时间和报名截止时间判断|
 
 - **返回示例**
 >    
@@ -789,6 +791,7 @@
             "creator": {
                 "id": 1,
                 "nickname": "XB",
+                "avatar": "public/images/avatars/default.png",
                 "age": 19,
                 "character_value": 50,
                 "gender": "男",
@@ -796,110 +799,19 @@
                 "description": null,
                 "school": "重庆邮电大学"
             },
-            "people_number_limit": 25,
-            "people_number_up": 35,
-            "people_number_join": 1,
-            "type": "说走就走",
-            "entrie_time_start": "2017-04-28 00:01:09",
-            "entrie_time_end": "2017-04-30 00:01:11",
-            "date_time_start": null,
-            "date_time_end": null,
             "location": "厦门鼓浪屿",
-            "created_at": "2017-04-20 21:28:11",
-            "updated_at": "2017-04-21 00:00:51",
-            "is_participated": true,
-            "status": "活动已经结束",
-            "tags": {
-                "1": "电影",
-                "4": "寒暑假约回家"
-            }
-        },
-        {
-            "id": 2,
-            "title": "火锅",
-            "content": "活动介绍",
-            "creator": {
-                "id": 2,
-                "nickname": "zs",
-                "age": null,
-                "character_value": 50,
-                "gender": null,
-                "followers": 1,
-                "description": null,
-                "school": "中国人民大学"
-            },
-            "people_number_limit": 2,
-            "people_number_up": 4,
+            "people_number_up": 25,
             "people_number_join": 1,
-            "type": "说走就走",
-            "entrie_time_start": "2017-04-24 00:03:26",
-            "entrie_time_end": "2017-04-26 00:03:30",
-            "date_time_start": "2017-04-18 18:10:51",
-            "date_time_end": "2017-04-18 19:30:56",
-            "location": "城门老火锅",
-            "created_at": "2017-04-18 09:11:36",
-            "updated_at": "2017-04-18 09:11:38",
-            "is_participated": false,
-            "status": "活动已经结束",
-            "tags": []
-        },
-        {
-            "id": 7,
-            "title": "五一成都",
-            "content": "活动介绍活动介绍活动介绍",
-            "creator": {
-                "id": 3,
-                "nickname": "kubiXB",
-                "age": null,
-                "character_value": 50,
-                "gender": "男",
-                "followers": 1,
-                "description": null,
-                "school": "天津商业大学"
-            },
-            "people_number_limit": 25,
-            "people_number_up": 35,
-            "people_number_join": 1,
-            "type": "精心计划",
-            "entrie_time_start": null,
-            "entrie_time_end": null,
             "date_time_start": null,
             "date_time_end": null,
-            "location": "成都",
-            "created_at": "2017-04-21 11:52:34",
-            "updated_at": "2017-04-21 11:52:34",
-            "is_participated": false,
-            "status": "活动已经结束",
-            "tags": []
-        },
-        {
-            "id": 8,
-            "title": "五一厦门三日游",
-            "content": "活动介绍活动介绍活动介绍",
-            "creator": {
-                "id": 3,
-                "nickname": "kubiXB",
-                "age": null,
-                "character_value": 50,
-                "gender": "男",
-                "followers": 1,
-                "description": null,
-                "school": "天津商业大学"
-            },
-            "people_number_limit": 25,
-            "people_number_up": 35,
-            "people_number_join": 3,
             "type": "说走就走",
-            "entrie_time_start": null,
-            "entrie_time_end": null,
-            "date_time_start": null,
-            "date_time_end": null,
-            "location": "厦门鼓浪屿",
-            "created_at": "2017-04-22 10:28:51",
-            "updated_at": "2017-04-27 22:12:40",
             "is_participated": false,
             "status": "活动已经结束",
-            "tags": []
+            "PercentOfPeople": 0.04,
+            "tags": [
+                "电影",
+                "桌游"
+            ]
         }
     ]
 }
@@ -935,34 +847,37 @@
     "status_code": "2000",
     "info": "success",
     "data": {
-        "id": 2,
-        "title": "火锅",
-        "content": "活动介绍",
+        "id": 1,
+        "title": "五一厦门三日游",
+        "content": "活动介绍活动介绍活动介绍",
         "creator": {
-            "id": 2,
-            "nickname": "zs",
-            "avatar": "/images/avatars/default.png",
-            "age": null,
+            "id": 1,
+            "nickname": "XB",
+            "avatar": "public/images/avatars/default.png",
+            "age": 19,
             "character_value": 50,
-            "gender": null,
-            "followers": 1,
+            "gender": "男",
+            "followers": 0,
             "description": null,
-            "school": "中国人民大学"
+            "school": "重庆邮电大学"
         },
-        "people_number_limit": 2,
-        "people_number_up": 4,
+        "people_number_up": 25,
         "people_number_join": 1,
         "type": "说走就走",
-        "entrie_time_start": "2017-04-24 00:03:26",
-        "entrie_time_end": "2017-12-28 00:03:30",
-        "date_time_start": "2017-04-18 18:10:51",
-        "date_time_end": "2017-04-30 19:30:56",
-        "location": "城门老火锅",
-        "created_at": "2017-04-18 09:11:36",
-        "updated_at": "2017-04-18 09:11:38",
+        "entrie_time_start": "2017-04-28 00:01:09",
+        "entrie_time_end": "2017-04-30 00:01:11",
+        "date_time_start": null,
+        "date_time_end": null,
+        "location": "厦门鼓浪屿",
+        "created_at": "2017-04-20 21:28:11",
+        "updated_at": "2017-04-21 00:00:51",
         "is_participated": false,
-        "status": "活动进行中",
-        "tags": []
+        "status": "活动已经结束",
+        "PercentOfPeople": 0.04,
+        "tags": [
+            "电影",
+            "桌游"
+        ]
     }
 }
 ```
@@ -1034,7 +949,6 @@
 >|title|varchar|标题
 >|content|varchar|内容|
 >|type|int|活动类型|
->|people_number_limit|int|人数下限|
 >|people_number_up|int|人数上限|
 >|location|varchar|地点|
 >|entrie_time_start|datetime|报名起始时间|
@@ -1063,8 +977,7 @@
       "id": 1,
       "name": "陈旭斌"
     },
-    "people_number_limit": 20,
-    "people_number_up": 35,
+    "people_number_up": 20,
     "people_number_join": 0,
     "type": "说走就走",
     "entrie_time_start": null,
@@ -1096,7 +1009,6 @@
 >|title|varchar|标题
 >|content|varchar|内容|
 >|type|int|活动类型|
->|people_number_limit|int|人数下限|
 >|people_number_up|int|人数上限|
 >|location|varchar|地点|
 >|entrie_time_start|datetime|报名起始时间|
@@ -1125,7 +1037,6 @@
       "id": 1,
       "name": "陈旭斌"
     },
-    "people_number_limit": "25",
     "people_number_up": "35",
     "people_number_join": 0,
     "type": "说走就走",
@@ -1611,6 +1522,40 @@
             "is_participated": false,
             "status": "活动已经结束",
             "tags": []
+        }
+    ]
+}
+```
+
+#### 接口说明 6、搜索标签
+
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/search/tags ](https://xbbbbbb.cn/MeetU/api/search/tags)
+
+
+- **请求方式** 
+>**GET**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>|q| varchar| 标签关键词|
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|varchar|返回信息|
+>| data|object|标签信息|
+
+- **返回示例**
+>    
+```json
+{
+    "tags": [
+        {
+            "id": 1,
+            "name": "电影"
         }
     ]
 }
