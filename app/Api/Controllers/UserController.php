@@ -7,6 +7,7 @@
  */
 
 namespace App\Api\Controllers;
+use App\Model\School;
 use App\Model\User;
 use App\Model\UserMin;
 use JWTAuth;
@@ -20,7 +21,7 @@ class UserController extends BaseController
             return $this->return_response_user('4004','未找到相关信息');
         }
         $user = collect($user)->map(function ($item) {
-            if ($item==null) {
+            if ($item===null) {
                 $item = "";
             }
             return $item;
@@ -38,10 +39,10 @@ class UserController extends BaseController
         }
         else
         {
-            $user=UserMin::select('id','nickname','age','character_value','gender','followers','description','school_id')->find($id);
+            $user=UserMin::select('id','nickname','age','character_value','gender','followers_count','description','school_name')->find($id);
         }
         $user = collect($user)->map(function ($item) {
-            if ($item==null) {
+            if ($item===null) {
                 $item = "";
             }
             return $item;
@@ -82,6 +83,7 @@ class UserController extends BaseController
             'gender'=>$payload['gender'],
             'description'=>$payload['description'],
             'school_id'=>$payload['school_id'],
+            'school_name'=>School::find($payload['school_id'])->school_name,
             'student_id'=>$payload['student_id'],
             'QQ'=>$payload['QQ'],
             'WeChat'=>$payload['WeChat'],

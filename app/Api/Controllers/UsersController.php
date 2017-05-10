@@ -18,12 +18,12 @@ class UsersController extends BaseController
     public function index()
     {
         $since= isset($_GET['since'])?$_GET['since']:0;
-        $users=UserMin::since($since)->select('id','nickname','avatar','age','character_value','gender','grade','followers','description','school_id')->take('50')->get();
+        $users=UserMin::since($since)->select('id','nickname','avatar','age','character_value','gender','followers_count','description','school_name')->take('50')->get();
 
         $user_array=array();
         foreach ($users as $user) {
             $user_array[] = collect($user)->map(function ($item) {
-                if ($item==null) {
+                if ($item===null) {
                     $item = "";
                 }
                 return $item;
@@ -39,9 +39,9 @@ class UsersController extends BaseController
 
     public function show($id)
     {
-        $user=UserMin::select('id','nickname','avatar','age','character_value','gender','followers','grade','description','school_id')->find($id);
+        $user=UserMin::select('id','nickname','avatar','age','character_value','gender','followers_count','description','school_name')->find($id);
         $user = collect($user)->map(function ($item) {
-            if ($item==null) {
+            if ($item===null) {
                 $item = "";
             }
             return $item;

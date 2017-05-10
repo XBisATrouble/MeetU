@@ -17,15 +17,14 @@ class UserMin extends Authenticatable
      *
      * @var array
      */
-    protected $appends = ['school'];
-
     protected $hidden = [
-        'password', 'remember_token','updated_at','created_at','idcard','pivot','phone','marital_status','verify_photo_2','verify_photo','name','verify','student_id','school_id','school_name',
+        'password', 'remember_token','updated_at','created_at','idcard','pivot','phone','marital_status','verify_photo_2','verify_photo','name','verify','student_id','school_id',
     ];
 
     protected $casts = [
         'age' => 'integer',
         'character_value'=>'integer',
+        'followers_count'=>'integer',
     ];
 
     public function getGenderAttribute($value)
@@ -49,12 +48,6 @@ class UserMin extends Authenticatable
         return $this->hasMany('App\Model\Activity','creator');
     }
 
-    public function getSchoolAttribute()
-    {
-        $school=School::find($this->school_id);
-        return $school['school_name'];
-    }
-
     public function scopeSince($query,$since)
     {
         return $query->where('id','>=',$since);
@@ -69,13 +62,13 @@ class UserMin extends Authenticatable
     //获取所有我关注的人
     public function followings()
     {
-        return $this->belongsToMany(self::Class, 'followers', 'user_id', 'follower_id')->withTimestamps()->select('users.id','nickname','avatar','age','character_value','gender','description','school_id');
+        return $this->belongsToMany(self::Class, 'followers', 'user_id', 'follower_id')->withTimestamps()->select('users.id','nickname','avatar','age','character_value','gender','description','school_name');
     }
 
     //获取所有关注我的人
     public function followers()
     {
-        return $this->belongsToMany(self::Class, 'followers', 'follower_id', 'user_id')->withTimestamps()->select('users.id','nickname','avatar','age','character_value','gender','description','school_id');
+        return $this->belongsToMany(self::Class, 'followers', 'follower_id', 'user_id')->withTimestamps()->select('users.id','nickname','avatar','age','character_value','gender','description','school_name');
     }
 
     //关注用户

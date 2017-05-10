@@ -13,8 +13,6 @@ class User extends Authenticatable
      */
     protected $table="users";
 
-    protected $appends = ['school'];
-
     protected $fillable = [
         'phone','avatar','password','nickname','gender','description','name','idcard','school_id','school_name','student_id','QQ','WeChat','WeiBo','BaiduPostBar','FaceBook','Instagram','Twitter','verify_photo','verify_photo_2'
     ];
@@ -25,7 +23,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token','updated_at','created_at','idcard','pivot','school_id','student_id','school_name',
+        'password', 'remember_token','updated_at','created_at','idcard','pivot','school_id','student_id',
     ];
 
     protected $casts = [
@@ -52,11 +50,5 @@ class User extends Authenticatable
     public function create_activity()
     {
         return $this->hasMany('App\Model\Activity','creator');
-    }
-
-    public function getSchoolAttribute()
-    {
-        $school=School::find($this->school_id);
-        return $school['school_name'];
     }
 }

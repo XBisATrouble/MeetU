@@ -37,7 +37,12 @@ class Activity extends Model
 
     public function users()
     {
-        return $this->belongsToMany('App\Model\User')->withTimestamps()->select('users.id','nickname','avatar','age','character_value','gender','grade','followers','description','school_id');
+        return $this->belongsToMany('App\Model\User')->withTimestamps()->select('users.id','nickname','avatar','age','character_value','gender','followers','description','school_id');
+    }
+
+    public function activity_users()
+    {
+        return $this->belongsToMany('App\Model\User')->withTimestamps()->select('users.id','avatar','school_id');
     }
 
     public function getStatusAttribute()

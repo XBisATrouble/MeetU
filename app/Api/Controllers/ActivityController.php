@@ -26,7 +26,7 @@ class ActivityController extends BaseController
             }
         );
         $people_number_up=isset($_GET['numberOfPeople'])?$_GET['numberOfPeople']:10000;
-        $activities=Activity::with('creator')
+        $activities=Activity::with('creator','activity_users')
             ->where($attributes)
             ->where('people_number_up','<',$people_number_up)
             ->get(['id','title','content','creator','location','people_number_up','people_number_join','date_time_start','date_time_end','type']);
