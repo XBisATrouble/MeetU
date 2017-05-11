@@ -29,6 +29,7 @@ class User extends Authenticatable
     protected $casts = [
         'age' => 'integer',
         'character_value'=>'integer',
+        'followers_count'=>'integer',
     ];
 
     public function getGenderAttribute($value)

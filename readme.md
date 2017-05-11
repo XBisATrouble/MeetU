@@ -771,6 +771,7 @@
 >|total|Integer|返回活动总数|
 >|creator|object|创建者信息|
 >|data|object|活动列表|
+>|data.type|int|1为精心计划，2为说走就走|
 >|data.people_number_up|Integer|参与上限人数|
 >|data.people_number_join|Integer|已参与人数|
 >|data.PercentOfPeople|float|参与人数/人数上限，保留两位小数四舍五入|
@@ -804,7 +805,7 @@
             "people_number_join": 1,
             "date_time_start": null,
             "date_time_end": null,
-            "type": "说走就走",
+            "type": 1,
             "is_participated": false,
             "status": "活动已经结束",
             "PercentOfPeople": 0.04,
@@ -863,7 +864,7 @@
         },
         "people_number_up": 25,
         "people_number_join": 1,
-        "type": "说走就走",
+        "type": 1,
         "entrie_time_start": "2017-04-28 00:01:09",
         "entrie_time_end": "2017-04-30 00:01:11",
         "date_time_start": null,
@@ -895,7 +896,7 @@
 > | 返回参数      |     参数类型 |   参数说明   |
 >| :-------- | :--------| :------ |
 >| status_code|   Integer|  执行结果code|
->|info|Varchar|信息|
+>|info|varchar|信息|
 >|total|Integer|返回活动总数|
 >| user|   object|  用户列表|
 
@@ -949,12 +950,13 @@
 >|title|varchar|标题
 >|content|varchar|内容|
 >|type|int|活动类型|
->|people_number_up|int|人数上限|
+>|people_number_up|int，可选参数，若没有则为0，代表无人数上线|人数上限|
 >|location|varchar|地点|
 >|entrie_time_start|datetime|报名起始时间|
 >|entrie_time_end|datetime|报名截止时间|
 >|date_time_start|datetime|活动开始时间|
 >|date_time_end|datetime|活动结束时间|
+>|tags|array|标签数组，由已有标签id和不存在标签名组成|
 
 - **返回**
 > | 返回参数      |     参数类型 |   参数说明   |
@@ -979,7 +981,7 @@
     },
     "people_number_up": 20,
     "people_number_join": 0,
-    "type": "说走就走",
+    "type": 1,
     "entrie_time_start": null,
     "entrie_time_end": null,
     "date_time_start": null,

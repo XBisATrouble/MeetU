@@ -57,11 +57,13 @@ class ActivityParticipantsController extends BaseController
         {
             return $this->return_response_activity('4004','未找到相关信息');
         }
-        if($this->isParticipated($user_id,$id))
+        if(!$this->isParticipated($user_id,$id))
         {
-            return $this->return_response_activity('4040','您已参加该活动');
+            return $this->return_response_activity('4040','您已尚未参加该活动');
         }
 
+        $activity->people_number_join-=1;
+        $activity->save();
         $activity->users()->detach($user_id);
         return $this->return_response_activity('2000','退出成功');
     }

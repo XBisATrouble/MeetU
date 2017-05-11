@@ -29,7 +29,7 @@ class ActivityController extends BaseController
         $activities=Activity::with('creator','activity_users')
             ->where($attributes)
             ->where('people_number_up','<',$people_number_up)
-            ->get(['id','title','content','creator','location','people_number_up','people_number_join','date_time_start','date_time_end','type']);
+            ->get(['id','title','content','creator','location','people_number_up','people_number_join','entrie_time_start','entrie_time_end','date_time_start','date_time_end','type']);
         $total=$activities->count();
         if ($total==0)
         {
@@ -82,7 +82,7 @@ a:
 
     public function show($id)
     {
-        $activity=Activity::with('creator','tags')->find($id);
+        $activity=Activity::with('creator','tags','users')->find($id);
         $user_id='';
         if (isset($_GET['token']))
         {
@@ -135,9 +135,22 @@ a:
         {
             return $this->return_response_activity('4003','请求参数出错');
         }
+
+        if (!is_null(Input::get('tags')))
+        {
+            $tags=Input::get('tags');
+            $tags=$this->normalizeTopic($tags);
+        }
+
         $activity = Activity::create(Input::only('title', 'content','people_number_up','type','entrie_time_start','entrie_time_end','date_time_start','date_time_end','location'));
         $activity->creator=$this->getUser()->id;
-        $activity->shool_id=$this->getUser()->school_id;
+        //标签
+        $activity->tags()->attach($tags);
+
+        if (Input::get('people_number_up')==null)
+        {
+            $activity->people_number_up=0;
+        }
         if(!$activity->save())
         {
             return $this->return_response_activity('5000','服务器出错');
@@ -215,23 +228,6 @@ a:
         return $this->return_response_activity('2000','success',$activity);
     }
 
-    public function create()
-    {
-//        $tags=Tag::lists('name','id');
-//        $type=Type::lists('type','id');
-//        $result[]=compact('tags');
-//        $result[]=compact('type');
-//        return $result;
-        $total=Tag::count();
-        $tags=Tag::all();
-        return response()->json([
-            'status_code'=>'2000',
-            'info'=>'success',
-            'total'=>$total,
-            'data'=>$tags,
-        ]);
-    }
-
     public function tags(Request $request)
     {
         $topics=Tag::select(['id','name'])->where('name','like','%'.$request->query('q').'%')->get();
@@ -242,10 +238,9 @@ a:
     {
         return collect($topics)->map(function ($topic){
             if(is_numeric($topic)){
-                Tag::find($topic)->increment('questions_count');
                 return (int)$topic;
             }
-            $newTopic=Tag::create(['name'=>$topic,'questions_count'=>1]);
+            $newTopic=Tag::create(['name'=>$topic]);
             return $newTopic->id;
         })->toArray();
     }

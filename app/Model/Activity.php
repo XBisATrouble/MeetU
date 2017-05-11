@@ -20,6 +20,11 @@ class Activity extends Model
         'status','PercentOfPeople'
     ];
 
+    protected $casts = [
+        'people_number_up'=>'integer',
+        'people_number_join'=>'integer',
+    ];
+
     public function tags()
     {
         return $this->belongsToMany('App\Model\Tag');
@@ -27,17 +32,17 @@ class Activity extends Model
 
     public function getTypeAttribute($type)
     {
-        return $this->attributes['type']=Type::find($type)->type;
+        return $this->attributes['type']=(int)$type;
     }
 
     public function creator()
     {
-        return $this->belongsTo('App\Model\User','creator')->select('id','nickname','avatar','age','character_value','gender','followers','description','school_id');
+        return $this->belongsTo('App\Model\User','creator')->select('id','nickname','avatar','age','character_value','gender','followers_count','description','school_id');
     }
 
     public function users()
     {
-        return $this->belongsToMany('App\Model\User')->withTimestamps()->select('users.id','nickname','avatar','age','character_value','gender','followers','description','school_id');
+        return $this->belongsToMany('App\Model\User')->withTimestamps()->select('users.id','nickname','avatar','age','character_value','gender','followers_count','description','school_id');
     }
 
     public function activity_users()
@@ -57,6 +62,6 @@ class Activity extends Model
 
     public function getPercentOfPeopleAttribute()
     {
-        return round($this->people_number_join/$this->people_number_up,2);
+        return $this->people_number_up==='0'?round($this->people_number_join/$this->people_number_up,2):0;
     }
 }
