@@ -136,16 +136,16 @@ a:
             return $this->return_response_activity('4003','请求参数出错');
         }
 
+        $activity = Activity::create(Input::only('title', 'content','people_number_up','type','entrie_time_start','entrie_time_end','date_time_start','date_time_end','location'));
+        $activity->creator=$this->getUser()->id;
+
         if (!is_null(Input::get('tags')))
         {
             $tags=Input::get('tags');
             $tags=$this->normalizeTopic($tags);
+            //标签
+            $activity->tags()->attach($tags);
         }
-
-        $activity = Activity::create(Input::only('title', 'content','people_number_up','type','entrie_time_start','entrie_time_end','date_time_start','date_time_end','location'));
-        $activity->creator=$this->getUser()->id;
-        //标签
-        $activity->tags()->attach($tags);
 
         if (Input::get('people_number_up')==null)
         {
@@ -230,18 +230,32 @@ a:
 
     public function tags(Request $request)
     {
-        $topics=Tag::select(['id','name'])->where('name','like','%'.$request->query('q').'%')->get();
-        return $topics;
+        $tags=Tag::select(['id','name'])->where('name','like','%'.$request->query('q').'%')->get();
+        return $this->response->array([
+            'status_code'=>2000,
+            'info'=>'success',
+            'tags'=> $tags,
+        ]);
     }
 
-    public function normalizeTopic(array $topics)
+    public function normalizeTopic(array $tags)
     {
-        return collect($topics)->map(function ($topic){
-            if(is_numeric($topic)){
-                return (int)$topic;
+        return collect($tags)->map(function ($tag){
+            if($this->isTagsExist($tag)){
+                return $this->getTagIdByName($tag);
             }
-            $newTopic=Tag::create(['name'=>$topic]);
+            $newTopic=Tag::create(['name'=>$tag]);
             return $newTopic->id;
         })->toArray();
+    }
+
+    public function isTagsExist($tag)
+    {
+        return !!Tag::where('name',$tag)->count();
+    }
+
+    public function getTagIdByName($name)
+    {
+        return Tag::where('name',$name)->first()->id;
     }
 }
