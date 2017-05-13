@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 
@@ -63,5 +64,23 @@ class Activity extends Model
     public function getPercentOfPeopleAttribute()
     {
         return $this->people_number_up==='0'?round($this->people_number_join/$this->people_number_up,2):0;
+    }
+
+    public function getCreatedAtAttribute($date)
+    {
+        if (Carbon::now() > Carbon::parse($date)->addDays(10)) {
+            return Carbon::parse($date);
+        }
+
+        return Carbon::parse($date)->diffForHumans();
+    }
+
+    public function getUpdatedAtAttribute($date)
+    {
+        if (Carbon::now() > Carbon::parse($date)->addDays(10)) {
+            return Carbon::parse($date);
+        }
+
+        return Carbon::parse($date)->diffForHumans();
     }
 }

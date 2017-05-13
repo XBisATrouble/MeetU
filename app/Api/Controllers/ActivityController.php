@@ -26,14 +26,20 @@ class ActivityController extends BaseController
             }
         );
         $people_number_up=isset($_GET['numberOfPeople'])?$_GET['numberOfPeople']:10000;
-        $activities=Activity::with('creator','activity_users')
+        $activities=Activity::latest('updated_at')
+            ->with('creator','activity_users')
             ->where($attributes)
             ->where('people_number_up','<',$people_number_up)
-            ->get(['id','title','content','creator','location','people_number_up','people_number_join','entrie_time_start','entrie_time_end','date_time_start','date_time_end','type']);
+            ->paginate(20);
         $total=$activities->count();
         if ($total==0)
         {
-            return $this->return_response_activity('4004','未找到相关信息');
+            return $this->response->array([
+                'status_code'=>'2000',
+                'info'=>'success',
+                'total'=>$total,
+                'data'=>[],
+            ]);
         }
         $activities_info=array();
 
@@ -136,7 +142,7 @@ a:
             return $this->return_response_activity('4003','请求参数出错');
         }
 
-        $activity = Activity::create(Input::only('title', 'content','people_number_up','type','entrie_time_start','entrie_time_end','date_time_start','date_time_end','location'));
+        $activity = Activity::create(Input::only('title', 'content','people_number_up','type','entrie_time_start','entrie_time_end','date_time_start','date_time_end','location','created_at','updated_at'));
         $activity->creator=$this->getUser()->id;
 
         if (!is_null(Input::get('tags')))

@@ -762,6 +762,7 @@
 >|type|int，可选参数|活动类型，1为精心计划，2为说走就走|
 >|school_id|int，可选参数|学校id，由创建者的学校决定|
 >|numberOfPeople|int，可选参数|返回最大人数少于此变量的所有活动|
+>|page|int，可选参数|分页，默认一页展示20个|
 
 - **返回**
 > | 返回参数      |     参数类型 |   参数说明   |
@@ -947,16 +948,16 @@
 > | 请求参数      |     参数类型 |   参数说明   |
 >| :-------- | :--------| :------ |
 >|**token**|varchar|调用接口凭证|
->|title|varchar|标题
->|content|varchar|内容|
->|type|int|活动类型|
+>|title|varchar，必须，切不超过100个字符|标题
+>|content|varchar，必须|内容|
+>|type|int，必须|活动类型|
 >|people_number_up|int，可选参数，若没有则为0，代表无人数上线|人数上限|
 >|location|varchar|地点|
 >|entrie_time_start|datetime|报名起始时间|
 >|entrie_time_end|datetime|报名截止时间|
 >|date_time_start|datetime|活动开始时间|
 >|date_time_end|datetime|活动结束时间|
->|tags|array|标签数组，由已有标签id和不存在标签名组成|
+>|tags|array|标签数组，由标签名组成|
 
 - **返回**
 > | 返回参数      |     参数类型 |   参数说明   |
@@ -1565,79 +1566,3 @@
 
 
 ## TODO AND ISSUE
-#### 1. 创建活动时标签的格式
-
-
-#### 2. 返回标签格式
-有两种
-```
-{
-    "status_code": "2000",
-    "info": "success",
-    "data": {
-        "id": 1,
-        "title": "五一厦门三日游",
-        "content": "活动介绍活动介绍活动介绍",
-        "creator": {
-            "id": 1,
-            "name": "陈旭斌"
-        },
-        "people_number_limit": 25,
-        "people_number_up": 35,
-        "people_number_join": 1,
-        "type": "说走就走",
-        "entrie_time_start": null,
-        "entrie_time_end": null,
-        "date_time_start": null,
-        "date_time_end": null,
-        "location": "厦门鼓浪屿",
-        "created_at": "2017-04-20 21:28:11",
-        "updated_at": "2017-04-21 00:00:51",
-        "is_participated": false,
-        "tags": [
-            {
-                "id": 1,
-                "name": "电影"
-            },
-            {
-                "id": 2,
-                "name": "桌游"
-            }
-        ]
-    }
-}
-```
-
-```
-{
-    "status_code": "2000",
-    "info": "success",
-    "data": {
-        "id": 1,
-        "title": "五一厦门三日游",
-        "content": "活动介绍活动介绍活动介绍",
-        "creator": {
-            "id": 1,
-            "name": "陈旭斌"
-        },
-        "people_number_limit": 25,
-        "people_number_up": 35,
-        "people_number_join": 1,
-        "type": "说走就走",
-        "entrie_time_start": null,
-        "entrie_time_end": null,
-        "date_time_start": null,
-        "date_time_end": null,
-        "location": "厦门鼓浪屿",
-        "created_at": "2017-04-20 21:28:11",
-        "updated_at": "2017-04-21 00:00:51",
-        "is_participated": false,
-        "tags": {
-            "1": "电影",
-            "2": "桌游"
-        }
-    }
-}
-```
-
-#### 3. 活动和用户模块修改意见
