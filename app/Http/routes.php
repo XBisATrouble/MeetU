@@ -64,6 +64,11 @@ $api->version('v1', function ($api) {
             $api->get('activity/create','ActivityController@create');                                   //创建活动时需要的信息
             $api->get('activity/{activity}/edit','ActivityController@edit');                            //编辑前获取所有的信息
             $api->resource('activity','ActivityController',array('only' => array('store','update','destroy')));
+
+            $api->post('user/verify','ImagesController@uploadVerifyPhotos');
+            $api->get('activity/{activity}/photos','ImagesController@getActivityPhotos');
+            $api->post('activity/{activity}/photos','ImagesController@uploadActivityPhotos');
+            $api->post('user/avatar','ImagesController@uploadUserAvatar');
         });
     });
 });

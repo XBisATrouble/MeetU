@@ -743,6 +743,64 @@
 }
 ```
 
+#### 接口说明 9、修改头像
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/user/avatar](https://xbbbbbb.cn/MeetU/api/user/avatar)
+
+- **请求方式** 
+>**POST**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>|token|varchar|调用接口凭证|
+>|photo|file，必填|头像图片，目前可以为png和jpg|
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|varchar|返回信息|
+>|data|object|返回头像地址，也可以通过user接口中的avatar取|
+
+- **返回示例**
+>    
+```json
+{
+  "status_code": "2000",
+  "info": "上传成功",
+  "data": "/public/uploads/avatars/1.jpg"
+}
+```
+
+#### 接口说明 10、上传验证图片
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/user/verify](https://xbbbbbb.cn/MeetU/api/user/verify)
+
+- **请求方式** 
+>**POST**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>|token|varchar|调用接口凭证|
+>|photo|file，必填|头像图片，目前可以为png和jpg|
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|varchar|返回信息|
+>|||该图片位于非公开目录，仅后台系统能访问|
+
+- **返回示例**
+>    
+```json
+{
+  "status_code": "2000",
+  "info": "上传成功",
+}
+```
 
 ## 活动模块
 
@@ -1566,3 +1624,79 @@
 
 
 ## TODO AND ISSUE
+#### 1. 创建活动时标签的格式
+
+
+#### 2. 返回标签格式
+有两种
+```
+{
+    "status_code": "2000",
+    "info": "success",
+    "data": {
+        "id": 1,
+        "title": "五一厦门三日游",
+        "content": "活动介绍活动介绍活动介绍",
+        "creator": {
+            "id": 1,
+            "name": "陈旭斌"
+        },
+        "people_number_limit": 25,
+        "people_number_up": 35,
+        "people_number_join": 1,
+        "type": "说走就走",
+        "entrie_time_start": null,
+        "entrie_time_end": null,
+        "date_time_start": null,
+        "date_time_end": null,
+        "location": "厦门鼓浪屿",
+        "created_at": "2017-04-20 21:28:11",
+        "updated_at": "2017-04-21 00:00:51",
+        "is_participated": false,
+        "tags": [
+            {
+                "id": 1,
+                "name": "电影"
+            },
+            {
+                "id": 2,
+                "name": "桌游"
+            }
+        ]
+    }
+}
+```
+
+```
+{
+    "status_code": "2000",
+    "info": "success",
+    "data": {
+        "id": 1,
+        "title": "五一厦门三日游",
+        "content": "活动介绍活动介绍活动介绍",
+        "creator": {
+            "id": 1,
+            "name": "陈旭斌"
+        },
+        "people_number_limit": 25,
+        "people_number_up": 35,
+        "people_number_join": 1,
+        "type": "说走就走",
+        "entrie_time_start": null,
+        "entrie_time_end": null,
+        "date_time_start": null,
+        "date_time_end": null,
+        "location": "厦门鼓浪屿",
+        "created_at": "2017-04-20 21:28:11",
+        "updated_at": "2017-04-21 00:00:51",
+        "is_participated": false,
+        "tags": {
+            "1": "电影",
+            "2": "桌游"
+        }
+    }
+}
+```
+
+#### 3. 活动和用户模块修改意见
