@@ -55,15 +55,17 @@ class Activity extends Model
     {
         $dt = new DateTime();
         $dt_now=$dt->format('Y-m-d H:i:s');
-        if($this->entrie_time_start<$dt_now && $this->entrie_time_end>$dt_now)
-            return "活动进行中";
+        if($dt_now<$this->entrie_time_start)
+            return "报名尚未开始";
+        else if ($dt_now>$this->entrie_time_end)
+            return "报名已经结束";
         else
-            return "活动已经结束";
+            return "报名进行中";
     }
 
     public function getPercentOfPeopleAttribute()
     {
-        return $this->people_number_up==='0'?round($this->people_number_join/$this->people_number_up,2):0;
+        return $this->people_number_up===0?0:(floatval(round((float)$this->people_number_join/$this->people_number_up,2)));
     }
 
     public function getCreatedAtAttribute($date)

@@ -63,8 +63,6 @@ class UsersController extends BaseController
             'gender'=>['boolean'],
             'name' => ['unique:users'],
             'idcard'=>['unique:users','between:18,18'],
-//            'photo'=>['mimes:jpeg,bmp,png,jpg'],
-//            'photo2'=>['mimes:jpeg,bmp,png,jpg'],
         ];
 
         $error_message=[
@@ -77,8 +75,6 @@ class UsersController extends BaseController
             'name.unique'=>'该姓名已被注册!',
             'idcard.unique'=>'该身份证已被注册!',
             'idcard.between'=>'身份证必须为18位',
-//            'photo.mimes'=>'必须上传图片',
-//            'photo2.mimes'=>'必须上传图片',
         ];
 
         $payload = app('request')->only('phone','password','nickname','gender','description','name','idcard','school_id','student_id','QQ','WeChat','WeiBo','FaceBook','Instagram','Twitter','photo','photo2');
@@ -101,26 +97,9 @@ class UsersController extends BaseController
             {
                 return $this->return_response('4024',$validator_array['password'][0]);
             }
-//            if(!empty($validator_array['photo'][0]))
-//            {
-//                return $this->return_response('4025',$validator_array['photo'][0]);
-//            }
-//            if(!empty($validator_array['photo2'][0]))
-//            {
-//                return $this->return_response('4025',$validator_array['photo2'][0]);
-//            }
         }
 
-//        if ($payload['photo']!=null){
-//            $photo=$this->upLoadPhoto($payload['photo'],$payload['idcard']);
-//        }else{
-//            $photo=null;
-//        }
-//        if ($payload['photo2']!=null){
-//            $photo2=$this->upLoadPhoto($payload['photo2'],$payload['idcard'],'_2');
-//        }else{
-//            $photo2=null;
-//        }
+        $school_name=is_null($payload['school_id'])?null:School::find($payload['school_id'])->school_name;
 
         $newUser=[
             'phone' => $payload['phone'],
@@ -132,7 +111,7 @@ class UsersController extends BaseController
             'idcard'=>$payload['idcard'],
             'avatar' => 'public/images/avatars/default.png',
             'school_id'=>$payload['school_id'],
-            'school_name'=>School::find($payload['school_id'])->school_name,
+            'school_name'=>$school_name,
             'student_id'=>$payload['student_id'],
             'QQ'=>$payload['QQ'],
             'WeChat'=>$payload['WeChat'],
