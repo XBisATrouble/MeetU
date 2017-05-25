@@ -69,6 +69,8 @@ $api->version('v1', function ($api) {
             $api->get('activity/{activity}/photos','ImagesController@getActivityPhotos');
             $api->post('activity/{activity}/photos','ImagesController@uploadActivityPhotos');
             $api->post('user/avatar','ImagesController@uploadUserAvatar');
+
+            $api->post('user/location','UserController@location');
         });
     });
 });

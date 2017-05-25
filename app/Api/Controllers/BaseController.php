@@ -10,6 +10,7 @@ namespace App\Api\Controllers;
 
 
 use App\Http\Controllers\Controller;
+use App\Model\User;
 use App\Model\UserMin;
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Support\Facades\DB;
@@ -154,5 +155,62 @@ class BaseController extends Controller
     public function isFollow($user_id,$follower_id)
     {
         return UserMin::find($user_id)->isFollowing($follower_id);
+    }
+
+    public function BaiduApiLocation($location)
+    {
+        header('Access-Control-Allow-Origin:*');
+        $ch = curl_init();
+        $url="http://api.map.baidu.com/place/v2/suggestion?query=".$location."&region=全国&output=json&ak=QFB8m8ZrCEgUXss3Av5vId58CuxlA0jl";
+        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
+        curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+//执行并获取HTML文档内容
+        $output = curl_exec($ch);
+//释放curl句柄
+        curl_close($ch);
+//打印获得的数据
+        $array=json_decode($output)->result;
+        $result['lat']=$array[0]->location->lat;
+        $result['lng']=$array[0]->location->lng;
+        return $result;
+    }
+
+    public function distance($user_id,$activity)
+    {
+        $user=User::find($user_id);
+        if ($user!=null)
+            return $this->getDistance($activity->lat,$activity->lng,$user->last_lat,$user->last_lng);
+        else
+            return null;
+    }
+
+    function getDistance($lat1, $lng1, $lat2, $lng2)
+    {
+        header('Access-Control-Allow-Origin:*');
+        $ch = curl_init();
+        $url="http://api.map.baidu.com/routematrix/v2/driving?output=json&origins=".$lat1.",".$lng1."&destinations=".$lat2.",".$lng2."&ak=QFB8m8ZrCEgUXss3Av5vId58CuxlA0jl";
+        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
+        curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+//执行并获取HTML文档内容
+        $output = curl_exec($ch);
+//释放curl句柄
+        curl_close($ch);
+//打印获得的数据
+        $status=json_decode($output)->status;
+        if ($status==0)
+        {
+            $result=json_decode($output)->result;
+            return $result[0]->distance->text;
+        }
+        else
+        {
+            return "0公里";
+        }
     }
 }

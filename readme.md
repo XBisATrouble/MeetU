@@ -802,6 +802,35 @@
 }
 ```
 
+#### 接口说明 11、更新用户位置
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/user/location](https://xbbbbbb.cn/MeetU/api/user/location)
+
+- **请求方式** 
+>**POST**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>|token|varchar|调用接口凭证|
+>|lng|varchar|经度|
+>|lat|varchar|纬度|
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|varchar|返回信息|
+
+- **返回示例**
+>    
+```json
+{
+  "status_code": "2000",
+  "info": "操作成功",
+}
+```
+
 ## 活动模块
 
 #### 接口说明 1、获取活动列表
@@ -816,7 +845,7 @@
 - **请求参数**
 > | 请求参数      |     参数类型 |   参数说明   |
 >| :-------- | :--------| :------ |
->|token|varchar，可选参数，如果带token则会对is_participated进行判断，默认为false|调用接口凭证|
+>|token|varchar，可选参数，如果带token则会对is_participated进行判断，默认为false，同时会对该用户与活动之间的距离做出返回，默认为0km|调用接口凭证|
 >|type|int，可选参数|活动类型，1为精心计划，2为说走就走|
 >|school_id|int，可选参数|学校id，由创建者的学校决定|
 >|numberOfPeople|int，可选参数|返回最大人数少于此变量的所有活动|
@@ -868,6 +897,7 @@
             "is_participated": false,
             "status": "活动已经结束",
             "PercentOfPeople": 0.04,
+            "distance":"1611公里",
             "tags": [
                 "电影",
                 "桌游"
@@ -889,7 +919,7 @@
 - **请求参数**
 > | 请求参数      |     参数类型 |   参数说明   |
 >| :-------- | :--------| :------ |
->|token|varchar，可选参数，如果带token则会对is_participated进行判断，默认为false|调用接口凭证|
+>|token|varchar，可选参数，如果带token则会对is_participated进行判断，默认为false，同时会对该用户与活动之间的距离做出返回，默认为0km|调用接口凭证|
 
 - **返回**
 > | 返回参数      |     参数类型 |   参数说明   |

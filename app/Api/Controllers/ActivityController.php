@@ -31,6 +31,7 @@ class ActivityController extends BaseController
             ->where($attributes)
             ->where('people_number_up','<',$people_number_up)
             ->paginate(20);
+
         $total=$activities->count();
         if ($total==0)
         {
@@ -49,7 +50,7 @@ class ActivityController extends BaseController
             if (is_object($this->getUser()))
             {
                 $user_id=$this->getUser()->id;
-                goto a;       //跳出该if
+                goto a;       //跳出该if 需要优化
             }
 
             if ($this->getUser()==4011)
@@ -75,6 +76,7 @@ class ActivityController extends BaseController
 a:
         foreach ($activities as $activity) {
             $activity['is_participated']=$this->isParticipated($user_id,$activity->id);
+            $activity['distance']=$this->distance($user_id,$activity);
             $activity=$this->insert_tags($activity);
             $activities_info[]=$activity;
         }
@@ -124,6 +126,7 @@ a:
             return $this->return_response_activity('4004','未找到相关信息');
         }
         $activity['is_participated']=$this->isParticipated($user_id,$id);
+        $activity['distance']=$this->distance($user_id,$activity);
         $activity=$this->insert_tags($activity);
         return $this->return_response_activity('2000','success',$activity);
     }
@@ -144,6 +147,14 @@ a:
 
         $activity = Activity::create(Input::only('title', 'content','people_number_up','type','entrie_time_start','entrie_time_end','date_time_start','date_time_end','location','created_at','updated_at'));
         $activity->creator=$this->getUser()->id;
+        $location=array();
+        if (Input::get('location')!=null)
+        {
+            $location=$this->BaiduApiLocation(Input::get('location'));
+            $activity->lat=$location['lat'];
+            $activity->lng=$location['lng'];
+        }
+
 
         if (!is_null(Input::get('tags')))
         {

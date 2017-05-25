@@ -194,4 +194,16 @@ class UserController extends BaseController
 
         return $this->return_response_activity('2000','取关成功');
     }
+
+    public function location()
+    {
+        $user=$this->getUser();
+        $user->last_lng=request('lng');
+        $user->last_lat=request('lat');
+        $user->save();
+        return $this->response->array([
+            'status_code'=>'2000',
+            'info' => '操作成功',
+        ]);
+    }
 }

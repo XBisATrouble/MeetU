@@ -5,6 +5,7 @@ namespace App\Model;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
+use JWTAuth;
 
 class Activity extends Model
 {

@@ -11,6 +11,7 @@ namespace App\Api\Controllers;
 use App\Model\School;
 use App\Model\UserMin;
 use App\Model\User;
+use Illuminate\Support\Facades\Input;
 use JWTAuth;
 
 class UsersController extends BaseController
@@ -109,7 +110,7 @@ class UsersController extends BaseController
             'description'=>$payload['description'],
             'name' => $payload['name'],
             'idcard'=>$payload['idcard'],
-            'avatar' => 'public/images/avatars/default.png',
+            'avatar' => '/public/uploads/avatars/default.png',
             'school_id'=>$payload['school_id'],
             'school_name'=>$school_name,
             'student_id'=>$payload['student_id'],
