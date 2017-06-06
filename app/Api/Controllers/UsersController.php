@@ -128,6 +128,7 @@ class UsersController extends BaseController
         // 创建用户成功
         if ($res)
         {
+            $this->registerHX($payload['phone']);
             $credentials = ['phone'=>$payload['phone'],'password'=>$payload['password']];
 
             $token = JWTAuth::attempt($credentials);
@@ -171,5 +172,31 @@ class UsersController extends BaseController
         {
             return $this->return_response_user('2004','未找到相关信息');
         }
+    }
+
+    public function registerHX($phone)
+    {
+        $get_url = "http://a1.easemob.com/1163170528178856/meetyou/users";
+
+        $post_data=array("username"=>$phone,"password"=>"000000");
+        $post_data=json_encode($post_data);
+
+        $post_datas = $this->curls($get_url, $post_data);
+
+        return true;
+    }
+
+    function curls($url, $data_string) {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json','Accept: application/json','Authorization: Bearer YWMtYPaF-EnZEeePkvufwmbnmAAAAAAAAAAAAAAAAAAAAAFfbfKgQ4IR57Lrf07fIeDZAgMAAAFcd8pG_gBPGgDQ38ueExey3GeoqXibHyzChreTzWQZBQFu6SXkzTTZKg'));
+
+
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+        $data = curl_exec($ch);
+        curl_close($ch);
+        return $data;
     }
 }

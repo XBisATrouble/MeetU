@@ -43,6 +43,8 @@ $api->version('v1', function ($api) {
 
         $api->get('search/tags','ActivityController@tags');                                                               //标签搜索
 
+        $api->resource('moments','MomentsController'); //store方法需要token
+
 
         //需要token的私有接口
         $api->group(['middleware'=>'jwt.api.auth'],function ($api){
