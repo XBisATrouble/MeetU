@@ -93,7 +93,7 @@ class MomentsController extends BaseController
                 'info'=>'未找到相关信息',
             ]);
         }
-        if($moment->creator!=$this->getUser()->id)
+        if($moment->user_id!=$this->getUser()->id)
         {
             return $this->response->array([
                 'status_code'=>'4030',
@@ -114,5 +114,18 @@ class MomentsController extends BaseController
                 'info'=>'操作成功',
             ]);
         }
+    }
+
+    public function followingsFeed()
+    {
+        $user=$this->getUser();
+        $moments=$user->momentFeed()->get();
+        $total=$moments->count();
+        return $this->response->array([
+            'status_code'=>'2000',
+            'info'=>'success',
+            'total'=>$total,
+            'data'=>$moments,
+        ]);
     }
 }

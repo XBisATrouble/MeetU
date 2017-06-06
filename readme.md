@@ -213,6 +213,8 @@
 - **请求URL**
 > [https://xbbbbbb.cn/MeetU/api/users ](https://xbbbbbb.cn/MeetU/api/users)
 
+- **注册时同时注册环信账号，账号为手机，密码为000000**
+
 - **请求方式** 
 >**POST**
 
@@ -1041,6 +1043,7 @@
 >|type|int，必须|活动类型|
 >|people_number_up|int，可选参数，若没有则为0，代表无人数上线|人数上限|
 >|location|varchar|地点|
+>|group_id|int|群聊组id|
 >|entrie_time_start|datetime|报名起始时间|
 >|entrie_time_end|datetime|报名截止时间|
 >|date_time_start|datetime|活动开始时间|
@@ -1652,81 +1655,245 @@
 }
 ```
 
+## 发现模块
 
-## TODO AND ISSUE
-#### 1. 创建活动时标签的格式
+#### 接口说明 1、获取最新发现内容
 
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/moments](https://xbbbbbb.cn/MeetU/api/moments)
 
-#### 2. 返回标签格式
-有两种
-```
+- **请求方式** 
+>**GET**
+- **此方法按时间进行排序**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>|page|int，可选参数|分页，默认一页展示20个|
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|varchar|返回信息|
+>|total|int|查询结果个数|
+>|data|object|返回信息|
+
+- **返回示例**
+>    
+```json
 {
     "status_code": "2000",
     "info": "success",
-    "data": {
-        "id": 1,
-        "title": "五一厦门三日游",
-        "content": "活动介绍活动介绍活动介绍",
-        "creator": {
-            "id": 1,
-            "name": "陈旭斌"
-        },
-        "people_number_limit": 25,
-        "people_number_up": 35,
-        "people_number_join": 1,
-        "type": "说走就走",
-        "entrie_time_start": null,
-        "entrie_time_end": null,
-        "date_time_start": null,
-        "date_time_end": null,
-        "location": "厦门鼓浪屿",
-        "created_at": "2017-04-20 21:28:11",
-        "updated_at": "2017-04-21 00:00:51",
-        "is_participated": false,
-        "tags": [
-            {
+    "total": 2,
+    "data": [
+        {
+            "id": 4,
+            "title": "厦门，一个容易触动人心的地方",
+            "content": "本次厦门行可以说是一场蓄谋已久的旅行，几个月前就和胖州商量着：要不要再报名试试，一起跑个马拉松？",
+            "location": "重庆邮电大学",
+            "votes_count": "0",
+            "comments_count": "0",
+            "user_id": "1",
+            "created_at": "14分钟前",
+            "updated_at": "14分钟前",
+            "user": {
                 "id": 1,
-                "name": "电影"
-            },
-            {
-                "id": 2,
-                "name": "桌游"
+                "nickname": "XB",
+                "age": 19,
+                "avatar": "/public/uploads/avatars/1.jpg",
+                "character_value": 50,
+                "school_name": "重庆邮电大学",
+                "gender": "男",
+                "grade": "大二",
+                "description": "运动健儿",
+                "followers_count": 0,
+                "last_lat": "29.538065",
+                "last_lng": "106.614548"
             }
-        ]
-    }
+        }....
+    ]
 }
 ```
 
+#### 接口说明 2、获取关注者的发现内容
+
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/moments/followings](https://xbbbbbb.cn/MeetU/api/moments/followings)
+
+- **请求方式** 
+>**GET**
+- **此方法按发布时间进行排序，内容为关注的人的发现内容**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>|**token**|varchar|调用接口凭证|
+>|page|int，可选参数|分页，默认一页展示20个|
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|varchar|返回信息|
+>|total|int|查询结果个数|
+>|data|object|返回信息|
+
+- **返回示例**
+>    
+```json
+{
+    "status_code": "2000",
+    "info": "success",
+    "total": 2,
+    "data": [
+        {
+            "id": 4,
+            "title": "厦门，一个容易触动人心的地方",
+            "content": "本次厦门行可以说是一场蓄谋已久的旅行，几个月前就和胖州商量着：要不要再报名试试，一起跑个马拉松？",
+            "location": "重庆邮电大学",
+            "votes_count": "0",
+            "comments_count": "0",
+            "user_id": "1",
+            "created_at": "14分钟前",
+            "updated_at": "14分钟前",
+            "user": {
+                "id": 1,
+                "nickname": "XB",
+                "age": 19,
+                "avatar": "/public/uploads/avatars/1.jpg",
+                "character_value": 50,
+                "school_name": "重庆邮电大学",
+                "gender": "男",
+                "grade": "大二",
+                "description": "运动健儿",
+                "followers_count": 0,
+                "last_lat": "29.538065",
+                "last_lng": "106.614548"
+            }
+        }....
+    ]
+}
 ```
+
+#### 接口说明 3、创建发现内容
+
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/moments](https://xbbbbbb.cn/MeetU/api/moments)
+
+- **请求方式** 
+>**POST**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>|**token**|string|调用接口凭证|
+>|title|string，必须|标题|
+>|content|string，必须|内容|
+>|location|string|发布时的位置|
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|varchar|返回信息|
+>|total|int|查询结果个数|
+>|data|object|返回发现实例|
+
+- **返回示例**
+>    
+```json
+{
+  "status_code": 2000,
+  "info": "success",
+  "data": {
+    "title": "美国明尼阿波利斯吉他四重奏音乐会 官方售票",
+    "content": "— 英国《古典吉他》杂志\n明尼阿波利斯吉他四重奏自1986年成立以来，以其非凡的想象力、卓越的艺术技巧和音乐性，成为当今“世界上最重要的吉他组合之一”——《共鸣板（Soundboard）》杂志\n四位吉他演奏家——约瑟夫·哈格多恩（Joseph Hagedorn）、玛娅·拉多范利亚（Maja Radovanlija）、本·坎克尔（Ben Kunkel）和维德·欧登（Wade Oden)的大多数乐曲都是背谱演奏，这在吉他组合中是不多见的。他们的曲目不仅有吉他四重奏的原创作品也有他们自己的精彩改编，除了众多重要的委约新作品还有独特的跨界合作。他们的演奏有着清晰的线条、独特的声音和绝对的纯净。作曲家兼演奏家丹尼尔·伯纳德·罗梅因（Daniel Bernard Roumain）曾评价他们，“不只是一支吉他四重奏，不只是出众的音乐家，也不只是一支非常棒的室内乐组合”，“他们是声音、风格和实质的使者”。",
+    "location": "重庆邮电大学",
+    "votes_count": 0,
+    "comments_count": 0,
+    "user_id": 7,
+    "updated_at": "1秒前",
+    "created_at": "1秒前",
+    "id": 7
+  }
+}
+```
+
+#### 接口说明 4、获取单个发现内容
+
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/moments/{moments_id}](https://xbbbbbb.cn/MeetU/api/moments/{moments_id})
+
+- **请求方式** 
+>**GET**
+
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|varchar|返回信息|
+>|data|object|返回信息|
+
+- **返回示例**
+>    
+```json
 {
     "status_code": "2000",
     "info": "success",
     "data": {
-        "id": 1,
-        "title": "五一厦门三日游",
-        "content": "活动介绍活动介绍活动介绍",
-        "creator": {
-            "id": 1,
-            "name": "陈旭斌"
-        },
-        "people_number_limit": 25,
-        "people_number_up": 35,
-        "people_number_join": 1,
-        "type": "说走就走",
-        "entrie_time_start": null,
-        "entrie_time_end": null,
-        "date_time_start": null,
-        "date_time_end": null,
-        "location": "厦门鼓浪屿",
-        "created_at": "2017-04-20 21:28:11",
-        "updated_at": "2017-04-21 00:00:51",
-        "is_participated": false,
-        "tags": {
-            "1": "电影",
-            "2": "桌游"
+        "id": 7,
+        "title": "美国明尼阿波利斯吉他四重奏音乐会 官方售票",
+        "content": "— 英国《古典吉他》杂志\n明尼阿波利斯吉他四重奏自1986年成立以来，以其非凡的想象力、卓越的艺术技巧和音乐性，成为当今“世界上最重要的吉他组合之一”——《共鸣板（Soundboard）》杂志\n四位吉他演奏家——约瑟夫·哈格多恩（Joseph Hagedorn）、玛娅·拉多范利亚（Maja Radovanlija）、本·坎克尔（Ben Kunkel）和维德·欧登（Wade Oden)的大多数乐曲都是背谱演奏，这在吉他组合中是不多见的。他们的曲目不仅有吉他四重奏的原创作品也有他们自己的精彩改编，除了众多重要的委约新作品还有独特的跨界合作。他们的演奏有着清晰的线条、独特的声音和绝对的纯净。作曲家兼演奏家丹尼尔·伯纳德·罗梅因（Daniel Bernard Roumain）曾评价他们，“不只是一支吉他四重奏，不只是出众的音乐家，也不只是一支非常棒的室内乐组合”，“他们是声音、风格和实质的使者”。",
+        "location": null,
+        "votes_count": "0",
+        "comments_count": "0",
+        "user_id": "7",
+        "created_at": "3分钟前",
+        "updated_at": "3分钟前",
+        "user": {
+            "id": 7,
+            "nickname": "xbb",
+            "age": 20,
+            "avatar": "/public/uploads/avatars/default.png",
+            "character_value": 50,
+            "school_name": "中国人民大学",
+            "gender": "女",
+            "description": "运动健儿",
+            "followers_count": 1,
+            "last_lat": "29.538065",
+            "last_lng": "106.614548"
         }
     }
 }
 ```
 
-#### 3. 活动和用户模块修改意见
+#### 接口说明 4、删除发现内容
+
+- **请求URL**
+> [https://xbbbbbb.cn/MeetU/api/moments/{moments_id}](https://xbbbbbb.cn/MeetU/api/moments/{moments_id})
+
+- **请求方式** 
+>**DELETE**
+
+- **请求参数**
+> | 请求参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>|**token**|string|调用接口凭证|
+
+- **返回**
+> | 返回参数      |     参数类型 |   参数说明   |
+>| :-------- | :--------| :------ |
+>| status_code|   Integer|  执行结果code|
+>|info|string|返回信息|
+>|data|object|返回信息|
+
+- **返回示例**
+>    
+```json
+{
+  "status_code": "2000",
+  "info": "操作成功"
+}
+```

@@ -43,6 +43,7 @@ $api->version('v1', function ($api) {
 
         $api->get('search/tags','ActivityController@tags');                                                               //标签搜索
 
+        $api->get('moments/followings','MomentsController@followingsFeed');
         $api->resource('moments','MomentsController'); //store方法需要token
 
 

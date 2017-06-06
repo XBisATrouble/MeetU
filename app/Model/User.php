@@ -52,4 +52,18 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Model\Activity','creator');
     }
+
+    public function followings()
+    {
+        return $this->belongsToMany(self::Class, 'followers', 'follower_id', 'user_id')->withTimestamps();
+    }
+
+    public function momentFeed()
+    {
+        $user_ids = $this->followings->pluck('id')->toArray();
+        array_push($user_ids, $this->id);
+        return Moment::whereIn('user_id', $user_ids)
+            ->with('user')
+            ->latest('updated_at');
+    }
 }

@@ -145,7 +145,7 @@ a:
             return $this->return_response_activity('4003','请求参数出错');
         }
 
-        $activity = Activity::create(Input::only('title', 'content','people_number_up','type','entrie_time_start','entrie_time_end','date_time_start','date_time_end','location','created_at','updated_at'));
+        $activity = Activity::create(Input::only('title', 'content','people_number_up','type','entrie_time_start','entrie_time_end','date_time_start','date_time_end','location','group_id','created_at','updated_at'));
         $activity->creator=$this->getUser()->id;
         $location=array();
         if (Input::get('location')!=null)

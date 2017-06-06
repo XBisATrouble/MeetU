@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c06b2439-269e-4706-8939-aa190bebfd43" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/enableQueryLog()" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Api/Controllers/UsersController.php" afterPath="$PROJECT_DIR$/app/Api/Controllers/UsersController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Api/Controllers/ActivityController.php" afterPath="$PROJECT_DIR$/app/Api/Controllers/ActivityController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Api/Controllers/MomentsController.php" afterPath="$PROJECT_DIR$/app/Api/Controllers/MomentsController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/routes.php" afterPath="$PROJECT_DIR$/app/Http/routes.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/jwt.php" afterPath="$PROJECT_DIR$/config/jwt.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Model/User.php" afterPath="$PROJECT_DIR$/app/Model/User.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -38,8 +40,8 @@
       <file leaf-file-name="routes.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="293">
-              <caret line="45" column="71" lean-forward="false" selection-start-line="45" selection-start-column="71" selection-end-line="45" selection-end-column="71" />
+            <state relative-caret-position="401">
+              <caret line="46" column="71" lean-forward="true" selection-start-line="46" selection-start-column="71" selection-end-line="46" selection-end-column="71" />
               <folding />
             </state>
           </provider>
@@ -48,7 +50,7 @@
       <file leaf-file-name="UserController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Api/Controllers/UserController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="644">
+            <state relative-caret-position="662">
               <caret line="207" column="5" lean-forward="false" selection-start-line="207" selection-start-column="5" selection-end-line="207" selection-end-column="5" />
               <folding />
             </state>
@@ -58,31 +60,19 @@
       <file leaf-file-name="UsersController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Api/Controllers/UsersController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="77">
-              <caret line="176" column="0" lean-forward="false" selection-start-line="176" selection-start-column="0" selection-end-line="200" selection-end-column="5" />
+            <state relative-caret-position="293">
+              <caret line="151" column="9" lean-forward="true" selection-start-line="151" selection-start-column="9" selection-end-line="151" selection-end-column="9" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BaseController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Api/Controllers/BaseController.php">
+      <file leaf-file-name="User.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Model/User.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="338">
-              <caret line="192" column="26" lean-forward="true" selection-start-line="192" selection-start-column="26" selection-end-line="192" selection-end-column="26" />
+            <state relative-caret-position="1418">
+              <caret line="65" column="26" lean-forward="true" selection-start-line="65" selection-start-column="26" selection-end-line="65" selection-end-column="26" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Moment.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Model/Moment.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="500">
-              <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-              <folding>
-                <element signature="e#110#128#0#PHP" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -90,8 +80,8 @@
       <file leaf-file-name="MomentsController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Api/Controllers/MomentsController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2511">
-              <caret line="98" column="38" lean-forward="false" selection-start-line="98" selection-start-column="38" selection-end-line="98" selection-end-column="38" />
+            <state relative-caret-position="378">
+              <caret line="94" column="9" lean-forward="true" selection-start-line="94" selection-start-column="9" selection-end-line="94" selection-end-column="9" />
               <folding>
                 <element signature="e#121#142#0#PHP" expanded="true" />
               </folding>
@@ -175,18 +165,18 @@
         <option value="$PROJECT_DIR$/app/Model/Tag.php" />
         <option value="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" />
         <option value="$PROJECT_DIR$/app/Api/Controllers/ImagesController.php" />
-        <option value="$PROJECT_DIR$/app/Model/User.php" />
         <option value="$PROJECT_DIR$/app/Model/Activity.php" />
         <option value="$PROJECT_DIR$/app/Api/Controllers/BaseController.php" />
-        <option value="$PROJECT_DIR$/app/Api/Controllers/ActivityController.php" />
         <option value="$PROJECT_DIR$/config/jwt.php" />
         <option value="$PROJECT_DIR$/app/Api/Controllers/ActivityParticipantsController.php" />
         <option value="$PROJECT_DIR$/app/Api/Controllers/AuthController.php" />
         <option value="$PROJECT_DIR$/app/Model/Moment.php" />
-        <option value="$PROJECT_DIR$/app/Api/Controllers/MomentsController.php" />
         <option value="$PROJECT_DIR$/app/Api/Controllers/UserController.php" />
-        <option value="$PROJECT_DIR$/app/Http/routes.php" />
         <option value="$PROJECT_DIR$/app/Api/Controllers/UsersController.php" />
+        <option value="$PROJECT_DIR$/app/Api/Controllers/ActivityController.php" />
+        <option value="$PROJECT_DIR$/app/Http/routes.php" />
+        <option value="$PROJECT_DIR$/app/Model/User.php" />
+        <option value="$PROJECT_DIR$/app/Api/Controllers/MomentsController.php" />
       </list>
     </option>
   </component>
@@ -592,12 +582,12 @@
       <workItem from="1496415309145" duration="4000" />
       <workItem from="1496415384456" duration="53000" />
       <workItem from="1496663961589" duration="4094000" />
-      <workItem from="1496736367623" duration="2713000" />
+      <workItem from="1496736367623" duration="6755000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="351462000" />
+    <option name="totallyTimeSpent" value="355504000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -853,20 +843,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Model/UserMin.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="20" column="178" lean-forward="true" selection-start-line="20" selection-start-column="178" selection-end-line="20" selection-end-column="178" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Model/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="16" column="247" lean-forward="false" selection-start-line="16" selection-start-column="247" selection-end-line="16" selection-end-column="247" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Api/Controllers/ImagesController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="66">
@@ -957,40 +933,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Api/Controllers/ActivityController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-922">
-          <caret line="218" column="9" lean-forward="true" selection-start-line="218" selection-start-column="9" selection-end-line="218" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Api/Controllers/BaseController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="192" column="26" lean-forward="true" selection-start-line="192" selection-start-column="26" selection-end-line="192" selection-end-column="26" />
+        <state relative-caret-position="378">
+          <caret line="147" column="187" lean-forward="false" selection-start-line="147" selection-start-column="187" selection-end-line="147" selection-end-column="187" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Api/Controllers/UserController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="644">
+        <state relative-caret-position="662">
           <caret line="207" column="5" lean-forward="false" selection-start-line="207" selection-start-column="5" selection-end-line="207" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Api/Controllers/UsersController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="77">
-          <caret line="176" column="0" lean-forward="false" selection-start-line="176" selection-start-column="0" selection-end-line="200" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="45" column="71" lean-forward="false" selection-start-line="45" selection-start-column="71" selection-end-line="45" selection-end-column="71" />
           <folding />
         </state>
       </provider>
@@ -1005,10 +957,50 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/Api/Controllers/BaseController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="115" column="0" lean-forward="true" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="401">
+          <caret line="46" column="71" lean-forward="true" selection-start-line="46" selection-start-column="71" selection-end-line="46" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Model/UserMin.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="698">
+          <caret line="71" column="5" lean-forward="true" selection-start-line="71" selection-start-column="5" selection-end-line="71" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Api/Controllers/UsersController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="151" column="9" lean-forward="true" selection-start-line="151" selection-start-column="9" selection-end-line="151" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Model/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1418">
+          <caret line="65" column="26" lean-forward="true" selection-start-line="65" selection-start-column="26" selection-end-line="65" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Api/Controllers/MomentsController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2511">
-          <caret line="98" column="38" lean-forward="false" selection-start-line="98" selection-start-column="38" selection-end-line="98" selection-end-column="38" />
+        <state relative-caret-position="378">
+          <caret line="94" column="9" lean-forward="true" selection-start-line="94" selection-start-column="9" selection-end-line="94" selection-end-column="9" />
           <folding>
             <element signature="e#121#142#0#PHP" expanded="true" />
           </folding>
