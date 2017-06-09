@@ -161,15 +161,15 @@
         {
             "id": 1,
             "nickname": "XB",
-            "avatar": "/images/avatars/default.png",
+            "avatar": "/public/uploads/avatars/default_man.png",
             "age": 19,
             "character_value": 50,
             "gender": "男",
-            "grade": "大二",
-            "followers": "",
-            "description": "",
-            "school": "重庆邮电大学"
-        },...
+            "followers_count": 0,
+            "description": "运动健儿",
+            "school_name": "重庆邮电大学"
+        },
+    ]
 }
 ```
 
@@ -196,14 +196,13 @@
     "data": {
         "id": 1,
         "nickname": "XB",
-        "avatar": "/images/avatars/default.png",
+        "avatar": "/public/uploads/avatars/default_man.png",
         "age": 19,
         "character_value": 50,
         "gender": "男",
-        "followers": "",
-        "grade": "大二",
-        "description": "",
-        "school": "重庆邮电大学"
+        "followers_count": 0,
+        "description": "运动健儿",
+        "school_name": "重庆邮电大学"
     }
 }
 ```
@@ -873,38 +872,49 @@
 {
     "status_code": "2000",
     "info": "success",
-    "total": 4,
+    "total": 20,
     "data": [
         {
-            "id": 1,
-            "title": "五一厦门三日游",
-            "content": "活动介绍活动介绍活动介绍",
+            "id": 78,
+            "title": "一起玩",
+            "content": "一起玩一起玩一起玩",
             "creator": {
-                "id": 1,
-                "nickname": "XB",
-                "avatar": "public/images/avatars/default.png",
-                "age": 19,
+                "id": 44,
+                "nickname": "哈喽",
+                "avatar": "/public/uploads/avatars/default_man.png",
+                "age": null,
                 "character_value": 50,
                 "gender": "男",
-                "followers": 0,
-                "description": null,
-                "school": "重庆邮电大学"
+                "followers_count": 0,
+                "description": "吃货"
             },
-            "location": "厦门鼓浪屿",
-            "people_number_up": 25,
+            "people_number_up": 10,
             "people_number_join": 1,
+            "type": 2,
+            "entrie_time_start": "2017-06-08 10:46:42",
+            "entrie_time_end": "2017-06-08 20:46:42",
             "date_time_start": null,
             "date_time_end": null,
-            "type": 1,
+            "location": "一棵树观景台",
+            "lat": "29.550935",
+            "lng": "106.60911",
+            "group_id": null,
+            "created_at": "1天前",
+            "updated_at": "1天前",
             "is_participated": false,
-            "status": "活动已经结束",
-            "PercentOfPeople": 0.04,
-            "distance":"1611公里",
+            "distance": null,
+            "status": "报名已经结束",
+            "PercentOfPeople": 0.1,
+            "activity_users": [
+                {
+                    "id": 44,
+                    "avatar": "/public/uploads/avatars/default_man.png"
+                }
+            ],
             "tags": [
-                "电影",
-                "桌游"
+                "随便玩"
             ]
-        }
+        },
     ]
 }
 ```
@@ -939,36 +949,50 @@
     "status_code": "2000",
     "info": "success",
     "data": {
-        "id": 1,
-        "title": "五一厦门三日游",
-        "content": "活动介绍活动介绍活动介绍",
+        "id": 78,
+        "title": "一起玩",
+        "content": "一起玩一起玩一起玩",
         "creator": {
-            "id": 1,
-            "nickname": "XB",
-            "avatar": "public/images/avatars/default.png",
-            "age": 19,
+            "id": 44,
+            "nickname": "哈喽",
+            "avatar": "/public/uploads/avatars/default_man.png",
+            "age": null,
             "character_value": 50,
             "gender": "男",
-            "followers": 0,
-            "description": null,
-            "school": "重庆邮电大学"
+            "followers_count": 0,
+            "description": "吃货"
         },
-        "people_number_up": 25,
+        "people_number_up": 10,
         "people_number_join": 1,
-        "type": 1,
-        "entrie_time_start": "2017-04-28 00:01:09",
-        "entrie_time_end": "2017-04-30 00:01:11",
+        "type": 2,
+        "entrie_time_start": "2017-06-08 10:46:42",
+        "entrie_time_end": "2017-06-08 20:46:42",
         "date_time_start": null,
         "date_time_end": null,
-        "location": "厦门鼓浪屿",
-        "created_at": "2017-04-20 21:28:11",
-        "updated_at": "2017-04-21 00:00:51",
+        "location": "一棵树观景台",
+        "lat": "29.550935",
+        "lng": "106.60911",
+        "group_id": null,
+        "created_at": "1天前",
+        "updated_at": "1天前",
         "is_participated": false,
-        "status": "活动已经结束",
-        "PercentOfPeople": 0.04,
+        "distance": null,
+        "status": "报名已经结束",
+        "PercentOfPeople": 0.1,
         "tags": [
-            "电影",
-            "桌游"
+            "随便玩"
+        ],
+        "users": [
+            {
+                "id": 44,
+                "nickname": "哈喽",
+                "avatar": "/public/uploads/avatars/default_man.png",
+                "age": null,
+                "character_value": 50,
+                "gender": "男",
+                "followers_count": 0,
+                "description": "吃货"
+            }
         ]
     }
 }

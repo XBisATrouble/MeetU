@@ -102,6 +102,8 @@ class UsersController extends BaseController
 
         $school_name=is_null($payload['school_id'])?null:School::find($payload['school_id'])->school_name;
 
+        $avatar_path=$payload['gender']==1?'/public/uploads/avatars/default_man.png':'/public/uploads/avatars/default_woman.png';
+
         $newUser=[
             'phone' => $payload['phone'],
             'password' => bcrypt($payload['password']),
@@ -110,7 +112,7 @@ class UsersController extends BaseController
             'description'=>$payload['description'],
             'name' => $payload['name'],
             'idcard'=>$payload['idcard'],
-            'avatar' => '/public/uploads/avatars/default.png',
+            'avatar' => $avatar_path,
             'school_id'=>$payload['school_id'],
             'school_name'=>$school_name,
             'student_id'=>$payload['student_id'],

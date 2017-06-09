@@ -182,7 +182,7 @@ class BaseController extends Controller
     {
         $user=User::find($user_id);
         if ($user!=null)
-            return $this->getDistance($activity->lat,$activity->lng,$user->last_lat,$user->last_lng);
+            return $this->getDistance($user->last_lat,$user->last_lng,$activity->lat,$activity->lng);
         else
             return null;
     }
@@ -203,6 +203,7 @@ class BaseController extends Controller
         curl_close($ch);
 //打印获得的数据
         $status=json_decode($output)->status;
+
         if ($status==0)
         {
             $result=json_decode($output)->result;
